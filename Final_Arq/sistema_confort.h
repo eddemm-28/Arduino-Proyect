@@ -15,6 +15,7 @@ class SistemaConfort {
     void actualizarLCD();     // Actualiza la pantalla con valores actuales
     void leerTeclado();       // Lee teclado y almacena tecla presionada
     void controlarAlarmas();
+    void testHardware();
       // Evalúa condiciones de alarma y cuenta en ventana de 12s
     
     // Getters para que la FSM pueda consultar el estado
