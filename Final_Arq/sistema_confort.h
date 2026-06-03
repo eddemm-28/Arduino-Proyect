@@ -13,6 +13,7 @@
 #include <LiquidCrystal_I2C.h>
 #include <Keypad.h>
 #include <Servo.h>
+#include "configuracion.h"
 
 /**
  * @class SistemaConfort
