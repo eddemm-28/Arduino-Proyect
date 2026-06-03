@@ -50,5 +50,9 @@ class SistemaConfort {
     Keypad teclado;
     Servo myservo;            // Objeto servo
 };
-
+class SistemaConfort {
+  public:
+    // ... (métodos existentes)
+    void testHardware();  // Rutina de diagnóstico de periféricos
+};
 #endif

@@ -38,7 +38,8 @@ void callbackControlAlarmas() {
 
 // ==================== SETUP ====================
 void setup() {
-  confort.begin();           // Inicializa pines, LCD, sensores, etc.
+  confort.begin();
+  confort.testHardware();   // <-- ejecuta la prueba y luego continúa con el sistema normal           // Inicializa pines, LCD, sensores, etc.
   setupFSM();                // Inicializa la máquina de estados
   inicializarAlarmas();      // Inicializa contadores de alarmas
 

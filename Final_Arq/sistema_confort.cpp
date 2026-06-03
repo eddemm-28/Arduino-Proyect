@@ -159,3 +159,116 @@ void SistemaConfort::controlarAlarmas() {
     alarmaAnterior = false;
   }
 }
+void SistemaConfort::testHardware() {
+  Serial.println(F("\n=== INICIANDO TEST DE HARDWARE ==="));
+  lcd.clear();
+  lcd.print("TEST HARDWARE");
+  delay(1500);
+
+  // 1. Test DHT11
+  lcd.clear();
+  lcd.print("1. DHT11...");
+  leerDHT();
+  Serial.print(F("Temperatura: ")); Serial.print(temperatura); Serial.println(" C");
+  Serial.print(F("Humedad: "));    Serial.print(humedad);    Serial.println(" %");
+  lcd.setCursor(0,1);
+  lcd.print("T:");
+  lcd.print(temperatura,1);
+  lcd.print(" H:");
+  lcd.print(humedad,0);
+  delay(2000);
+
+  // 2. Test LDR (luz)
+  lcd.clear();
+  lcd.print("2. LDR (luz)");
+  leerLDR();
+  Serial.print(F("Valor LDR: ")); Serial.println(luz);
+  lcd.setCursor(0,1);
+  lcd.print("Luz: "); lcd.print(luz);
+  delay(2000);
+
+  // 3. Test Hall (campo magnético)
+  lcd.clear();
+  lcd.print("3. Hall (iman)");
+  leerHall();
+  Serial.print(F("Valor Hall: ")); Serial.println(hall);
+  lcd.setCursor(0,1);
+  lcd.print("Hall: "); lcd.print(hall);
+  delay(2000);
+
+  // 4. Test Teclado: presionar una tecla cualquiera
+  lcd.clear();
+  lcd.print("4. Teclado");
+  lcd.setCursor(0,1);
+  lcd.print("Presione tecla");
+  Serial.println(F("Esperando tecla..."));
+  char tecla = 0;
+  while (!tecla) {
+    tecla = teclado.getKey();
+  }
+  Serial.print(F("Tecla presionada: ")); Serial.println(tecla);
+  lcd.clear();
+  lcd.print("Tecla: ");
+  lcd.print(tecla);
+  delay(1000);
+
+  // 5. Test Servo (movimiento)
+  lcd.clear();
+  lcd.print("5. Servo");
+  lcd.setCursor(0,1);
+  lcd.print("Moviendo...");
+  Serial.println(F("Moviendo servo 0° -> 90° -> 0°"));
+  myservo.write(0);
+  delay(500);
+  myservo.write(90);
+  delay(1000);
+  myservo.write(0);
+  delay(500);
+
+  // 6. Test LED de alarma (pin 3)
+  lcd.clear();
+  lcd.print("6. LED alarma");
+  Serial.println(F("Parpadeo LED alarma 3 veces"));
+  for (int i = 0; i < 3; i++) {
+    digitalWrite(PIN_LED_ALARMA, HIGH);
+    delay(300);
+    digitalWrite(PIN_LED_ALARMA, LOW);
+    delay(300);
+  }
+
+  // 7. Test Buzzer
+  lcd.clear();
+  lcd.print("7. Buzzer");
+  Serial.println(F("Sonido buzzer 1s"));
+  tone(PIN_BUZZER, 1000);
+  delay(1000);
+  noTone(PIN_BUZZER);
+
+  // 8. Test LED RGB (secuencia colores)
+  lcd.clear();
+  lcd.print("8. RGB");
+  Serial.println(F("Secuencia: rojo, verde, azul"));
+  // Rojo
+  analogWrite(PIN_LED_RGB_R, 255);
+  analogWrite(PIN_LED_RGB_G, 0);
+  analogWrite(PIN_LED_RGB_B, 0);
+  delay(1000);
+  // Verde
+  analogWrite(PIN_LED_RGB_R, 0);
+  analogWrite(PIN_LED_RGB_G, 255);
+  delay(1000);
+  // Azul
+  analogWrite(PIN_LED_RGB_G, 0);
+  analogWrite(PIN_LED_RGB_B, 255);
+  delay(1000);
+  // Apagar
+  analogWrite(PIN_LED_RGB_R, 0);
+  analogWrite(PIN_LED_RGB_B, 0);
+
+  // Fin
+  lcd.clear();
+  lcd.print("TEST COMPLETO");
+  Serial.println(F("=== TEST COMPLETADO CON EXITO ==="));
+  delay(2000);
+  lcd.clear();
+}
