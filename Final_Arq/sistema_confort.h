@@ -14,7 +14,8 @@ class SistemaConfort {
     void leerSensores();      // Lee DHT, LDR, Hall (sin delay)
     void actualizarLCD();     // Actualiza la pantalla con valores actuales
     void leerTeclado();       // Lee teclado y almacena tecla presionada
-    void controlarAlarmas();  // Evalúa condiciones de alarma y cuenta en ventana de 12s
+    void controlarAlarmas();
+      // Evalúa condiciones de alarma y cuenta en ventana de 12s
     
     // Getters para que la FSM pueda consultar el estado
     float getTemperatura() { return temperatura; }
@@ -50,5 +51,5 @@ class SistemaConfort {
     Keypad teclado;
     Servo myservo;            // Objeto servo
 };
-void testHardware();
+
 #endif
