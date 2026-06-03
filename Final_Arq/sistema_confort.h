@@ -2,36 +2,51 @@
 #define SISTEMA_CONFORT_H
 
 #include <Arduino.h>
-#include "AsyncTaskLib.h"
-#include "configuracion.h"
+#include <LiquidCrystal_I2C.h>
+#include <Keypad.h>
+#include <DHT.h>
 
 class SistemaConfort {
   public:
     SistemaConfort();
     void begin();
-    void tickSensores();   // tarea asincrónica para sensores
-    void tickLCD();        // tarea asincrónica para LCD
-    void tickTeclado();    // tarea asincrónica para teclado
-    void tickAlarmas();    // tarea asincrónica para alarmas
-
-    // Datos actuales
-    float getTemperatura();
-    float getHumedad();
-    int getLuz();
-    int getPresion();
+    void leerSensores();      // Lee DHT, LDR, presión (sin delay)
+    void actualizarLCD();     // Actualiza la pantalla con valores actuales
+    void leerTeclado();       // Lee teclado y almacena tecla presionada
+    void controlarAlarmas();  // Evalúa condiciones de alarma y cuenta en ventana de 12s
+    
+    // Getters para que la FSM pueda consultar el estado
+    float getTemperatura() { return temperatura; }
+    float getHumedad() { return humedad; }
+    int getLuz() { return luz; }
+    int getPresion() { return presion; }
+    int getAlarmasConsecutivas() { return alarmasConsecutivas; }
+    bool hayEmergencia() { return emergenciaActiva; }
 
   private:
     void leerDHT();
     void leerLDR();
     void leerPresion();
-    void actualizarLCD();
     void procesarTecla(char tecla);
-    void evaluarAlarmas();
-
-    unsigned long tiempoUltimoSensor;
-    unsigned long tiempoUltimoLCD;
-    unsigned long tiempoUltimoTeclado;
-    unsigned long tiempoUltimoAlarma;
+    
+    // Variables de sensores
+    float temperatura;
+    float humedad;
+    int luz;
+    int presion;
+    
+    // Variables para alarmas (ventana de 12 segundos)
+    int alarmasConsecutivas;
+    unsigned long tiempoPrimeraAlarma;
+    bool emergenciaActiva;
+    
+    // Última tecla presionada (para pasar a la FSM)
+    char ultimaTecla;
+    
+    // Objetos de periféricos
+    LiquidCrystal_I2C lcd;
+    DHT dht;
+    Keypad teclado;
 };
 
 #endif
