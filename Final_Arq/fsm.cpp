@@ -40,7 +40,7 @@ SistemaConfort *ptrSistema = nullptr;
 void setupFSM() {
   estadoActual = ESTADO_INICIO;
   Serial.println(F("FSM inicializada en INICIO"));
-  ptrSistema = nullptr;
+  //ptrSistema = nullptr;
 }
 
 void loopFSM() {
@@ -81,11 +81,15 @@ void dispararEvento(int evento) {
         detenerTemporizadores();
       } 
       else if (evento == EVENTO_CLAVE_INCORRECTA) {
+        int fallos = ptrSistema->getIntentosFallidos();
         Serial.print("Intentos fallidos desde FSM: ");
-        Serial.println(ptrSistema->getIntentosFallidos());
-        if (ptrSistema && ptrSistema->getIntentosFallidos() >= 3) {
+        Serial.println(fallos);
+        if (ptrSistema && fallos >= 3) {
+          Serial.println("*** ACTIVANDO BLOQUEO ***");
           estadoActual = ESTADO_BLOQUEO;
-          Serial.println("-> BLOQUEO");
+          // Asegurar que el LED y buzzer se activen inmediatamente
+          digitalWrite(PIN_LED_ALARMA, HIGH);
+          tone(PIN_BUZZER, 2000, 50);
           detenerTemporizadores();
         }
       }
@@ -427,6 +431,30 @@ void actualizarLCDporEstado() {
       lcd.print("!!! ALARMA !!!");
       lcd.setCursor(0,1);
       lcd.print(enAlarmaPorIntruso ? "Intrusos" : "Ambiental");
+      break;
+
+    case ESTADO_CONFIGURACION:
+      lcd.setCursor(0,0);
+      lcd.print("CONFIGURACION   ");
+      lcd.setCursor(0,1);
+      switch (subEstadoConfig) {
+        case CONFIG_MENU:
+          lcd.print("1:Clave 2:RFID A:Salir");
+          break;
+        case CONFIG_CAMBIO_CLAVE:
+          lcd.print("Nueva clave: ");
+          lcd.print(nuevaClave);
+          for (int i = nuevaClave.length(); i < 4; i++) lcd.print("_");
+          break;
+        case CONFIG_CONFIRMAR_CLAVE:
+          lcd.print("Confirme: ");
+          lcd.print(confirmacion);
+          for (int i = confirmacion.length(); i < 4; i++) lcd.print("_");
+          break;
+        case CONFIG_REGISTRO_RFID:
+          lcd.print("Pase tarjeta...");
+          break;
+      }
       break;
   }
 }

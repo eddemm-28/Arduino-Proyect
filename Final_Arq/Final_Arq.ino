@@ -60,8 +60,8 @@ void callbackControlAlarmas() {
 // ==================== SETUP ====================
 void setup() {
   confort.begin();
-  ptrSistema = &confort;
-  setupFSM();
+  setupFSM();               // Primero inicializa la FSM
+  ptrSistema = &confort;    // Luego asigna el puntero
   inicializarAlarmas();
 
   tareaSensores.Start();
@@ -69,6 +69,12 @@ void setup() {
   tareaTeclado.Start();
   
   Serial.println(F("Sistema iniciado. Tareas asincrónicas corriendo."));
+  pinMode(PIN_LED_ALARMA, OUTPUT);
+  
+  //Borrar despues
+  digitalWrite(PIN_LED_ALARMA, HIGH);
+  delay(500);  // Solo para prueba, luego elimina el delay
+  digitalWrite(PIN_LED_ALARMA, LOW);
 }
 
 // ==================== LOOP ====================
