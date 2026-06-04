@@ -12,10 +12,6 @@
 extern String inputBuffer;
 extern bool bufferCompleto;
 
-// ... (el resto del archivo permanece igual, excepto la corrección del comentario en el constructor)
-extern String inputBuffer;
-extern bool bufferCompleto;
-
 // ==================== DEFINICIÓN DE PINES DEL TECLADO ====================
 const byte filasKeypad[FILAS_KEYPAD] = {32, 33, 34, 35};
 const byte columnasKeypad[COLUMNAS_KEYPAD] = {A7, A6, A5, A4};
