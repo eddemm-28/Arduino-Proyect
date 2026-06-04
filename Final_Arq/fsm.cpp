@@ -307,16 +307,33 @@ void actualizarLEDyBuzzer() {
   
   switch (estadoActual) {
     case ESTADO_BLOQUEO:
-      if (millis() - lastBlink > 100) {
-        ledState = !ledState;
-        digitalWrite(PIN_LED_ALARMA, ledState);
-        if (ledState) {
-          tone(PIN_BUZZER, 2000, 50);   // Pitido corto de 2kHz durante 50ms
+    {
+      static unsigned long lastChange = 0;
+      static bool ledOn = true;   // true = LED encendido, false = apagado
+
+      if (ledOn) {
+        // Fase ON: 100 ms
+        if (millis() - lastChange >= 100) {
+          digitalWrite(PIN_LED_ALARMA, LOW);
+          ledOn = false;
+          lastChange = millis();
+        } else {
+          digitalWrite(PIN_LED_ALARMA, HIGH);
         }
-        lastBlink = millis();
+      } else {
+        // Fase OFF: 500 ms
+        if (millis() - lastChange >= 500) {
+          digitalWrite(PIN_LED_ALARMA, HIGH);
+          ledOn = true;
+          lastChange = millis();
+          tone(PIN_BUZZER, 2000, 50);   // pitido corto al inicio del encendido
+        } else {
+          digitalWrite(PIN_LED_ALARMA, LOW);
+        }
       }
       digitalWrite(PIN_LED_RGB_R, LOW);
-      break;
+    }
+    break;
       
     case ESTADO_ALARMA:
       if (millis() - lastBlink > 300) {
@@ -380,39 +397,6 @@ void actualizarLCDporEstado() {
       lcd.print("SISTEMA BLOQUEADO");
       lcd.setCursor(0,1);
       lcd.print("Presione boton");
-      break;
-      
-    case ESTADO_BLOQUEO:
-    {
-      static unsigned long tiempoUltimoCambio = 0;
-      static bool faseEncendido = true;   // true = LED encendido, false = apagado
-
-      if (faseEncendido) {
-        // Fase ON: debe durar 100 ms
-        if (millis() - tiempoUltimoCambio >= 100) {
-          digitalWrite(PIN_LED_ALARMA, LOW);   // Apagar LED
-          faseEncendido = false;
-          tiempoUltimoCambio = millis();
-          // Opcional: pitido corto al inicio del apagado (o al encendido)
-          // tone(PIN_BUZZER, 2000, 50);  // si quieres sonido cada ciclo
-        } else {
-          digitalWrite(PIN_LED_ALARMA, HIGH);  // Mantener encendido
-        }
-      } else {
-        // Fase OFF: debe durar 500 ms
-        if (millis() - tiempoUltimoCambio >= 500) {
-          digitalWrite(PIN_LED_ALARMA, HIGH);  // Encender LED
-          faseEncendido = true;
-          tiempoUltimoCambio = millis();
-          tone(PIN_BUZZER, 2000, 50);
-        } else {
-          digitalWrite(PIN_LED_ALARMA, LOW);   // Mantener apagado
-        }
-      }
-      digitalWrite(PIN_LED_RGB_R, LOW);
-      // Si quieres que el buzzer suene brevemente solo al inicio del ciclo,
-      // descomenta las líneas tone().
-    }
     break;
       
     case ESTADO_MONITOR_INTRUSOS:
