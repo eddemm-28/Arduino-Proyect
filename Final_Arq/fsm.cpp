@@ -130,8 +130,20 @@ void dispararEvento(int evento) {
     subEstadoConfig = CONFIG_MENU;
   }
   else {
-    // Manejo de sub-estados (teclas numéricas, '#', y 'A')
+    // Manejo de teclas (números, letras A/B, #)
     char tecla = (char)evento;
+    
+    // Función auxiliar para salir de configuración a un monitor
+    auto salirAMonitor = [this](EstadoSistema nuevoEstado, AsyncTask &timer) {
+      estadoActual = nuevoEstado;
+      subEstadoConfig = CONFIG_MENU;
+      nuevaClave = "";
+      confirmacion = "";
+      detenerTemporizadores();
+      timer.Start();
+      Serial.println(nuevoEstado == ESTADO_MONITOR_INTRUSOS ? "-> MONITOR INTRUSOS" : "-> MONITOR AMBIENTAL");
+    };
+    
     switch (subEstadoConfig) {
       case CONFIG_MENU:
         if (tecla == '1') {
@@ -146,15 +158,12 @@ void dispararEvento(int evento) {
           Serial.println("Modo: Registrar RFID - Pase la tarjeta");
         }
         else if (tecla == 'A' || tecla == 'a') {
-          // Salir de configuración y pasar a monitor intrusos
-          estadoActual = ESTADO_MONITOR_INTRUSOS;
-          subEstadoConfig = CONFIG_MENU;
-          nuevaClave = "";
-          confirmacion = "";
-          Serial.println("-> MONITOR INTRUSOS");
-          detenerTemporizadores();
-          timer2s.Start();
+          salirAMonitor(ESTADO_MONITOR_INTRUSOS, timer2s);
         }
+        else if (tecla == 'B' || tecla == 'b') {
+          salirAMonitor(ESTADO_MONITOR_AMBIENTAL, timer5s);
+        }
+        // Otras teclas: no hacer nada
         break;
 
       case CONFIG_CAMBIO_CLAVE:
@@ -168,18 +177,17 @@ void dispararEvento(int evento) {
           }
         }
         else if (tecla == '#') {
-          // Cancelar
+          // Cancelar y volver al menú
           subEstadoConfig = CONFIG_MENU;
           nuevaClave = "";
           confirmacion = "";
           Serial.println("Cancelado. Volviendo al menu.");
         }
         else if (tecla == 'A' || tecla == 'a') {
-          // Cancelar y volver al menú
-          subEstadoConfig = CONFIG_MENU;
-          nuevaClave = "";
-          confirmacion = "";
-          Serial.println("Cancelado. Volviendo al menu.");
+          salirAMonitor(ESTADO_MONITOR_INTRUSOS, timer2s);
+        }
+        else if (tecla == 'B' || tecla == 'b') {
+          salirAMonitor(ESTADO_MONITOR_AMBIENTAL, timer5s);
         }
         break;
 
@@ -203,28 +211,27 @@ void dispararEvento(int evento) {
           }
         }
         else if (tecla == '#') {
-          // Cancelar
           confirmacion = "";
           subEstadoConfig = CONFIG_MENU;
           nuevaClave = "";
           Serial.println("Cancelado.");
         }
         else if (tecla == 'A' || tecla == 'a') {
-          // Cancelar
-          confirmacion = "";
-          subEstadoConfig = CONFIG_MENU;
-          nuevaClave = "";
-          Serial.println("Cancelado.");
+          salirAMonitor(ESTADO_MONITOR_INTRUSOS, timer2s);
+        }
+        else if (tecla == 'B' || tecla == 'b') {
+          salirAMonitor(ESTADO_MONITOR_AMBIENTAL, timer5s);
         }
         break;
 
       case CONFIG_REGISTRO_RFID:
         if (tecla == 'A' || tecla == 'a') {
-          // Cancelar registro
-          subEstadoConfig = CONFIG_MENU;
-          Serial.println("Registro cancelado. Volviendo al menu.");
+          salirAMonitor(ESTADO_MONITOR_INTRUSOS, timer2s);
         }
-        // Timeout se maneja aparte
+        else if (tecla == 'B' || tecla == 'b') {
+          salirAMonitor(ESTADO_MONITOR_AMBIENTAL, timer5s);
+        }
+        // Timeout para espera de tarjeta
         if (millis() - tiempoEsperaRFID > 10000) {
           Serial.println("Tiempo de espera agotado. Volviendo al menu.");
           subEstadoConfig = CONFIG_MENU;
