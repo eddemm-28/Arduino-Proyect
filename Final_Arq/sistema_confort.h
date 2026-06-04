@@ -74,7 +74,7 @@ class SistemaConfort {
     char ultimaTecla;         ///< Última tecla presionada
 
     // Objetos de periféricos
-    LiquidCrystal_I2C lcd;    ///< Objeto para controlar LCD I2C
+    LiquidCrystal lcd;   ///< Objeto para controlar LCD I2C
     Keypad teclado;           ///< Objeto para teclado matricial
     Servo myservo;            ///< Objeto para servomotor
 

@@ -329,8 +329,7 @@ void actualizarLCDporEstado() {
       lcd.print(enAlarmaPorIntruso ? "Intrusos" : "Ambiental");
       break;
   }
-  
-  EstadoSistema getEstadoActual() {
+}
+EstadoSistema getEstadoActual() {
     return estadoActual;
   }
-}

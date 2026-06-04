@@ -8,6 +8,9 @@
 #include "sistema_confort.h"
 #include "configuracion.h"
 
+extern String inputBuffer;
+extern bool bufferCompleto;
+
 // ==================== DEFINICIÓN DE PINES DEL TECLADO ====================
 const byte filasKeypad[FILAS_KEYPAD] = {32, 33, 34, 35};
 const byte columnasKeypad[COLUMNAS_KEYPAD] = {A7, A6, A5, A4};
@@ -63,9 +66,8 @@ SistemaConfort::SistemaConfort()
 
 // ==================== MÉTODOS PÚBLICOS ====================
 void SistemaConfort::begin() {
- void SistemaConfort::begin() {
   Serial.begin(9600);
-  lcd.begin(16, 2);           // <- En lugar de init()
+  lcd.begin(16, 2);
   lcd.print("Iniciando...");
   
   myservo.attach(PIN_SERVO);
@@ -86,19 +88,17 @@ void SistemaConfort::begin() {
   
   lcd.clear();
   lcd.print("Sistema listo");
-  // delay(2000);  // Eliminado
+  // delay eliminado
   lcd.clear();
 
   SPI.begin();
   rfid.PCD_Init();
-  // delay(50);    // Eliminado
   
   pinMode(PIN_BOTON, INPUT_PULLUP);
   botonPresionado = false;
   tiempoUltimoBoton = 0;
 
   cargarCredencialesDesdeEEPROM();
-}
 }
 
 void SistemaConfort::leerSensores() {
