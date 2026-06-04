@@ -102,5 +102,20 @@ void loop() {
         dispararEvento(EVENTO_CLAVE_CORRECTA);
       }
     }
+    else if (getEstadoActual() == ESTADO_CONFIGURACION) {
+      // Si estamos en sub-estado de registro RFID, verificar si se detecta una tarjeta
+      if (subEstadoConfig == CONFIG_REGISTRO_RFID) {
+        if (confort.leerRFID()) {
+          // La función leerRFID ya devuelve true si es válida, pero aquí queremos leer cualquier tarjeta
+          // Necesitamos obtener el UID sin validar. Para eso, crear un método aparte en SistemaConfort: String leerCualquierRFID()
+          String uid = confort.leerCualquierRFID();  // Nuevo método (ver abajo)
+          if (uid != "") {
+            // Guardar el UID en una variable global o pasarlo como evento
+            ultimoUIDLeido = uid;
+            dispararEvento(EVENTO_RFID_DETECTADO);
+          }
+        }
+      }
+    }
   }
 }

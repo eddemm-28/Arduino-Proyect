@@ -27,7 +27,8 @@ enum EventoFSM {
   EVENTO_TIMER_5S,        // Transición 5->4
   EVENTO_TIMER_2S_DESDE_ALARMA,
   EVENTO_TIMER_4S_DESDE_ALARMA,
-  EVENTO_TRES_ALARMAS_EN_12S
+  EVENTO_TRES_ALARMAS_EN_12S,
+  EVENTO_RFID_DETECTADO
 };
 
 void setupFSM();
@@ -39,4 +40,10 @@ void actualizarLEDyBuzzer();  // Controla LEDs y buzzer según estado
 // Para que la FSM pueda acceder a los sensores y al sistema
 extern SistemaConfort *ptrSistema;  // Se declarará en Final_Arq.ino
 
+enum SubEstadoConfig {
+  CONFIG_MENU,
+  CONFIG_CAMBIO_CLAVE,
+  CONFIG_CONFIRMAR_CLAVE,
+  CONFIG_REGISTRO_RFID
+};
 #endif

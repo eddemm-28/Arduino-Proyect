@@ -19,6 +19,12 @@ static int alarmasGlobales = 0;
 static unsigned long inicioVentanaAlarmas = 0;
 static bool enAlarmaPorIntruso = false;
 
+// Al inicio, después de las otras variables estáticas:
+static SubEstadoConfig subEstadoConfig = CONFIG_MENU;
+static String nuevaClave = "";
+static bool esperandoConfirmacion = false;
+static unsigned long tiempoEsperaRFID = 0;  // timeout para lectura RFID
+
 // ==== Tareas asincrónicas ====
 AsyncTask timer2s(2000, false, []() { dispararEvento(EVENTO_TIMER_2S); });
 AsyncTask timer5s(5000, false, []() { dispararEvento(EVENTO_TIMER_5S); });
@@ -90,18 +96,106 @@ void dispararEvento(int evento) {
       break;
       
     case ESTADO_CONFIGURACION:
-      if (evento == EVENTO_BOTON_RESET) {
-        estadoActual = ESTADO_INICIO;
-        Serial.println("-> INICIO (reset)");
-        detenerTemporizadores();
-      }
-      else if (evento == EVENTO_TECLA_A) {
-        estadoActual = ESTADO_MONITOR_INTRUSOS;
-        Serial.println("-> MONITOR INTRUSOS");
-        detenerTemporizadores();
-        timer2s.Start();
-      }
-      break;
+  if (evento == EVENTO_BOTON_RESET) {
+    estadoActual = ESTADO_INICIO;
+    subEstadoConfig = CONFIG_MENU;
+    nuevaClave = "";
+    Serial.println("-> INICIO (reset)");
+    detenerTemporizadores();
+  }
+  else if (evento == EVENTO_TECLA_A) {
+    // Salir de configuración y pasar a monitor intrusos
+    estadoActual = ESTADO_MONITOR_INTRUSOS;
+    subEstadoConfig = CONFIG_MENU;
+    nuevaClave = "";
+    Serial.println("-> MONITOR INTRUSOS");
+    detenerTemporizadores();
+    timer2s.Start();
+  }
+  else {
+    // Manejo de sub-estados
+    char tecla = (char)evento;  // Los eventos de tecla se pasan como su valor ASCII
+    switch (subEstadoConfig) {
+      case CONFIG_MENU:
+        if (tecla == '1') {
+          subEstadoConfig = CONFIG_CAMBIO_CLAVE;
+          nuevaClave = "";
+          Serial.println("Modo: Cambiar clave - Ingrese 4 digitos");
+        }
+        else if (tecla == '2') {
+          subEstadoConfig = CONFIG_REGISTRO_RFID;
+          tiempoEsperaRFID = millis();
+          Serial.println("Modo: Registrar RFID - Pase la tarjeta");
+        }
+        break;
+        
+      case CONFIG_CAMBIO_CLAVE:
+        if (tecla >= '0' && tecla <= '9') {
+          if (nuevaClave.length() < 4) {
+            nuevaClave += tecla;
+            if (nuevaClave.length() == 4) {
+              subEstadoConfig = CONFIG_CONFIRMAR_CLAVE;
+              Serial.println("Confirme la nueva clave (mismos 4 digitos)");
+            }
+          }
+        }
+        else if (tecla == '#') {
+          // Cancelar
+          subEstadoConfig = CONFIG_MENU;
+          nuevaClave = "";
+          Serial.println("Cancelado. Volviendo al menu.");
+        }
+        break;
+        
+      case CONFIG_CONFIRMAR_CLAVE:
+        if (tecla >= '0' && tecla <= '9') {
+          static String confirmacion = "";
+          if (confirmacion.length() < 4) {
+            confirmacion += tecla;
+            if (confirmacion.length() == 4) {
+              if (confirmacion == nuevaClave) {
+                if (ptrSistema) {
+                  ptrSistema->guardarCredenciales(nuevaClave, ptrSistema->getUIDAlmacenado());
+                  Serial.println("Clave cambiada exitosamente");
+                }
+              } else {
+                Serial.println("Error: las claves no coinciden");
+              }
+              confirmacion = "";
+              subEstadoConfig = CONFIG_MENU;
+              nuevaClave = "";
+            }
+          }
+        }
+        else if (tecla == '#') {
+          // Cancelar
+          confirmacion = "";
+          subEstadoConfig = CONFIG_MENU;
+          nuevaClave = "";
+          Serial.println("Cancelado.");
+        }
+        break;
+        
+      case CONFIG_REGISTRO_RFID:
+        // La lectura de RFID se maneja aparte, por eventos
+        if (evento == EVENTO_RFID_DETECTADO) {
+          String nuevoUID = obtenerUIDLeido(); // Variable global
+          if (ptrSistema) {
+            ptrSistema->guardarCredenciales(ptrSistema->getClaveAlmacenada(), nuevoUID);
+            Serial.print("Nueva tarjeta registrada: ");
+            Serial.println(nuevoUID);
+          }
+          subEstadoConfig = CONFIG_MENU;
+        }
+        // Timeout: si pasan 10 segundos sin RFID, volver al menú
+        if (millis() - tiempoEsperaRFID > 10000) {
+          Serial.println("Tiempo de espera agotado. Volviendo al menu.");
+          subEstadoConfig = CONFIG_MENU;
+        }
+        break;
+    }
+  }
+  break;
       
     case ESTADO_MONITOR_INTRUSOS:
       if (evento == EVENTO_TIMER_2S) {
@@ -287,9 +381,26 @@ void actualizarLCDporEstado() {
       
     case ESTADO_CONFIGURACION:
       lcd.setCursor(0,0);
-      lcd.print("CONFIGURACION");
+      lcd.print("CONFIGURACION   ");
       lcd.setCursor(0,1);
-      lcd.print("A: Monitoreo");
+      switch (subEstadoConfig) {
+        case CONFIG_MENU:
+          lcd.print("1:Clave 2:RFID A:Salir");
+          break;
+        case CONFIG_CAMBIO_CLAVE:
+          lcd.print("Nueva clave: ");
+          lcd.print(nuevaClave);
+          for (int i = nuevaClave.length(); i < 4; i++) lcd.print("_");
+          break;
+        case CONFIG_CONFIRMAR_CLAVE:
+          lcd.print("Confirme: ");
+          lcd.print(confirmacion);  // Necesitas una variable estática para confirmación
+          for (int i = confirmacion.length(); i < 4; i++) lcd.print("_");
+          break;
+        case CONFIG_REGISTRO_RFID:
+          lcd.print("Pase tarjeta...");
+          break;
+      }
       break;
       
     case ESTADO_MONITOR_INTRUSOS:

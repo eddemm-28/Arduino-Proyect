@@ -332,3 +332,17 @@ void SistemaConfort::incrementarIntentosFallidos() {
 void SistemaConfort::resetIntentosFallidos() {
   intentosFallidos = 0;
 }
+
+String SistemaConfort::leerCualquierRFID() {
+  if (!rfid.PICC_IsNewCardPresent()) return "";
+  if (!rfid.PICC_ReadCardSerial()) return "";
+  String uid = "";
+  for (byte i = 0; i < rfid.uid.size; i++) {
+    if (rfid.uid.uidByte[i] < 0x10) uid += "0";
+    uid += String(rfid.uid.uidByte[i], HEX);
+  }
+  uid.toUpperCase();
+  rfid.PICC_HaltA();
+  rfid.PCD_StopCrypto1();
+  return uid;
+}

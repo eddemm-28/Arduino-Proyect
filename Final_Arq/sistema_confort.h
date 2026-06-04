@@ -41,6 +41,9 @@ class SistemaConfort {
     int getAlarmasConsecutivas() const { return alarmasConsecutivas; }
     bool hayEmergencia() const { return emergenciaActiva; }
     LiquidCrystal& getLCD() { return lcd; }
+    String getClaveAlmacenada() const { return claveAlmacenada; }
+    String getUIDAlmacenado() const { return uidAlmacenado; }
+    String leerCualquierRFID();   // Lee UID sin validar
 
   private:
     void leerTermistor();
