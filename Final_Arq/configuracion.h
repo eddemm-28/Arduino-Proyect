@@ -20,13 +20,21 @@
 #define PIN_SONIDO_DIGITAL 7  ///< Pin digital para sensor KY-037 (salida digital)
 #define PIN_SONIDO_ANALOG A0  ///< Pin analógico para sensor KY-037 (intensidad de sonido)
 
-// Actuadores
-#define PIN_SERVO 13          ///< Pin para servomotor (persiana/ventilador)
-#define PIN_BUZZER 6          ///< Pin para buzzer (cambiado a 6 para evitar conflicto)
-#define PIN_LED_ALARMA 3      ///< Pin para LED rojo de alarma simple
-#define PIN_LED_RGB_R 5       ///< Pin para canal rojo del LED RGB
-#define PIN_LED_RGB_G 6       ///< Pin para canal verde del LED RGB (comparte con buzzer, ajustar si es necesario)
-#define PIN_LED_RGB_B 8       ///< Pin para canal azul del LED RGB
+// Actuadores (reorganizados para evitar conflictos)
+#define PIN_SERVO 13
+#define PIN_BUZZER 10          // Cambiado a 10 (libre)
+#define PIN_LED_ALARMA 3       // Se mantiene en 3 (LCD no usa este pin)
+#define PIN_LED_RGB_R 5
+#define PIN_LED_RGB_G 6        // Antes compartía con buzzer, ahora buzzer en 10
+#define PIN_LED_RGB_B 8
+
+// Pines para LCD paralela (nuevos)
+#define PIN_LCD_RS 22
+#define PIN_LCD_EN 23
+#define PIN_LCD_D4 24
+#define PIN_LCD_D5 25
+#define PIN_LCD_D6 26
+#define PIN_LCD_D7 27
 
 // Teclado matricial 4x4
 #define FILAS_KEYPAD 4        ///< Número de filas del teclado
@@ -58,5 +66,19 @@ extern int contadorAlarmas;   ///< Número de alarmas consecutivas en ventana de
 extern unsigned long tiempoPrimeraAlarma; ///< Momento (ms) de la primera alarma de la ventana
 extern bool emergenciaActiva; ///< Bandera que indica estado de emergencia crítica
 extern char ultimaTecla;      ///< Última tecla presionada en el teclado
+
+// ==================== BOTÓN EXTERNO ====================
+#define PIN_BOTON 12          ///< Pin para botón de reset (pull-up interno)
+
+// ==================== EEPROM ====================
+#define EEPROM_USUARIO_VALIDO 0      ///< Dirección donde se guarda si hay usuario configurado (byte)
+#define EEPROM_CLAVE_LENGTH  4       ///< Longitud de la clave numérica (4 dígitos)
+#define EEPROM_CLAVE_START   1       ///< Dirección inicial de la clave (4 bytes)
+#define EEPROM_UID_LENGTH    4       ///< Longitud del UID de RFID (4 bytes)
+#define EEPROM_UID_START     5       ///< Dirección inicial del UID
+
+// ==================== VARIABLES GLOBALES ADICIONALES ====================
+extern bool botonPresionado;          ///< Bandera para debounce del botón
+extern unsigned long tiempoUltimoBoton;
 
 #endif // CONFIGURACION_H

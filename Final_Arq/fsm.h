@@ -1,47 +1,41 @@
-/**
- * @file fsm.h
- * @brief Declaración de la máquina de estados finitos (FSM) del sistema.
- * @details Define los estados del sistema y las funciones para inicializar,
- *          ejecutar y enviar eventos a la FSM.
- */
-
 #ifndef FSM_H
 #define FSM_H
 
 #include <Arduino.h>
 
-/**
- * @enum EstadoSistema
- * @brief Posibles estados del sistema de confort térmico.
- */
 enum EstadoSistema {
-  ESTADO_INICIO,            ///< Estado inicial: espera tarjeta RFID
-  ESTADO_IDENTIFICACION,    ///< Leyendo y validando tarjeta
-  ESTADO_SELECCION_MODO,    ///< Menú principal: automático/manual/configuración
-  ESTADO_REGULACION_AUTO,   ///< Control automático de temperatura
-  ESTADO_REGULACION_MANUAL, ///< Usuario controla actuadores manualmente
-  ESTADO_CONFIGURACION,     ///< Ajuste de parámetros (setpoints, usuarios)
-  ESTADO_ALARMA_SIMPLE,     ///< Alarma no crítica, se puede retornar a regulación
-  ESTADO_EMERGENCIA         ///< Estado crítico por 3 alarmas en 12s
+  ESTADO_INICIO,
+  ESTADO_BLOQUEO,
+  ESTADO_CONFIGURACION,
+  ESTADO_MONITOR_INTRUSOS,
+  ESTADO_MONITOR_AMBIENTAL,
+  ESTADO_ALARMA
 };
 
-/**
- * @brief Inicializa la máquina de estados.
- * @details Debe llamarse una vez en setup().
- */
+// Eventos que pueden disparar transiciones
+enum EventoFSM {
+  EVENTO_CLAVE_CORRECTA,
+  EVENTO_CLAVE_INCORRECTA,
+  EVENTO_BOTON_RESET,
+  EVENTO_TECLA_HASH,      // '#'
+  EVENTO_TECLA_ASTERISCO, // '*'
+  EVENTO_TECLA_A,         // Para salir de config a monitoreo
+  EVENTO_SONIDO_ALTO,     // Micrófono supera umbral
+  EVENTO_CONDICION_ALARMA_AMBIENTAL, // temp<20 y luz<100
+  EVENTO_TIMER_2S,        // Transición 4->5
+  EVENTO_TIMER_5S,        // Transición 5->4
+  EVENTO_TIMER_2S_DESDE_ALARMA,
+  EVENTO_TIMER_4S_DESDE_ALARMA,
+  EVENTO_TRES_ALARMAS_EN_12S
+};
+
 void setupFSM();
-
-/**
- * @brief Actualiza la máquina de estados.
- * @details Debe invocarse repetidamente en loop().
- *          Evalúa transiciones basadas en eventos y ejecuta acciones de estado.
- */
 void loopFSM();
-
-/**
- * @brief Dispara un evento externo hacia la FSM.
- * @param evento Código numérico del evento (definir según necesidades).
- */
 void dispararEvento(int evento);
+EstadoSistema getEstadoActual();
+void actualizarLEDyBuzzer();  // Controla LEDs y buzzer según estado
 
-#endif // FSM_H
+// Para que la FSM pueda acceder a los sensores y al sistema
+extern SistemaConfort *ptrSistema;  // Se declarará en Final_Arq.ino
+
+#endif

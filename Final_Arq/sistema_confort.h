@@ -10,10 +10,13 @@
 #define SISTEMA_CONFORT_H
 
 #include <Arduino.h>
-#include <LiquidCrystal_I2C.h>
+#include <LiquidCrystal.h>
 #include <Keypad.h>
 #include <Servo.h>
+#include <EEPROM.h>
+#include <MFRC522.h>
 #include "configuracion.h"
+
 
 /**
  * @class SistemaConfort
@@ -21,48 +24,21 @@
  */
 class SistemaConfort {
   public:
-    /**
-     * @brief Constructor. Inicializa variables internas y objetos de periféricos.
-     */
     SistemaConfort();
-
-    /**
-     * @brief Inicializa pines, LCD, servo y periféricos.
-     * @details Debe llamarse una vez en setup().
-     */
     void begin();
-
-    /**
-     * @brief Lee todos los sensores (termistor, LDR, Hall, sonido) sin bloquear.
-     * @details Está diseñada para ser llamada periódicamente desde una AsyncTask.
-     */
     void leerSensores();
-
-    /**
-     * @brief Actualiza la pantalla LCD con los últimos valores de sensores y estado.
-     * @details Se invoca desde una tarea asincrónica cada 500 ms.
-     */
-    void actualizarLCD();
-
-    /**
-     * @brief Escanea el teclado matricial y procesa la tecla presionada.
-     * @details Se ejecuta cada 100 ms desde una AsyncTask.
-     */
+    void actualizarLCD();   // Ya no se usará, se mantiene por compatibilidad
     void leerTeclado();
-
-    /**
-     * @brief Evalúa condiciones de alarma y gestiona la ventana de 12 segundos.
-     * @details Detecta peligro por temperatura o sonido, incrementa contador
-     *          y activa emergencia si se alcanzan 3 alarmas en menos de 12s.
-     *          Se ejecuta cada 1 segundo desde una tarea asincrónica.
-     */
-    void controlarAlarmas();
-
-    /**
-     * @brief Prueba secuencial de todos los periféricos (LCD, sensores, servo, LEDs, buzzer).
-     * @details Muestra resultados en LCD y Serial. Útil para validar el hardware.
-     */
-    void testHardware();
+    void controlarAlarmas(); // Ya no se usará, se mantiene por compatibilidad
+    void testHardware();     // Se puede eliminar o comentar su uso
+    void leerBoton();
+    bool leerRFID();
+    void guardarCredenciales(String clave, String uid);
+    bool validarClave(String entrada);
+    bool validarUID(String uid);
+    int getIntentosFallidos();
+    void incrementarIntentosFallidos();
+    void resetIntentosFallidos();
 
     // Getters para la FSM
     float getTemperatura() const { return temperatura; }
@@ -72,6 +48,7 @@ class SistemaConfort {
     bool getSonidoDigital() const { return sonidoDigital; }
     int getAlarmasConsecutivas() const { return contadorAlarmas; }
     bool hayEmergencia() const { return emergenciaActiva; }
+    LiquidCrystal& getLCD() { return lcd; }  // <- Nuevo getter
 
   private:
     // Métodos privados de lectura de sensores
@@ -100,6 +77,12 @@ class SistemaConfort {
     LiquidCrystal_I2C lcd;    ///< Objeto para controlar LCD I2C
     Keypad teclado;           ///< Objeto para teclado matricial
     Servo myservo;            ///< Objeto para servomotor
+
+    //Funcionalidades
+    int intentosFallidos;                 ///< Para bloqueo tras 3 fallos
+    String claveAlmacenada;               ///< Cache de la clave desde EEPROM
+    String uidAlmacenado;                 ///< Cache del UID
+    MFRC522 rfid;                         ///< Objeto RFID (declarar después de incluir librería)
 };
 
 #endif // SISTEMA_CONFORT_H

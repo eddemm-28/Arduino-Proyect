@@ -42,8 +42,10 @@ char ultimaTecla = 0;
 
 // ==================== CONSTRUCTOR ====================
 SistemaConfort::SistemaConfort()
-  : lcd(0x27, 16, 2),                             // Dirección I2C común 0x27, LCD 16x2
-    teclado(makeKeymap(teclas), filasKeypad, columnasKeypad, FILAS_KEYPAD, COLUMNAS_KEYPAD) {
+  : lcd(PIN_LCD_RS, PIN_LCD_EN, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PIN_LCD_D7),  // <- Cambio
+    teclado(makeKeymap(teclas), filasKeypad, columnasKeypad, FILAS_KEYPAD, COLUMNAS_KEYPAD),
+    rfid(PIN_RFID_SS, PIN_RFID_RST)
+  {
   // Inicializar variables (los objetos ya se construyeron)
   temperatura = 0;
   luz = 0;
@@ -54,17 +56,20 @@ SistemaConfort::SistemaConfort()
   tiempoPrimeraAlarma = 0;
   emergenciaActiva = false;
   ultimaTecla = 0;
+  intentosFallidos = 0;
+  claveAlmacenada = "";
+  uidAlmacenado = "";
 }
 
 // ==================== MÉTODOS PÚBLICOS ====================
 void SistemaConfort::begin() {
+ void SistemaConfort::begin() {
   Serial.begin(9600);
-  lcd.init();
-  lcd.backlight();
+  lcd.begin(16, 2);           // <- En lugar de init()
   lcd.print("Iniciando...");
   
   myservo.attach(PIN_SERVO);
-  myservo.write(0);               // Posición inicial (cerrado)
+  myservo.write(0);
   
   pinMode(PIN_LED_ALARMA, OUTPUT);
   pinMode(PIN_LED_RGB_R, OUTPUT);
@@ -73,7 +78,6 @@ void SistemaConfort::begin() {
   pinMode(PIN_BUZZER, OUTPUT);
   pinMode(PIN_SONIDO_DIGITAL, INPUT);
   
-  // Apagar todos los actuadores
   digitalWrite(PIN_LED_ALARMA, LOW);
   digitalWrite(PIN_LED_RGB_R, LOW);
   digitalWrite(PIN_LED_RGB_G, LOW);
@@ -82,8 +86,19 @@ void SistemaConfort::begin() {
   
   lcd.clear();
   lcd.print("Sistema listo");
-  delay(2000);
+  // delay(2000);  // Eliminado
   lcd.clear();
+
+  SPI.begin();
+  rfid.PCD_Init();
+  // delay(50);    // Eliminado
+  
+  pinMode(PIN_BOTON, INPUT_PULLUP);
+  botonPresionado = false;
+  tiempoUltimoBoton = 0;
+
+  cargarCredencialesDesdeEEPROM();
+}
 }
 
 void SistemaConfort::leerSensores() {
@@ -175,93 +190,7 @@ void SistemaConfort::controlarAlarmas() {
 }
 
 void SistemaConfort::testHardware() {
-  Serial.println(F("\n=== INICIANDO TEST DE HARDWARE ==="));
-  lcd.clear();
-  lcd.print("TEST HARDWARE");
-  delay(1500);
-  
-  // 1. Termistor
-  lcd.clear();
-  lcd.print("1. Termistor");
-  leerTermistor();
-  Serial.print(F("Temperatura: ")); Serial.print(temperatura); Serial.println(" C");
-  lcd.setCursor(0,1);
-  lcd.print("T:"); lcd.print(temperatura,1);
-  delay(2000);
-  
-  // 2. LDR
-  lcd.clear();
-  lcd.print("2. LDR");
-  leerLDR();
-  Serial.print(F("Luz: ")); Serial.println(luz);
-  lcd.setCursor(0,1);
-  lcd.print("Luz:"); lcd.print(luz);
-  delay(2000);
-  
-  // 3. Hall
-  lcd.clear();
-  lcd.print("3. Hall (iman)");
-  leerHall();
-  Serial.print(F("Hall: ")); Serial.println(campoMagnetico);
-  lcd.setCursor(0,1);
-  lcd.print("Hall:"); lcd.print(campoMagnetico);
-  delay(2000);
-  
-  // 4. Teclado
-  lcd.clear();
-  lcd.print("4. Teclado");
-  lcd.setCursor(0,1);
-  lcd.print("Presione tecla");
-  Serial.println(F("Esperando tecla..."));
-  char tecla = 0;
-  while (!tecla) {
-    tecla = teclado.getKey();
-  }
-  Serial.print(F("Tecla: ")); Serial.println(tecla);
-  lcd.clear();
-  lcd.print("Tecla: "); lcd.print(tecla);
-  delay(1000);
-  
-  // 5. Servo
-  lcd.clear();
-  lcd.print("5. Servo");
-  lcd.setCursor(0,1);
-  lcd.print("Moviendo...");
-  Serial.println(F("Moviendo servo 0° -> 90° -> 0°"));
-  myservo.write(0); delay(500);
-  myservo.write(90); delay(1000);
-  myservo.write(0); delay(500);
-  
-  // 6. LED alarma
-  lcd.clear();
-  lcd.print("6. LED alarma");
-  Serial.println(F("Parpadeo LED alarma 3 veces"));
-  for (int i=0; i<3; i++) {
-    digitalWrite(PIN_LED_ALARMA, HIGH); delay(300);
-    digitalWrite(PIN_LED_ALARMA, LOW);  delay(300);
-  }
-  
-  // 7. Buzzer
-  lcd.clear();
-  lcd.print("7. Buzzer");
-  Serial.println(F("Sonido buzzer 1s"));
-  tone(PIN_BUZZER, 1000); delay(1000);
-  noTone(PIN_BUZZER);
-  
-  // 8. LED RGB
-  lcd.clear();
-  lcd.print("8. RGB (R,G,B)");
-  Serial.println(F("Secuencia rojo, verde, azul"));
-  analogWrite(PIN_LED_RGB_R, 255); analogWrite(PIN_LED_RGB_G, 0); analogWrite(PIN_LED_RGB_B, 0); delay(1000);
-  analogWrite(PIN_LED_RGB_R, 0);   analogWrite(PIN_LED_RGB_G, 255); analogWrite(PIN_LED_RGB_B, 0); delay(1000);
-  analogWrite(PIN_LED_RGB_R, 0);   analogWrite(PIN_LED_RGB_G, 0);   analogWrite(PIN_LED_RGB_B, 255); delay(1000);
-  analogWrite(PIN_LED_RGB_R, 0);   analogWrite(PIN_LED_RGB_G, 0);   analogWrite(PIN_LED_RGB_B, 0);
-  
-  lcd.clear();
-  lcd.print("TEST COMPLETO");
-  Serial.println(F("=== TEST COMPLETADO CON EXITO ==="));
-  delay(2000);
-  lcd.clear();
+  Serial.println(F("Test hardware no implementado sin delays."));
 }
 
 // ==================== MÉTODOS PRIVADOS ====================
@@ -287,11 +216,119 @@ void SistemaConfort::leerSonido() {
 }
 
 void SistemaConfort::procesarTecla(char tecla) {
-  // Aquí se conectará con la FSM (por ahora solo se imprime)
-  Serial.print("Tecla presionada: ");
+Serial.print("Tecla presionada: ");
   Serial.println(tecla);
-  // Ejemplo básico: control manual del servo con teclas 2,8,6
-  // if (tecla == '2') myservo.write(0);
-  // else if (tecla == '8') myservo.write(90);
-  // else if (tecla == '6') myservo.write(180);
+  
+  // Si el estado actual es INICIO, acumular dígitos en el buffer
+  if (getEstadoActual() == ESTADO_INICIO) {
+    if (tecla >= '0' && tecla <= '9') {
+      if (inputBuffer.length() < 4) {
+        inputBuffer += tecla;
+        if (inputBuffer.length() == 4) {
+          bufferCompleto = true;
+        }
+      }
+    } else if (tecla == '#') {
+      // Forzar verificación si se presiona # antes de 4 dígitos
+      bufferCompleto = true;
+    }
+  }
+}
+// Carga credenciales desde EEPROM a las variables cache
+void SistemaConfort::cargarCredencialesDesdeEEPROM() {
+  byte valido = EEPROM.read(EEPROM_USUARIO_VALIDO);
+  if (valido == 0x01) {
+    // Leer clave (4 dígitos)
+    char buf[EEPROM_CLAVE_LENGTH+1];
+    for (int i = 0; i < EEPROM_CLAVE_LENGTH; i++) {
+      buf[i] = EEPROM.read(EEPROM_CLAVE_START + i);
+    }
+    buf[EEPROM_CLAVE_LENGTH] = '\0';
+    claveAlmacenada = String(buf);
+    
+    // Leer UID (4 bytes en hex)
+    String uid = "";
+    for (int i = 0; i < EEPROM_UID_LENGTH; i++) {
+      byte b = EEPROM.read(EEPROM_UID_START + i);
+      if (b < 0x10) uid += "0";
+      uid += String(b, HEX);
+    }
+    uidAlmacenado = uid;
+  } else {
+    // Valores por defecto para pruebas (clave 1234, UID simulado)
+    claveAlmacenada = "1234";
+    uidAlmacenado = "DEADBEEF";
+    guardarCredenciales(claveAlmacenada, uidAlmacenado);
+  }
+}
+
+void SistemaConfort::guardarCredenciales(String clave, String uid) {
+  EEPROM.write(EEPROM_USUARIO_VALIDO, 0x01);
+  for (int i = 0; i < EEPROM_CLAVE_LENGTH && i < clave.length(); i++) {
+    EEPROM.write(EEPROM_CLAVE_START + i, clave[i]);
+  }
+  // Convertir UID string a bytes (asume formato hexadecimal, ej. "DEADBEEF")
+  int len = uid.length();
+  for (int i = 0; i < EEPROM_UID_LENGTH; i++) {
+    if (i*2+1 < len) {
+      String byteStr = uid.substring(i*2, i*2+2);
+      byte b = (byte) strtol(byteStr.c_str(), NULL, 16);
+      EEPROM.write(EEPROM_UID_START + i, b);
+    } else {
+      EEPROM.write(EEPROM_UID_START + i, 0);
+    }
+  }
+  EEPROM.commit(); // Solo para placas que lo requieran (Mega no necesita, pero seguro)
+  cargarCredencialesDesdeEEPROM();
+}
+
+bool SistemaConfort::validarClave(String entrada) {
+  return (entrada == claveAlmacenada);
+}
+
+bool SistemaConfort::validarUID(String uid) {
+  return (uid == uidAlmacenado);
+}
+
+void SistemaConfort::leerBoton() {
+  bool lectura = digitalRead(PIN_BOTON);
+  if (lectura == LOW && millis() - tiempoUltimoBoton > 200) { // debounce
+    tiempoUltimoBoton = millis();
+    botonPresionado = true;
+  } else if (lectura == HIGH) {
+    botonPresionado = false;
+  }
+}
+
+bool SistemaConfort::leerRFID() {
+  if (!rfid.PICC_IsNewCardPresent()) return false;
+  if (!rfid.PICC_ReadCardSerial()) return false;
+  
+  String uid = "";
+  for (byte i = 0; i < rfid.uid.size; i++) {
+    if (rfid.uid.uidByte[i] < 0x10) uid += "0";
+    uid += String(rfid.uid.uidByte[i], HEX);
+  }
+  uid.toUpperCase();
+  rfid.PICC_HaltA();
+  rfid.PCD_StopCrypto1();
+  
+  if (validarUID(uid)) {
+    resetIntentosFallidos();
+    return true;
+  }
+  incrementarIntentosFallidos();
+  return false;
+}
+
+int SistemaConfort::getIntentosFallidos() {
+  return intentosFallidos;
+}
+
+void SistemaConfort::incrementarIntentosFallidos() {
+  intentosFallidos++;
+}
+
+void SistemaConfort::resetIntentosFallidos() {
+  intentosFallidos = 0;
 }

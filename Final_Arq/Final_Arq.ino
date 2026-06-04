@@ -13,9 +13,19 @@
 #include "fsm.h"
 #include "alarmas.h"
 #include "AsyncTaskLib.h"
+#include <EEPROM.h>
+#include <MFRC522.h>
 
 // Objeto global del sistema
 SistemaConfort confort;
+AsyncTask tareaSensores(2000, true, callbackLeerSensores);
+bool botonPresionado = false;
+unsigned long tiempoUltimoBoton = 0;
+String inputBuffer = "";
+bool bufferCompleto = false;
+
+void limpiarBuffer() { inputBuffer = ""; bufferCompleto = false; }
+String obtenerBufferEntrada() { return inputBuffer; }
 
 // ==================== DECLARACIÓN DE CALLBACKS ====================
 void callbackLeerSensores();
@@ -42,7 +52,7 @@ AsyncTask tareaTeclado(100, true, callbackLeerTeclado);
 /**
  * @brief Tarea para controlar alarmas cada 1 segundo.
  */
-AsyncTask tareaAlarmas(1000, true, callbackControlAlarmas);
+//AsyncTask tareaAlarmas(1000, true, callbackControlAlarmas);
 
 // ==================== IMPLEMENTACIÓN DE CALLBACKS ====================
 void callbackLeerSensores() {
@@ -63,28 +73,60 @@ void callbackControlAlarmas() {
 
 // ==================== SETUP ====================
 void setup() {
-  confort.begin();                // Inicializa periféricos
-  confort.testHardware();         // Prueba rápida de todos los componentes
-  setupFSM();                     // Inicializa máquina de estados
-  inicializarAlarmas();           // Inicializa sistema de alarmas
+ confort.begin();
+  // confort.testHardware();   // Comentado para evitar delays
+  ptrSistema = &confort;
+  setupFSM();
+  inicializarAlarmas();
 
-  // Iniciar las tareas asincrónicas
   tareaSensores.Start();
   tareaLCD.Start();
   tareaTeclado.Start();
-  tareaAlarmas.Start();
-
+  // tareaAlarmas.Start();     // Comentado
+  
   Serial.println(F("Sistema iniciado. Tareas asincrónicas corriendo."));
 }
 
 // ==================== LOOP ====================
 void loop() {
-  // Actualizar todas las tareas (no bloqueante)
   tareaSensores.Update();
   tareaLCD.Update();
   tareaTeclado.Update();
-  tareaAlarmas.Update();
-
-  // Actualizar la máquina de estados
-  loopFSM();
+  // tareaAlarmas.Update();
+  loopFSM();            // La FSM maneja todo
+  
+  // Detección de condiciones de alarma según estado actual
+  static unsigned long lastCheck = 0;
+  if (millis() - lastCheck > 500) {
+    lastCheck = millis();
+    // Estado 4: detectar sonido alto (umbral)
+    if (getEstadoActual() == ESTADO_MONITOR_INTRUSOS) {
+      if (confort.getSonidoAnalog() > SONIDO_UMBRAL) {
+        dispararEvento(EVENTO_SONIDO_ALTO);
+      }
+    }
+    // Estado 5: detectar condición ambiental
+    else if (getEstadoActual() == ESTADO_MONITOR_AMBIENTAL) {
+      if (confort.getTemperatura() < 20.0 && confort.getLuz() < 100) {
+        dispararEvento(EVENTO_CONDICION_ALARMA_AMBIENTAL);
+      }
+    }
+    // Estado Inicio: verificar RFID o clave ingresada (se maneja con buffer)
+    else if (getEstadoActual() == ESTADO_INICIO) {
+      // Comprobar si se ha ingresado una clave completa (ej. 4 dígitos)
+      if (bufferCompleto) {
+        if (confort.validarClave(buffer)) {
+          dispararEvento(EVENTO_CLAVE_CORRECTA);
+        } else {
+          confort.incrementarIntentosFallidos();
+          dispararEvento(EVENTO_CLAVE_INCORRECTA);
+        }
+        limpiarBuffer();
+      }
+      // También comprobar RFID
+      if (confort.leerRFID()) {
+        dispararEvento(EVENTO_CLAVE_CORRECTA);
+      }
+    }
+  }
 }
