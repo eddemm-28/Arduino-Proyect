@@ -382,29 +382,38 @@ void actualizarLCDporEstado() {
       lcd.print("Presione boton");
       break;
       
-    case ESTADO_CONFIGURACION:
-      lcd.setCursor(0,0);
-      lcd.print("CONFIGURACION   ");
-      lcd.setCursor(0,1);
-      switch (subEstadoConfig) {
-        case CONFIG_MENU:
-          lcd.print("1:Clave 2:RFID A:Salir");
-          break;
-        case CONFIG_CAMBIO_CLAVE:
-          lcd.print("Nueva clave: ");
-          lcd.print(nuevaClave);
-          for (int i = nuevaClave.length(); i < 4; i++) lcd.print("_");
-          break;
-        case CONFIG_CONFIRMAR_CLAVE:
-          lcd.print("Confirme: ");
-          lcd.print(confirmacion);  // Necesitas una variable estática para confirmación
-          for (int i = confirmacion.length(); i < 4; i++) lcd.print("_");
-          break;
-        case CONFIG_REGISTRO_RFID:
-          lcd.print("Pase tarjeta...");
-          break;
+    case ESTADO_BLOQUEO:
+    {
+      static unsigned long tiempoUltimoCambio = 0;
+      static bool faseEncendido = true;   // true = LED encendido, false = apagado
+
+      if (faseEncendido) {
+        // Fase ON: debe durar 100 ms
+        if (millis() - tiempoUltimoCambio >= 100) {
+          digitalWrite(PIN_LED_ALARMA, LOW);   // Apagar LED
+          faseEncendido = false;
+          tiempoUltimoCambio = millis();
+          // Opcional: pitido corto al inicio del apagado (o al encendido)
+          // tone(PIN_BUZZER, 2000, 50);  // si quieres sonido cada ciclo
+        } else {
+          digitalWrite(PIN_LED_ALARMA, HIGH);  // Mantener encendido
+        }
+      } else {
+        // Fase OFF: debe durar 500 ms
+        if (millis() - tiempoUltimoCambio >= 500) {
+          digitalWrite(PIN_LED_ALARMA, HIGH);  // Encender LED
+          faseEncendido = true;
+          tiempoUltimoCambio = millis();
+          tone(PIN_BUZZER, 2000, 50);
+        } else {
+          digitalWrite(PIN_LED_ALARMA, LOW);   // Mantener apagado
+        }
       }
-      break;
+      digitalWrite(PIN_LED_RGB_R, LOW);
+      // Si quieres que el buzzer suene brevemente solo al inicio del ciclo,
+      // descomenta las líneas tone().
+    }
+    break;
       
     case ESTADO_MONITOR_INTRUSOS:
       lcd.setCursor(0,0);
