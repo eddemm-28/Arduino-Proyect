@@ -10,6 +10,7 @@ static unsigned long tiempoPrimerSonido = 0;
 static int alarmasGlobales = 0;          // Contador de alarmas en ventana de 12s
 static unsigned long inicioVentanaAlarmas = 0;
 static bool enAlarmaPorIntruso = false;  // Para saber si llegamos desde 4 o desde 5
+extern String obtenerBufferEntrada();
 
 // Tareas asincrónicas para temporizadores de cambio automático
 AsyncTask timer2s(2000, false, []() { dispararEvento(EVENTO_TIMER_2S); });

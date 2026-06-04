@@ -7,7 +7,12 @@
 
 #include "sistema_confort.h"
 #include "configuracion.h"
+#include "fsm.h"      // <-- AGREGADO para getEstadoActual()
 
+extern String inputBuffer;
+extern bool bufferCompleto;
+
+// ... (el resto del archivo permanece igual, excepto la corrección del comentario en el constructor)
 extern String inputBuffer;
 extern bool bufferCompleto;
 
