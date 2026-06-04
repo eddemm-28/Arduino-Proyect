@@ -31,7 +31,7 @@ void limpiarBuffer() { inputBuffer = ""; bufferCompleto = false; }
 String obtenerBufferEntrada() { return inputBuffer; }
 
 // ==================== CREACIÓN DE TAREAS ASINCRÓNICAS ====================
-AsyncTask tareaSensores(2000, true, callbackLeerSensores);
+//AsyncTask tareaSensores(2000, true, callbackLeerSensores);
 AsyncTask tareaLCD(500, true, callbackActualizarLCD);
 AsyncTask tareaTeclado(100, true, callbackLeerTeclado);
 // AsyncTask tareaAlarmas(1000, true, callbackControlAlarmas);  // No se usa
