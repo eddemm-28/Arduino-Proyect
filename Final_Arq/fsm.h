@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include "sistema_confort.h"
 
+SubEstadoConfig getSubEstadoConfig();
+
 enum EstadoSistema {
   ESTADO_INICIO,
   ESTADO_BLOQUEO,

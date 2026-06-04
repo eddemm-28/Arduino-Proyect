@@ -33,6 +33,8 @@ String obtenerBufferEntrada() { return inputBuffer; }
 String ultimoUIDLeido = "";      // Almacena el último UID leído sin validar
 String obtenerUIDLeido() { return ultimoUIDLeido; }
 
+extern SubEstadoConfig subEstadoConfig;   // Para acceder desde loop()
+
 // ==================== CREACIÓN DE TAREAS ASINCRÓNICAS ====================
 AsyncTask tareaSensores(2000, true, callbackLeerSensores);   // <-- DESCOMENTAR
 AsyncTask tareaLCD(500, true, callbackActualizarLCD);
@@ -105,7 +107,7 @@ void loop() {
         dispararEvento(EVENTO_CLAVE_CORRECTA);
       }
     }
-    else if (getEstadoActual() == ESTADO_CONFIGURACION) {
+        else if (getEstadoActual() == ESTADO_CONFIGURACION) {
       if (subEstadoConfig == CONFIG_REGISTRO_RFID) {
         String uid = confort.leerCualquierRFID();
         if (uid != "") {
@@ -113,7 +115,6 @@ void loop() {
           dispararEvento(EVENTO_RFID_DETECTADO);
         }
       }
-    }
     }
   }
 }

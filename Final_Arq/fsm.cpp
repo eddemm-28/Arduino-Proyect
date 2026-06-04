@@ -439,3 +439,7 @@ void actualizarLCDporEstado() {
 EstadoSistema getEstadoActual() {
   return estadoActual;
 }
+
+SubEstadoConfig getSubEstadoConfig() {
+  return subEstadoConfig;
+}
