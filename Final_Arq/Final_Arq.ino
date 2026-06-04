@@ -94,10 +94,12 @@ void loop() {
     }
     else if (getEstadoActual() == ESTADO_INICIO) {
       if (bufferCompleto) {
-        if (confort.validarClave(inputBuffer)) {   // CORREGIDO: buffer -> inputBuffer
+        if (confort.validarClave(inputBuffer)) {
           dispararEvento(EVENTO_CLAVE_CORRECTA);
         } else {
           confort.incrementarIntentosFallidos();
+          Serial.print("Intento fallido #");
+          Serial.println(confort.getIntentosFallidos());
           dispararEvento(EVENTO_CLAVE_INCORRECTA);
         }
         limpiarBuffer();

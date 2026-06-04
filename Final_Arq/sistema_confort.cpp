@@ -292,10 +292,10 @@ bool SistemaConfort::validarUID(String uid) {
 
 void SistemaConfort::leerBoton() {
   bool lectura = digitalRead(PIN_BOTON);
-  if (lectura == LOW && millis() - tiempoUltimoBoton > 200) { // debounce
+  if (lectura == HIGH && millis() - tiempoUltimoBoton > 200) { // Cambiado LOW → HIGH
     tiempoUltimoBoton = millis();
     botonPresionado = true;
-  } else if (lectura == HIGH) {
+  } else if (lectura == LOW) {
     botonPresionado = false;
   }
 }

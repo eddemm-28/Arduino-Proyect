@@ -81,6 +81,8 @@ void dispararEvento(int evento) {
         detenerTemporizadores();
       } 
       else if (evento == EVENTO_CLAVE_INCORRECTA) {
+        Serial.print("Intentos fallidos desde FSM: ");
+        Serial.println(ptrSistema->getIntentosFallidos());
         if (ptrSistema && ptrSistema->getIntentosFallidos() >= 3) {
           estadoActual = ESTADO_BLOQUEO;
           Serial.println("-> BLOQUEO");
