@@ -133,17 +133,6 @@ void dispararEvento(int evento) {
     // Manejo de teclas (números, letras A/B, #)
     char tecla = (char)evento;
     
-    // Función auxiliar para salir de configuración a un monitor
-    auto salirAMonitor = [this](EstadoSistema nuevoEstado, AsyncTask &timer) {
-      estadoActual = nuevoEstado;
-      subEstadoConfig = CONFIG_MENU;
-      nuevaClave = "";
-      confirmacion = "";
-      detenerTemporizadores();
-      timer.Start();
-      Serial.println(nuevoEstado == ESTADO_MONITOR_INTRUSOS ? "-> MONITOR INTRUSOS" : "-> MONITOR AMBIENTAL");
-    };
-    
     switch (subEstadoConfig) {
       case CONFIG_MENU:
         if (tecla == '1') {
@@ -158,10 +147,24 @@ void dispararEvento(int evento) {
           Serial.println("Modo: Registrar RFID - Pase la tarjeta");
         }
         else if (tecla == 'A' || tecla == 'a') {
-          salirAMonitor(ESTADO_MONITOR_INTRUSOS, timer2s);
+          // Salir a monitor intrusos
+          estadoActual = ESTADO_MONITOR_INTRUSOS;
+          subEstadoConfig = CONFIG_MENU;
+          nuevaClave = "";
+          confirmacion = "";
+          detenerTemporizadores();
+          timer2s.Start();
+          Serial.println("-> MONITOR INTRUSOS");
         }
         else if (tecla == 'B' || tecla == 'b') {
-          salirAMonitor(ESTADO_MONITOR_AMBIENTAL, timer5s);
+          // Salir a monitor ambiental
+          estadoActual = ESTADO_MONITOR_AMBIENTAL;
+          subEstadoConfig = CONFIG_MENU;
+          nuevaClave = "";
+          confirmacion = "";
+          detenerTemporizadores();
+          timer5s.Start();
+          Serial.println("-> MONITOR AMBIENTAL");
         }
         // Otras teclas: no hacer nada
         break;
@@ -184,10 +187,22 @@ void dispararEvento(int evento) {
           Serial.println("Cancelado. Volviendo al menu.");
         }
         else if (tecla == 'A' || tecla == 'a') {
-          salirAMonitor(ESTADO_MONITOR_INTRUSOS, timer2s);
+          estadoActual = ESTADO_MONITOR_INTRUSOS;
+          subEstadoConfig = CONFIG_MENU;
+          nuevaClave = "";
+          confirmacion = "";
+          detenerTemporizadores();
+          timer2s.Start();
+          Serial.println("-> MONITOR INTRUSOS");
         }
         else if (tecla == 'B' || tecla == 'b') {
-          salirAMonitor(ESTADO_MONITOR_AMBIENTAL, timer5s);
+          estadoActual = ESTADO_MONITOR_AMBIENTAL;
+          subEstadoConfig = CONFIG_MENU;
+          nuevaClave = "";
+          confirmacion = "";
+          detenerTemporizadores();
+          timer5s.Start();
+          Serial.println("-> MONITOR AMBIENTAL");
         }
         break;
 
@@ -217,19 +232,43 @@ void dispararEvento(int evento) {
           Serial.println("Cancelado.");
         }
         else if (tecla == 'A' || tecla == 'a') {
-          salirAMonitor(ESTADO_MONITOR_INTRUSOS, timer2s);
+          estadoActual = ESTADO_MONITOR_INTRUSOS;
+          subEstadoConfig = CONFIG_MENU;
+          nuevaClave = "";
+          confirmacion = "";
+          detenerTemporizadores();
+          timer2s.Start();
+          Serial.println("-> MONITOR INTRUSOS");
         }
         else if (tecla == 'B' || tecla == 'b') {
-          salirAMonitor(ESTADO_MONITOR_AMBIENTAL, timer5s);
+          estadoActual = ESTADO_MONITOR_AMBIENTAL;
+          subEstadoConfig = CONFIG_MENU;
+          nuevaClave = "";
+          confirmacion = "";
+          detenerTemporizadores();
+          timer5s.Start();
+          Serial.println("-> MONITOR AMBIENTAL");
         }
         break;
 
       case CONFIG_REGISTRO_RFID:
         if (tecla == 'A' || tecla == 'a') {
-          salirAMonitor(ESTADO_MONITOR_INTRUSOS, timer2s);
+          estadoActual = ESTADO_MONITOR_INTRUSOS;
+          subEstadoConfig = CONFIG_MENU;
+          nuevaClave = "";
+          confirmacion = "";
+          detenerTemporizadores();
+          timer2s.Start();
+          Serial.println("-> MONITOR INTRUSOS");
         }
         else if (tecla == 'B' || tecla == 'b') {
-          salirAMonitor(ESTADO_MONITOR_AMBIENTAL, timer5s);
+          estadoActual = ESTADO_MONITOR_AMBIENTAL;
+          subEstadoConfig = CONFIG_MENU;
+          nuevaClave = "";
+          confirmacion = "";
+          detenerTemporizadores();
+          timer5s.Start();
+          Serial.println("-> MONITOR AMBIENTAL");
         }
         // Timeout para espera de tarjeta
         if (millis() - tiempoEsperaRFID > 10000) {
