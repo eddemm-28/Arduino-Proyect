@@ -17,24 +17,24 @@
 #define PIN_TERMISTOR A2      ///< Pin analógico para termistor NTC (temperatura)
 #define PIN_LDR A3            ///< Pin analógico para fotoresistencia (luz)
 #define PIN_HALL A1           ///< Pin analógico para sensor magnético Hall
-#define PIN_SONIDO_DIGITAL 7  ///< Pin digital para sensor KY-037 (salida digital)
+#define PIN_SONIDO_DIGITAL 8  ///< Pin digital para sensor KY-037 (salida digital)
 #define PIN_SONIDO_ANALOG A0  ///< Pin analógico para sensor KY-037 (intensidad de sonido)
 
 // Actuadores (reorganizados para evitar conflictos)
 #define PIN_SERVO 13
-#define PIN_BUZZER 10          // Cambiado a 10 (libre)
-#define PIN_LED_ALARMA 3       // Se mantiene en 3 (LCD no usa este pin)
-#define PIN_LED_RGB_R 5
-#define PIN_LED_RGB_G 6        // Antes compartía con buzzer, ahora buzzer en 10
-#define PIN_LED_RGB_B 8
+#define PIN_BUZZER 7          // Cambiado a 10 (libre)
+#define PIN_LED_ALARMA 6       // Se mantiene en 3 (LCD no usa este pin)
+#define PIN_LED_RGB_R 24
+#define PIN_LED_RGB_G 25        // Antes compartía con buzzer, ahora buzzer en 10
+#define PIN_LED_RGB_B 26
 
 // Pines para LCD paralela (nuevos)
-#define PIN_LCD_RS 22
-#define PIN_LCD_EN 23
-#define PIN_LCD_D4 24
-#define PIN_LCD_D5 25
-#define PIN_LCD_D6 26
-#define PIN_LCD_D7 27
+#define PIN_LCD_RS 12
+#define PIN_LCD_EN 11
+#define PIN_LCD_D4 5
+#define PIN_LCD_D5 4
+#define PIN_LCD_D6 3
+#define PIN_LCD_D7 2
 
 // Teclado matricial 4x4
 #define FILAS_KEYPAD 4        ///< Número de filas del teclado
@@ -68,7 +68,7 @@ extern bool emergenciaActiva; ///< Bandera que indica estado de emergencia crít
 extern char ultimaTecla;      ///< Última tecla presionada en el teclado
 
 // ==================== BOTÓN EXTERNO ====================
-#define PIN_BOTON 12          ///< Pin para botón de reset (pull-up interno)
+#define PIN_BOTON 10          ///< Pin para botón de reset (pull-up interno)
 
 // ==================== EEPROM ====================
 #define EEPROM_USUARIO_VALIDO 0      ///< Dirección donde se guarda si hay usuario configurado (byte)

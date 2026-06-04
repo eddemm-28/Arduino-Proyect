@@ -9,6 +9,7 @@ void incrementarContadorAlarmasGlobal();
 void actualizarLEDyBuzzer();
 void actualizarLCDporEstado();
 extern String obtenerBufferEntrada();
+extern String obtenerUIDLeido();
 
 // ==== Variables estáticas ====
 static EstadoSistema estadoActual = ESTADO_INICIO;
@@ -24,6 +25,8 @@ static SubEstadoConfig subEstadoConfig = CONFIG_MENU;
 static String nuevaClave = "";
 static bool esperandoConfirmacion = false;
 static unsigned long tiempoEsperaRFID = 0;  // timeout para lectura RFID
+
+static String confirmacion = "";
 
 // ==== Tareas asincrónicas ====
 AsyncTask timer2s(2000, false, []() { dispararEvento(EVENTO_TIMER_2S); });
@@ -177,9 +180,8 @@ void dispararEvento(int evento) {
         break;
         
       case CONFIG_REGISTRO_RFID:
-        // La lectura de RFID se maneja aparte, por eventos
         if (evento == EVENTO_RFID_DETECTADO) {
-          String nuevoUID = obtenerUIDLeido(); // Variable global
+          String nuevoUID = obtenerUIDLeido();   // Ahora existe
           if (ptrSistema) {
             ptrSistema->guardarCredenciales(ptrSistema->getClaveAlmacenada(), nuevoUID);
             Serial.print("Nueva tarjeta registrada: ");
@@ -187,7 +189,6 @@ void dispararEvento(int evento) {
           }
           subEstadoConfig = CONFIG_MENU;
         }
-        // Timeout: si pasan 10 segundos sin RFID, volver al menú
         if (millis() - tiempoEsperaRFID > 10000) {
           Serial.println("Tiempo de espera agotado. Volviendo al menu.");
           subEstadoConfig = CONFIG_MENU;
@@ -309,9 +310,11 @@ void actualizarLEDyBuzzer() {
       if (millis() - lastBlink > 100) {
         ledState = !ledState;
         digitalWrite(PIN_LED_ALARMA, ledState);
+        if (ledState) {
+          tone(PIN_BUZZER, 2000, 50);   // Pitido corto de 2kHz durante 50ms
+        }
         lastBlink = millis();
       }
-      noTone(PIN_BUZZER);
       digitalWrite(PIN_LED_RGB_R, LOW);
       break;
       
