@@ -2,6 +2,7 @@
 #define FSM_H
 
 #include <Arduino.h>
+#include "sistema_confort.h"
 
 enum EstadoSistema {
   ESTADO_INICIO,

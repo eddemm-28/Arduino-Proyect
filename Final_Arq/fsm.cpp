@@ -3,60 +3,60 @@
 #include "sistema_confort.h"
 #include "AsyncTaskLib.h"
 
-static EstadoSistema estadoActual = ESTADO_INICIO;
-static unsigned long tiempoUltimoEvento = 0;
-static int contadorSonidoAlto = 0;      // Para detectar 3 eventos de sonido alto en estado 4
-static unsigned long tiempoPrimerSonido = 0;
-static int alarmasGlobales = 0;          // Contador de alarmas en ventana de 12s
-static unsigned long inicioVentanaAlarmas = 0;
-static bool enAlarmaPorIntruso = false;  // Para saber si llegamos desde 4 o desde 5
+// ==== Declaración de funciones auxiliares (prototipos) ====
+void detenerTemporizadores();
+void incrementarContadorAlarmasGlobal();
+void actualizarLEDyBuzzer();
+void actualizarLCDporEstado();
 extern String obtenerBufferEntrada();
 
-// Tareas asincrónicas para temporizadores de cambio automático
+// ==== Variables estáticas ====
+static EstadoSistema estadoActual = ESTADO_INICIO;
+static unsigned long tiempoUltimoEvento = 0;
+static int contadorSonidoAlto = 0;
+static unsigned long tiempoPrimerSonido = 0;
+static int alarmasGlobales = 0;
+static unsigned long inicioVentanaAlarmas = 0;
+static bool enAlarmaPorIntruso = false;
+
+// ==== Tareas asincrónicas ====
 AsyncTask timer2s(2000, false, []() { dispararEvento(EVENTO_TIMER_2S); });
 AsyncTask timer5s(5000, false, []() { dispararEvento(EVENTO_TIMER_5S); });
 AsyncTask timerAlarma2s(2000, false, []() { dispararEvento(EVENTO_TIMER_2S_DESDE_ALARMA); });
 AsyncTask timerAlarma4s(4000, false, []() { dispararEvento(EVENTO_TIMER_4S_DESDE_ALARMA); });
 
-// Variable global para acceder al sistema
+// Variable global
 SistemaConfort *ptrSistema = nullptr;
 
 void setupFSM() {
   estadoActual = ESTADO_INICIO;
   Serial.println(F("FSM inicializada en INICIO"));
-  ptrSistema = nullptr; // se asignará desde el setup principal
+  ptrSistema = nullptr;
 }
 
 void loopFSM() {
   if (ptrSistema == nullptr) return;
   
-  // Leer botón externo (reset)
   ptrSistema->leerBoton();
   if (botonPresionado) {
     dispararEvento(EVENTO_BOTON_RESET);
-    botonPresionado = false; // evento ya disparado
+    botonPresionado = false;
   }
   
-  // Leer tecla del teclado (última tecla almacenada)
   char tecla = ultimaTecla;
   if (tecla != 0) {
-    ultimaTecla = 0; // consumir la tecla
+    ultimaTecla = 0;
     if (tecla == '#') dispararEvento(EVENTO_TECLA_HASH);
     else if (tecla == '*') dispararEvento(EVENTO_TECLA_ASTERISCO);
     else if (tecla == 'A' || tecla == 'a') dispararEvento(EVENTO_TECLA_A);
-    // Otras teclas se procesan en el estado actual (ej. ingreso de clave)
   }
   
-  // Actualizar temporizadores (no bloqueantes)
   timer2s.Update();
   timer5s.Update();
   timerAlarma2s.Update();
   timerAlarma4s.Update();
   
-  // Actualizar LED y buzzer según estado actual
   actualizarLEDyBuzzer();
-  
-  // Actualizar pantalla LCD
   actualizarLCDporEstado();
 }
 
@@ -64,17 +64,14 @@ void dispararEvento(int evento) {
   Serial.print("Evento: ");
   Serial.println(evento);
   
-  // Lógica de transiciones según el estado actual
   switch (estadoActual) {
     case ESTADO_INICIO:
       if (evento == EVENTO_CLAVE_CORRECTA) {
         estadoActual = ESTADO_CONFIGURACION;
         Serial.println("-> CONFIGURACION");
         detenerTemporizadores();
-        // Al entrar a configuración, mostrar menú
       } 
       else if (evento == EVENTO_CLAVE_INCORRECTA) {
-        // Se incrementa el contador de intentos desde afuera. Si llega a 3, bloqueo
         if (ptrSistema && ptrSistema->getIntentosFallidos() >= 3) {
           estadoActual = ESTADO_BLOQUEO;
           Serial.println("-> BLOQUEO");
@@ -102,7 +99,6 @@ void dispararEvento(int evento) {
         estadoActual = ESTADO_MONITOR_INTRUSOS;
         Serial.println("-> MONITOR INTRUSOS");
         detenerTemporizadores();
-        // Iniciar timer de 2s para cambiar a ambiental
         timer2s.Start();
       }
       break;
@@ -112,7 +108,7 @@ void dispararEvento(int evento) {
         estadoActual = ESTADO_MONITOR_AMBIENTAL;
         Serial.println("-> MONITOR AMBIENTAL");
         timer2s.Stop();
-        timer5s.Start();  // empezar cuenta para volver
+        timer5s.Start();
       }
       else if (evento == EVENTO_TECLA_HASH) {
         estadoActual = ESTADO_CONFIGURACION;
@@ -120,17 +116,14 @@ void dispararEvento(int evento) {
         detenerTemporizadores();
       }
       else if (evento == EVENTO_SONIDO_ALTO) {
-        // Incrementar contador de sonidos altos
         if (contadorSonidoAlto == 0) tiempoPrimerSonido = millis();
         contadorSonidoAlto++;
         if (contadorSonidoAlto >= 3 && (millis() - tiempoPrimerSonido <= 12000)) {
-          // Disparar alarma desde intrusos
           enAlarmaPorIntruso = true;
           estadoActual = ESTADO_ALARMA;
           Serial.println("-> ALARMA (3 sonidos)");
           detenerTemporizadores();
-          timerAlarma2s.Start(); // 2 segundos y vuelve a intrusos
-          // Incrementar contador global de alarmas para regla 13
+          timerAlarma2s.Start();
           incrementarContadorAlarmasGlobal();
         }
         else if (millis() - tiempoPrimerSonido > 12000) {
@@ -157,7 +150,7 @@ void dispararEvento(int evento) {
         estadoActual = ESTADO_ALARMA;
         Serial.println("-> ALARMA (temp/luz)");
         detenerTemporizadores();
-        timerAlarma4s.Start(); // 4 segundos y vuelve a ambiental
+        timerAlarma4s.Start();
         incrementarContadorAlarmasGlobal();
       }
       break;
@@ -186,7 +179,7 @@ void dispararEvento(int evento) {
   }
 }
 
-// Funciones auxiliares
+// ==== Implementación de auxiliares ====
 void detenerTemporizadores() {
   timer2s.Stop();
   timer5s.Stop();
@@ -219,7 +212,6 @@ void actualizarLEDyBuzzer() {
   
   switch (estadoActual) {
     case ESTADO_BLOQUEO:
-      // Parpadeo rápido: 100ms on, 500ms off
       if (millis() - lastBlink > 100) {
         ledState = !ledState;
         digitalWrite(PIN_LED_ALARMA, ledState);
@@ -230,7 +222,6 @@ void actualizarLEDyBuzzer() {
       break;
       
     case ESTADO_ALARMA:
-      // Parpadeo: 300ms on, 700ms off + buzzer continuo
       if (millis() - lastBlink > 300) {
         ledState = !ledState;
         digitalWrite(PIN_LED_ALARMA, ledState);
@@ -241,7 +232,6 @@ void actualizarLEDyBuzzer() {
       break;
       
     case ESTADO_CONFIGURACION:
-      // LED RGB azul fijo
       digitalWrite(PIN_LED_ALARMA, LOW);
       noTone(PIN_BUZZER);
       analogWrite(PIN_LED_RGB_R, 0);
@@ -277,7 +267,7 @@ void actualizarLEDyBuzzer() {
 
 void actualizarLCDporEstado() {
   if (!ptrSistema) return;
-  LiquidCrystal &lcd = ptrSistema->getLCD();   // <- Cambio de tipo
+  LiquidCrystal &lcd = ptrSistema->getLCD();
   lcd.clear();
   
   switch (estadoActual) {
@@ -331,6 +321,7 @@ void actualizarLCDporEstado() {
       break;
   }
 }
+
 EstadoSistema getEstadoActual() {
-    return estadoActual;
-  }
+  return estadoActual;
+}

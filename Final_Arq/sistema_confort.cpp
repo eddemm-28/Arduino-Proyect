@@ -279,7 +279,6 @@ void SistemaConfort::guardarCredenciales(String clave, String uid) {
       EEPROM.write(EEPROM_UID_START + i, 0);
     }
   }
-  EEPROM.commit(); // Solo para placas que lo requieran (Mega no necesita, pero seguro)
   cargarCredencialesDesdeEEPROM();
 }
 
