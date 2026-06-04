@@ -4,14 +4,14 @@
  * @details Contiene toda la lógica de lectura de sensores, control de actuadores,
  *          gestión de alarmas y prueba de hardware.
  */
-
+ 
 #include "sistema_confort.h"
 #include "configuracion.h"
-#include "fsm.h"      // <-- AGREGADO para getEstadoActual()
-
+#include "fsm.h"
+ 
 extern String inputBuffer;
 extern bool bufferCompleto;
-
+ 
 // ==================== DEFINICIÓN DE PINES DEL TECLADO ====================
 const byte filasKeypad[FILAS_KEYPAD] = {32, 33, 34, 35};
 const byte columnasKeypad[COLUMNAS_KEYPAD] = {A7, A6, A5, A4};
@@ -21,18 +21,18 @@ const char teclas[FILAS_KEYPAD][COLUMNAS_KEYPAD] = {
   {'7','8','9','C'},
   {'*','0','#','D'}
 };
-
+ 
 // ==================== PARÁMETROS DEL TERMISTOR ====================
-const float R1 = 10000.0;              // Resistencia fija en serie (10k ohm)
-const float c1 = 0.001129148;          // Coeficiente Steinhart-Hart
-const float c2 = 0.000234125;          // Coeficiente Steinhart-Hart
-const float c3 = 0.0000000876741;      // Coeficiente Steinhart-Hart
-
+const float R1 = 10000.0;
+const float c1 = 0.001129148;
+const float c2 = 0.000234125;
+const float c3 = 0.0000000876741;
+ 
 // ==================== UMBRALES DE ALARMA ====================
-const float TEMP_MAX = 35.0;           // Temperatura máxima antes de alarma (°C)
-const float TEMP_MIN = 10.0;           // Temperatura mínima antes de alarma (°C)
-const int SONIDO_UMBRAL = 800;         // Valor analógico a partir del cual se considera ruido fuerte
-
+const float TEMP_MAX = 35.0;
+const float TEMP_MIN = 10.0;
+const int SONIDO_UMBRAL = 800;
+ 
 // ==================== VARIABLES GLOBALES (definición) ====================
 float temperatura = 0;
 int luz = 0;
@@ -43,14 +43,13 @@ int contadorAlarmas = 0;
 unsigned long tiempoPrimeraAlarma = 0;
 bool emergenciaActiva = false;
 char ultimaTecla = 0;
-
+ 
 // ==================== CONSTRUCTOR ====================
 SistemaConfort::SistemaConfort()
-  : lcd(PIN_LCD_RS, PIN_LCD_EN, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PIN_LCD_D7),  // <- Cambio
+  : lcd(PIN_LCD_RS, PIN_LCD_EN, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PIN_LCD_D7),
     teclado(makeKeymap(teclas), filasKeypad, columnasKeypad, FILAS_KEYPAD, COLUMNAS_KEYPAD),
     rfid(PIN_RFID_SS, PIN_RFID_RST)
   {
-  // Inicializar variables (los objetos ya se construyeron)
   temperatura = 0;
   luz = 0;
   campoMagnetico = 0;
@@ -64,7 +63,7 @@ SistemaConfort::SistemaConfort()
   claveAlmacenada = "";
   uidAlmacenado = "";
 }
-
+ 
 // ==================== MÉTODOS PÚBLICOS ====================
 void SistemaConfort::begin() {
   Serial.begin(9600);
@@ -89,55 +88,59 @@ void SistemaConfort::begin() {
   
   lcd.clear();
   lcd.print("Sistema listo");
-  // delay eliminado
   lcd.clear();
-
+ 
   SPI.begin();
   rfid.PCD_Init();
   
   pinMode(PIN_BOTON, INPUT_PULLUP);
   botonPresionado = false;
   tiempoUltimoBoton = 0;
-
+ 
   cargarCredencialesDesdeEEPROM();
 }
-
+ 
 void SistemaConfort::leerSensores() {
   leerTermistor();
   leerLDR();
   leerHall();
   leerSonido();
 }
-
+ 
 void SistemaConfort::actualizarLCD() {
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("T:");
-  lcd.print(temperatura, 1);
-  lcd.print("C L:");
-  lcd.print(map(luz, 0, 1023, 0, 100));
-  lcd.print("%");
-  
-  lcd.setCursor(0, 1);
-  if (emergenciaActiva) {
-    lcd.print("EMERGENCIA!   ");
-  } else if (contadorAlarmas > 0) {
-    lcd.print("ALARMA #");
-    lcd.print(contadorAlarmas);
-    lcd.print("    ");
-  } else {
-    lcd.print("Sistema OK     ");
-  }
+  // Este método ya no controla el LCD principal; la FSM lo gestiona
+  // mediante actualizarLCDporEstado(). Se mantiene por compatibilidad.
 }
-
+ 
 void SistemaConfort::leerTeclado() {
   char tecla = teclado.getKey();
   if (tecla) {
-    ultimaTecla = tecla;
+    Serial.print("Tecla presionada: ");
+    Serial.println(tecla);
+ 
+    // Acumular buffer solo en ESTADO_INICIO
     procesarTecla(tecla);
+ 
+    // *** CORRECCIÓN DEFINITIVA: disparar evento aquí mismo, sin pasar
+    // por ultimaTecla ni esperar a loopFSM(). Esto elimina cualquier
+    // problema de timing entre tareaTeclado y loopFSM. ***
+    if (tecla == '#') {
+      dispararEvento(EVENTO_TECLA_HASH);
+    } else if (tecla == '*') {
+      dispararEvento(EVENTO_TECLA_ASTERISCO);
+    } else if (tecla == 'A' || tecla == 'a') {
+      dispararEvento(EVENTO_TECLA_A);
+    } else if (tecla == 'B' || tecla == 'b' ||
+               tecla == 'C' || tecla == 'c' ||
+               tecla == 'D' || tecla == 'd') {
+      // Teclas B/C/D no usadas actualmente, ignorar
+    } else {
+      // Teclas numéricas: enviar ASCII
+      dispararEvento((int)tecla);
+    }
   }
 }
-
+ 
 void SistemaConfort::controlarAlarmas() {
   bool condicionPeligro = (temperatura > TEMP_MAX || temperatura < TEMP_MIN) ||
                           (sonidoAnalog > SONIDO_UMBRAL);
@@ -146,7 +149,6 @@ void SistemaConfort::controlarAlarmas() {
   static unsigned long inicioVentana = 0;
   
   if (condicionPeligro && !alarmaAnterior) {
-    // Nueva alarma detectada
     if (alarmasConsecutivas == 0) {
       inicioVentana = millis();
       tiempoPrimeraAlarma = inicioVentana;
@@ -162,13 +164,12 @@ void SistemaConfort::controlarAlarmas() {
     
     if (alarmasConsecutivas >= 3 && (millis() - inicioVentana <= 12000)) {
       emergenciaActiva = true;
-      myservo.write(0);               // Detener servo
+      myservo.write(0);
       digitalWrite(PIN_LED_ALARMA, HIGH);
       digitalWrite(PIN_LED_RGB_R, HIGH);
-      tone(PIN_BUZZER, 2500);         // Tono continuo de emergencia
+      tone(PIN_BUZZER, 2500);
       Serial.println("!!! EMERGENCIA: 3 ALARMAS EN 12 SEGUNDOS !!!");
     } else {
-      // Alarma simple: parpadeo de LED de alarma y pitido corto
       static unsigned long ultimoParpadeo = 0;
       if (millis() - ultimoParpadeo > 500) {
         ultimoParpadeo = millis();
@@ -189,11 +190,11 @@ void SistemaConfort::controlarAlarmas() {
     alarmaAnterior = false;
   }
 }
-
+ 
 void SistemaConfort::testHardware() {
   Serial.println(F("Test hardware no implementado sin delays."));
 }
-
+ 
 // ==================== MÉTODOS PRIVADOS ====================
 void SistemaConfort::leerTermistor() {
   int Vo = analogRead(PIN_TERMISTOR);
@@ -202,25 +203,25 @@ void SistemaConfort::leerTermistor() {
   float Tk = 1.0 / (c1 + c2*logR2 + c3*logR2*logR2*logR2);
   temperatura = Tk - 273.15;
 }
-
+ 
 void SistemaConfort::leerLDR() {
   luz = analogRead(PIN_LDR);
 }
-
+ 
 void SistemaConfort::leerHall() {
   campoMagnetico = analogRead(PIN_HALL);
 }
-
+ 
 void SistemaConfort::leerSonido() {
   sonidoAnalog = analogRead(PIN_SONIDO_ANALOG);
   sonidoDigital = digitalRead(PIN_SONIDO_DIGITAL);
 }
-
+ 
 void SistemaConfort::procesarTecla(char tecla) {
-Serial.print("Tecla presionada: ");
-  Serial.println(tecla);
-  
-  // Si el estado actual es INICIO, acumular dígitos en el buffer
+  // *** CORRECCIÓN: procesarTecla SOLO acumula el buffer en ESTADO_INICIO.
+  // Para todos los demás estados, loopFSM() lee ultimaTecla directamente
+  // y dispara el evento correcto. Mezclar lógica aquí causaba que las
+  // teclas en ESTADO_CONFIGURACION no produjeran ningún evento. ***
   if (getEstadoActual() == ESTADO_INICIO) {
     if (tecla >= '0' && tecla <= '9') {
       if (inputBuffer.length() < 4) {
@@ -230,16 +231,14 @@ Serial.print("Tecla presionada: ");
         }
       }
     } else if (tecla == '#') {
-      // Forzar verificación si se presiona # antes de 4 dígitos
       bufferCompleto = true;
     }
   }
 }
-// Carga credenciales desde EEPROM a las variables cache
+ 
 void SistemaConfort::cargarCredencialesDesdeEEPROM() {
   byte valido = EEPROM.read(EEPROM_USUARIO_VALIDO);
   if (valido == 0x01) {
-    // Leer clave (4 dígitos)
     char buf[EEPROM_CLAVE_LENGTH+1];
     for (int i = 0; i < EEPROM_CLAVE_LENGTH; i++) {
       buf[i] = EEPROM.read(EEPROM_CLAVE_START + i);
@@ -247,7 +246,6 @@ void SistemaConfort::cargarCredencialesDesdeEEPROM() {
     buf[EEPROM_CLAVE_LENGTH] = '\0';
     claveAlmacenada = String(buf);
     
-    // Leer UID (4 bytes en hex)
     String uid = "";
     for (int i = 0; i < EEPROM_UID_LENGTH; i++) {
       byte b = EEPROM.read(EEPROM_UID_START + i);
@@ -256,19 +254,17 @@ void SistemaConfort::cargarCredencialesDesdeEEPROM() {
     }
     uidAlmacenado = uid;
   } else {
-    // Valores por defecto para pruebas (clave 1234, UID simulado)
     claveAlmacenada = "1234";
     uidAlmacenado = "DEADBEEF";
     guardarCredenciales(claveAlmacenada, uidAlmacenado);
   }
 }
-
+ 
 void SistemaConfort::guardarCredenciales(String clave, String uid) {
   EEPROM.write(EEPROM_USUARIO_VALIDO, 0x01);
-  for (int i = 0; i < EEPROM_CLAVE_LENGTH && i < clave.length(); i++) {
+  for (int i = 0; i < EEPROM_CLAVE_LENGTH && i < (int)clave.length(); i++) {
     EEPROM.write(EEPROM_CLAVE_START + i, clave[i]);
   }
-  // Convertir UID string a bytes (asume formato hexadecimal, ej. "DEADBEEF")
   int len = uid.length();
   for (int i = 0; i < EEPROM_UID_LENGTH; i++) {
     if (i*2+1 < len) {
@@ -281,15 +277,15 @@ void SistemaConfort::guardarCredenciales(String clave, String uid) {
   }
   cargarCredencialesDesdeEEPROM();
 }
-
+ 
 bool SistemaConfort::validarClave(String entrada) {
   return (entrada == claveAlmacenada);
 }
-
+ 
 bool SistemaConfort::validarUID(String uid) {
   return (uid == uidAlmacenado);
 }
-
+ 
 void SistemaConfort::leerBoton() {
   bool lectura = digitalRead(PIN_BOTON);
   if (lectura == LOW && millis() - tiempoUltimoBoton > 200) {
@@ -299,7 +295,7 @@ void SistemaConfort::leerBoton() {
     botonPresionado = false;
   }
 }
-
+ 
 bool SistemaConfort::leerRFID() {
   if (!rfid.PICC_IsNewCardPresent()) return false;
   if (!rfid.PICC_ReadCardSerial()) return false;
@@ -320,19 +316,19 @@ bool SistemaConfort::leerRFID() {
   incrementarIntentosFallidos();
   return false;
 }
-
+ 
 int SistemaConfort::getIntentosFallidos() {
   return intentosFallidos;
 }
-
+ 
 void SistemaConfort::incrementarIntentosFallidos() {
   intentosFallidos++;
 }
-
+ 
 void SistemaConfort::resetIntentosFallidos() {
   intentosFallidos = 0;
 }
-
+ 
 String SistemaConfort::leerCualquierRFID() {
   if (!rfid.PICC_IsNewCardPresent()) return "";
   if (!rfid.PICC_ReadCardSerial()) return "";

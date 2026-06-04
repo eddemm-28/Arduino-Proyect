@@ -14,11 +14,9 @@
 #include <EEPROM.h>
 #include <MFRC522.h>
 
-// ==================== DECLARACIÓN DE CALLBACKS (ANTES DE SU USO) ====================
+// ==================== DECLARACIÓN DE CALLBACKS ====================
 void callbackLeerSensores();
-void callbackActualizarLCD();
 void callbackLeerTeclado();
-void callbackControlAlarmas();
 
 // ==================== OBJETOS GLOBALES ====================
 SistemaConfort confort;
@@ -30,52 +28,44 @@ bool bufferCompleto = false;
 void limpiarBuffer() { inputBuffer = ""; bufferCompleto = false; }
 String obtenerBufferEntrada() { return inputBuffer; }
 
-String ultimoUIDLeido = "";      // Almacena el último UID leído sin validar
+String ultimoUIDLeido = "";
 String obtenerUIDLeido() { return ultimoUIDLeido; }
 
-
-// ==================== CREACIÓN DE TAREAS ASINCRÓNICAS ====================
-AsyncTask tareaSensores(2000, true, callbackLeerSensores);   // <-- DESCOMENTAR
-AsyncTask tareaLCD(500, true, callbackActualizarLCD);
+// ==================== TAREAS ASINCRÓNICAS ====================
+AsyncTask tareaSensores(2000, true, callbackLeerSensores);
+// *** CORRECCIÓN: tareaLCD eliminada. ***
+// confort.actualizarLCD() estaba sobreescribiendo el LCD de la FSM y además
+// generaba lcd.clear() adicionales que bloqueaban la lectura del teclado.
+// La FSM gestiona el LCD directamente en actualizarLCDporEstado() con su
+// propio control de tiempo (cada 300ms).
 AsyncTask tareaTeclado(100, true, callbackLeerTeclado);
-// AsyncTask tareaAlarmas(1000, true, callbackControlAlarmas);
 
-// ==================== IMPLEMENTACIÓN DE CALLBACKS ====================
+// ==================== CALLBACKS ====================
 void callbackLeerSensores() {
   confort.leerSensores();
-}
-
-void callbackActualizarLCD() {
-  confort.actualizarLCD();   // Esta función ya no actualiza la FSM, pero se mantiene
 }
 
 void callbackLeerTeclado() {
   confort.leerTeclado();
 }
 
-void callbackControlAlarmas() {
-  confort.controlarAlarmas();
-}
-
 // ==================== SETUP ====================
 void setup() {
   confort.begin();
-  setupFSM();               // Primero inicializa la FSM
-  ptrSistema = &confort;    // Luego asigna el puntero
+  setupFSM();
+  ptrSistema = &confort;
   inicializarAlarmas();
 
   tareaSensores.Start();
-  tareaLCD.Start();
   tareaTeclado.Start();
+
   pinMode(PIN_LED_ALARMA, OUTPUT);
-  Serial.println(F("Sistema iniciado. Tareas asincrónicas corriendo."));
-  
+  Serial.println(F("Sistema iniciado. Tareas asincronicas corriendo."));
 }
 
 // ==================== LOOP ====================
 void loop() {
   tareaSensores.Update();
-  tareaLCD.Update();
   tareaTeclado.Update();
   loopFSM();
   
@@ -84,12 +74,20 @@ void loop() {
     lastCheck = millis();
     
     if (getEstadoActual() == ESTADO_MONITOR_INTRUSOS) {
+      // Sonido fuerte
       if (confort.getSonidoAnalog() > SONIDO_UMBRAL) {
         dispararEvento(EVENTO_SONIDO_ALTO);
       }
+      // Campo magnético: el sensor Hall devuelve ~512 en reposo;
+      // una variación > 50 respecto al centro indica presencia de imán
+      int hall = confort.getCampoMagnetico();
+      if (hall < 462 || hall > 562) {
+        dispararEvento(EVENTO_HALL_DETECTADO);
+      }
     }
     else if (getEstadoActual() == ESTADO_MONITOR_AMBIENTAL) {
-      if (confort.getTemperatura() < 20.0 && confort.getLuz() < 100) {
+      // Temperatura menor a 20°C dispara alarma ambiental
+      if (confort.getTemperatura() < 20.0) {
         dispararEvento(EVENTO_CONDICION_ALARMA_AMBIENTAL);
       }
     }
