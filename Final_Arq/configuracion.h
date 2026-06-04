@@ -23,8 +23,8 @@
 // Actuadores (reorganizados para evitar conflictos)
 #define PIN_SERVO 13
 #define PIN_BUZZER 7          // Cambiado a 10 (libre)
-#define PIN_LED_ALARMA 6       // Se mantiene en 3 (LCD no usa este pin)
-#define PIN_LED_RGB_R 24
+#define PIN_LED_ALARMA 24       // Se mantiene en 3 (LCD no usa este pin)
+#define PIN_LED_RGB_R 6
 #define PIN_LED_RGB_G 25        // Antes compartía con buzzer, ahora buzzer en 10
 #define PIN_LED_RGB_B 26
 

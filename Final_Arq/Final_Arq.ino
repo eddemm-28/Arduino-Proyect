@@ -67,14 +67,9 @@ void setup() {
   tareaSensores.Start();
   tareaLCD.Start();
   tareaTeclado.Start();
-  
-  Serial.println(F("Sistema iniciado. Tareas asincrónicas corriendo."));
   pinMode(PIN_LED_ALARMA, OUTPUT);
+  Serial.println(F("Sistema iniciado. Tareas asincrónicas corriendo."));
   
-  //Borrar despues
-  digitalWrite(PIN_LED_ALARMA, HIGH);
-  delay(500);  // Solo para prueba, luego elimina el delay
-  digitalWrite(PIN_LED_ALARMA, LOW);
 }
 
 // ==================== LOOP ====================
