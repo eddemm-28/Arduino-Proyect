@@ -239,43 +239,75 @@ void SistemaConfort::procesarTecla(char tecla) {
 void SistemaConfort::cargarCredencialesDesdeEEPROM() {
   byte valido = EEPROM.read(EEPROM_USUARIO_VALIDO);
   if (valido == 0x01) {
-    char buf[EEPROM_CLAVE_LENGTH+1];
+    // Leer clave (4 caracteres)
+    char bufClave[EEPROM_CLAVE_LENGTH + 1];
     for (int i = 0; i < EEPROM_CLAVE_LENGTH; i++) {
-      buf[i] = EEPROM.read(EEPROM_CLAVE_START + i);
+      bufClave[i] = (char)EEPROM.read(EEPROM_CLAVE_START + i);
     }
-    buf[EEPROM_CLAVE_LENGTH] = '\0';
-    claveAlmacenada = String(buf);
-    
-    String uid = "";
-    for (int i = 0; i < EEPROM_UID_LENGTH; i++) {
-      byte b = EEPROM.read(EEPROM_UID_START + i);
-      if (b < 0x10) uid += "0";
-      uid += String(b, HEX);
+    bufClave[EEPROM_CLAVE_LENGTH] = '\0';
+    claveAlmacenada = String(bufClave);
+ 
+    // Leer UID: se guardan 8 chars ASCII (ej "532E7C2E") en EEPROM_UID_LENGTH*2 bytes
+    char bufUID[EEPROM_UID_LENGTH * 2 + 1];
+    for (int i = 0; i < EEPROM_UID_LENGTH * 2; i++) {
+      bufUID[i] = (char)EEPROM.read(EEPROM_UID_START + i);
     }
-    uidAlmacenado = uid;
+    bufUID[EEPROM_UID_LENGTH * 2] = '\0';
+    uidAlmacenado = String(bufUID);
+    uidAlmacenado.toUpperCase();  // siempre en mayúsculas para comparar
+ 
+    Serial.print("Credenciales cargadas - Clave: ");
+    Serial.print(claveAlmacenada);
+    Serial.print(" UID: ");
+    Serial.println(uidAlmacenado);
   } else {
+    // Primera vez: no hay RFID registrado aún, solo clave por defecto
     claveAlmacenada = "1234";
-    uidAlmacenado = "DEADBEEF";
-    guardarCredenciales(claveAlmacenada, uidAlmacenado);
+    uidAlmacenado = "";  // sin RFID registrado
+    // Guardar clave por defecto pero dejar UID vacío
+    EEPROM.write(EEPROM_USUARIO_VALIDO, 0x01);
+    for (int i = 0; i < EEPROM_CLAVE_LENGTH; i++) {
+      EEPROM.write(EEPROM_CLAVE_START + i, claveAlmacenada[i]);
+    }
+    for (int i = 0; i < EEPROM_UID_LENGTH; i++) {
+      EEPROM.write(EEPROM_UID_START + i, 0);
+    }
+    Serial.println("Primera inicializacion: clave=1234, sin RFID registrado");
   }
 }
  
 void SistemaConfort::guardarCredenciales(String clave, String uid) {
+  uid.toUpperCase();  // normalizar siempre a mayúsculas antes de guardar
+ 
   EEPROM.write(EEPROM_USUARIO_VALIDO, 0x01);
-  for (int i = 0; i < EEPROM_CLAVE_LENGTH && i < (int)clave.length(); i++) {
-    EEPROM.write(EEPROM_CLAVE_START + i, clave[i]);
+ 
+  // Guardar clave como caracteres ASCII
+  for (int i = 0; i < EEPROM_CLAVE_LENGTH; i++) {
+    if (i < (int)clave.length()) {
+      EEPROM.write(EEPROM_CLAVE_START + i, (byte)clave[i]);
+    } else {
+      EEPROM.write(EEPROM_CLAVE_START + i, 0);
+    }
   }
-  int len = uid.length();
-  for (int i = 0; i < EEPROM_UID_LENGTH; i++) {
-    if (i*2+1 < len) {
-      String byteStr = uid.substring(i*2, i*2+2);
-      byte b = (byte) strtol(byteStr.c_str(), NULL, 16);
-      EEPROM.write(EEPROM_UID_START + i, b);
+ 
+  // Guardar UID como string ASCII de 8 chars (ej: "532E7C2E")
+  // Se usan EEPROM_UID_LENGTH*2 posiciones (8 bytes para 8 caracteres)
+  for (int i = 0; i < EEPROM_UID_LENGTH * 2; i++) {
+    if (i < (int)uid.length()) {
+      EEPROM.write(EEPROM_UID_START + i, (byte)uid[i]);
     } else {
       EEPROM.write(EEPROM_UID_START + i, 0);
     }
   }
-  cargarCredencialesDesdeEEPROM();
+ 
+  // Actualizar cache en RAM inmediatamente (sin releer EEPROM)
+  claveAlmacenada = clave;
+  uidAlmacenado = uid;
+ 
+  Serial.print(">>> Credenciales guardadas OK - Clave: ");
+  Serial.print(claveAlmacenada);
+  Serial.print(" | UID activo: ");
+  Serial.println(uidAlmacenado);
 }
  
 bool SistemaConfort::validarClave(String entrada) {
@@ -309,11 +341,18 @@ bool SistemaConfort::leerRFID() {
   rfid.PICC_HaltA();
   rfid.PCD_StopCrypto1();
   
+  Serial.print("RFID leido: ");
+  Serial.print(uid);
+  Serial.print(" | UID esperado: ");
+  Serial.println(uidAlmacenado);
+ 
   if (validarUID(uid)) {
     resetIntentosFallidos();
+    Serial.println(">>> RFID OK: acceso concedido");
     return true;
   }
-  incrementarIntentosFallidos();
+  // Tarjeta no reconocida: NO incrementa intentos fallidos.
+  Serial.println(">>> RFID no reconocido");
   return false;
 }
  

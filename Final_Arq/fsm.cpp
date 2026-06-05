@@ -106,6 +106,8 @@ void dispararEvento(int evento) {
         confirmacion = "";
         Serial.println("-> INICIO (reset)");
         detenerTemporizadores();
+        // Recargar credenciales por si se registró un nuevo RFID
+        if (ptrSistema) ptrSistema->cargarCredencialesDesdeEEPROM();
       }
       else if (evento == EVENTO_RFID_DETECTADO && subEstadoConfig == CONFIG_REGISTRO_RFID) {
         String nuevoUID = obtenerUIDLeido();
@@ -125,6 +127,8 @@ void dispararEvento(int evento) {
           confirmacion = "";
           Serial.println("-> MONITOR INTRUSOS");
           detenerTemporizadores();
+          // Recargar credenciales por si se registró un nuevo RFID
+          if (ptrSistema) ptrSistema->cargarCredencialesDesdeEEPROM();
           timer2s.Start();
         } else {
           subEstadoConfig = CONFIG_MENU;
@@ -223,7 +227,7 @@ void dispararEvento(int evento) {
         contadorSonidoAlto++;
         Serial.print("Deteccion intruso #");
         Serial.println(contadorSonidoAlto);
-        if (contadorSonidoAlto >= 40 && (millis() - tiempoPrimerSonido <= 12000)) {
+        if (contadorSonidoAlto >= 3 && (millis() - tiempoPrimerSonido <= 12000)) {
           enAlarmaPorIntruso = true;
           estadoActual = ESTADO_ALARMA;
           Serial.println("-> ALARMA (3 detecciones)");
@@ -445,7 +449,7 @@ void actualizarLCDporEstado() {
       lcd.print("Temp:");
       lcd.print(ptrSistema->getTemperatura(),1);
       lcd.print("C Luz:");
-      lcd.print(map(ptrSistema->getLuz(),0,1023,0,60));
+      lcd.print(map(ptrSistema->getLuz(),0,1023,0,100));
       lcd.print("%");
       lcd.setCursor(0,1);
       lcd.print("*:Config");

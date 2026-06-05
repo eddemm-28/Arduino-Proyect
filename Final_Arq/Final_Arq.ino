@@ -69,6 +69,13 @@ void loop() {
   tareaTeclado.Update();
   loopFSM();
   
+  // RFID se consulta en cada ciclo del loop para no perder la ventana de lectura
+  if (getEstadoActual() == ESTADO_INICIO) {
+    if (confort.leerRFID()) {
+      dispararEvento(EVENTO_CLAVE_CORRECTA);
+    }
+  }
+
   static unsigned long lastCheck = 0;
   if (millis() - lastCheck > 500) {
     lastCheck = millis();
@@ -81,16 +88,15 @@ void loop() {
       // Campo magnético: el sensor Hall devuelve ~512 en reposo;
       // una variación > 50 respecto al centro indica presencia de imán
       int hall = confort.getCampoMagnetico();
-      if (hall < 500 || hall > 540) {
+      if (hall < 520 || hall > 610) {
         dispararEvento(EVENTO_HALL_DETECTADO);
       }
     }
     else if (getEstadoActual() == ESTADO_MONITOR_AMBIENTAL) {
-      // Temperatura menor a 20°C dispara alarma ambiental
-      if (confort.getTemperatura() < 20.0) {
+    if (confort.getTemperatura() < 20.0 || confort.getLuz() > 900) {
         dispararEvento(EVENTO_CONDICION_ALARMA_AMBIENTAL);
-      }
     }
+}
     else if (getEstadoActual() == ESTADO_INICIO) {
       if (bufferCompleto) {
         if (confort.validarClave(inputBuffer)) {
@@ -102,9 +108,6 @@ void loop() {
           dispararEvento(EVENTO_CLAVE_INCORRECTA);
         }
         limpiarBuffer();
-      }
-      if (confort.leerRFID()) {
-        dispararEvento(EVENTO_CLAVE_CORRECTA);
       }
     }
     else if (getEstadoActual() == ESTADO_CONFIGURACION) {
