@@ -1,0 +1,295 @@
+\doxysection{fsm.\+h File Reference}
+\hypertarget{fsm_8h}{}\label{fsm_8h}\index{fsm.h@{fsm.h}}
+{\ttfamily \+\#include $<$Arduino.\+h$>$}\newline
+{\ttfamily \+\#include "{}sistema\+\_\+confort.\+h"{}}\newline
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991d}{Estado\+Sistema}} \{ \newline
+\doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991da14fcbb1f74f9c57b69bbdce235d9d7ed}{ESTADO\+\_\+\+INICIO}}
+, \doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991da09996f9a64fb04364d2a6336f8307e3a}{ESTADO\+\_\+\+BLOQUEO}}
+, \doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991da79b3f423806482696b13ec2beeb41688}{ESTADO\+\_\+\+CONFIGURACION}}
+, \doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991dacb08460f4573bbf4f97edee7dd661a37}{ESTADO\+\_\+\+MONITOR\+\_\+\+INTRUSOS}}
+, \newline
+\doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991dae45fc9df033b2d15eef2c3cf94cc8ed9}{ESTADO\+\_\+\+MONITOR\+\_\+\+AMBIENTAL}}
+, \doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991da08d7418ac9bf5aeedac1cca4033a6029}{ESTADO\+\_\+\+ALARMA}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0b}{Evento\+FSM}} \{ \newline
+\doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bafdc26ddc2aeb1e847da9782fda03121b}{EVENTO\+\_\+\+CLAVE\+\_\+\+CORRECTA}}
+, \doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bac5e9dd08298cf5642b21dc138d60a46f}{EVENTO\+\_\+\+CLAVE\+\_\+\+INCORRECTA}}
+, \doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba18909259cdb00f595db801d54c96174f}{EVENTO\+\_\+\+BOTON\+\_\+\+RESET}}
+, \doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bafd36b0874545158425c5cbb3dadcde72}{EVENTO\+\_\+\+TECLA\+\_\+\+HASH}}
+, \newline
+\doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0baa5f9a461506306c92d0b189213bda9ad}{EVENTO\+\_\+\+TECLA\+\_\+\+ASTERISCO}}
+, \doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0badc046ae1a67d9768a3e812665f3b285b}{EVENTO\+\_\+\+TECLA\+\_\+A}}
+, \doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba68e62c986c3e1b54497ab66374bbc581}{EVENTO\+\_\+\+SONIDO\+\_\+\+ALTO}}
+, \doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bacb9957b60ccc763a7cbbf90723e17cda}{EVENTO\+\_\+\+HALL\+\_\+\+DETECTADO}}
+, \newline
+\doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba62076be53b3a6b58757873785c0f6a06}{EVENTO\+\_\+\+CONDICION\+\_\+\+ALARMA\+\_\+\+AMBIENTAL}}
+, \doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bafa9eb76b5d38ef9692959155c7036913}{EVENTO\+\_\+\+TIMER\+\_\+2S}}
+, \doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba5761771e85a93bad27d400514cf6bdd7}{EVENTO\+\_\+\+TIMER\+\_\+5S}}
+, \doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba99f7aa701e3140ee94145d0f57c9ad4a}{EVENTO\+\_\+\+TIMER\+\_\+2\+S\+\_\+\+DESDE\+\_\+\+ALARMA}}
+, \newline
+\doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0baaa741da99ed1fa8140a2eb6877086b67}{EVENTO\+\_\+\+TIMER\+\_\+4\+S\+\_\+\+DESDE\+\_\+\+ALARMA}}
+, \doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0baa35ea0a79886ef19029a844341745a7f}{EVENTO\+\_\+\+TRES\+\_\+\+ALARMAS\+\_\+\+EN\+\_\+12S}}
+, \doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba5dab285fc44f16557bb84d5abcb97ef8}{EVENTO\+\_\+\+RFID\+\_\+\+DETECTADO}}
+ \}
+\item 
+enum \doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5b}{Sub\+Estado\+Config}} \{ \doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5ba09d06a1d7569f0d7df95702b87278489}{CONFIG\+\_\+\+MENU}}
+, \doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5bae8f535678c25d6357d898c1592b083a0}{CONFIG\+\_\+\+CAMBIO\+\_\+\+CLAVE}}
+, \doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5ba3e375cff762a9f62a76efa97bf981144}{CONFIG\+\_\+\+CONFIRMAR\+\_\+\+CLAVE}}
+, \doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5ba67ec9e35fbb773c9070925968b6e83bd}{CONFIG\+\_\+\+REGISTRO\+\_\+\+RFID}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{fsm_8h_af98c24382ba5867f1ea87de3b944daad}{setup\+FSM}} ()
+\item 
+void \doxymbox{\hyperlink{fsm_8h_a5973b4a82b63ea902051f2307c9695cd}{loop\+FSM}} ()
+\item 
+void \doxymbox{\hyperlink{fsm_8h_a4576af7985c542ce00abbdf3981dcc54}{disparar\+Evento}} (int evento)
+\item 
+\doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991d}{Estado\+Sistema}} \doxymbox{\hyperlink{fsm_8h_adcf0fc417421a2f068fa8c3a2cfb2761}{get\+Estado\+Actual}} ()
+\item 
+\doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5b}{Sub\+Estado\+Config}} \doxymbox{\hyperlink{fsm_8h_a6dd88945aefecfda223d4560bcec7376}{get\+Sub\+Estado\+Config}} ()
+\item 
+void \doxymbox{\hyperlink{fsm_8h_abaabf8fa257c1c045c9cab5681b09568}{actualizar\+LEDy\+Buzzer}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_sistema_confort}{Sistema\+Confort}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{fsm_8h_a0d0e9fabf9e0961643dd8db2e9ea1604}{ptr\+Sistema}}
+\end{DoxyCompactItemize}
+
+
+\label{fsm_8h_doc-enum-members}
+\Hypertarget{fsm_8h_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{fsm_8h_a21966b54989cd66c32b522ac6958991d}\index{fsm.h@{fsm.h}!EstadoSistema@{EstadoSistema}}
+\index{EstadoSistema@{EstadoSistema}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{EstadoSistema}{EstadoSistema}}
+{\footnotesize\ttfamily \label{fsm_8h_a21966b54989cd66c32b522ac6958991d} 
+enum \doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991d}{Estado\+Sistema}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ESTADO\_INICIO@{ESTADO\_INICIO}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!ESTADO\_INICIO@{ESTADO\_INICIO}}
+}\Hypertarget{fsm_8h_a21966b54989cd66c32b522ac6958991da14fcbb1f74f9c57b69bbdce235d9d7ed}\label{fsm_8h_a21966b54989cd66c32b522ac6958991da14fcbb1f74f9c57b69bbdce235d9d7ed} 
+ESTADO\+\_\+\+INICIO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ESTADO\_BLOQUEO@{ESTADO\_BLOQUEO}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!ESTADO\_BLOQUEO@{ESTADO\_BLOQUEO}}
+}\Hypertarget{fsm_8h_a21966b54989cd66c32b522ac6958991da09996f9a64fb04364d2a6336f8307e3a}\label{fsm_8h_a21966b54989cd66c32b522ac6958991da09996f9a64fb04364d2a6336f8307e3a} 
+ESTADO\+\_\+\+BLOQUEO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ESTADO\_CONFIGURACION@{ESTADO\_CONFIGURACION}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!ESTADO\_CONFIGURACION@{ESTADO\_CONFIGURACION}}
+}\Hypertarget{fsm_8h_a21966b54989cd66c32b522ac6958991da79b3f423806482696b13ec2beeb41688}\label{fsm_8h_a21966b54989cd66c32b522ac6958991da79b3f423806482696b13ec2beeb41688} 
+ESTADO\+\_\+\+CONFIGURACION&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ESTADO\_MONITOR\_INTRUSOS@{ESTADO\_MONITOR\_INTRUSOS}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!ESTADO\_MONITOR\_INTRUSOS@{ESTADO\_MONITOR\_INTRUSOS}}
+}\Hypertarget{fsm_8h_a21966b54989cd66c32b522ac6958991dacb08460f4573bbf4f97edee7dd661a37}\label{fsm_8h_a21966b54989cd66c32b522ac6958991dacb08460f4573bbf4f97edee7dd661a37} 
+ESTADO\+\_\+\+MONITOR\+\_\+\+INTRUSOS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ESTADO\_MONITOR\_AMBIENTAL@{ESTADO\_MONITOR\_AMBIENTAL}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!ESTADO\_MONITOR\_AMBIENTAL@{ESTADO\_MONITOR\_AMBIENTAL}}
+}\Hypertarget{fsm_8h_a21966b54989cd66c32b522ac6958991dae45fc9df033b2d15eef2c3cf94cc8ed9}\label{fsm_8h_a21966b54989cd66c32b522ac6958991dae45fc9df033b2d15eef2c3cf94cc8ed9} 
+ESTADO\+\_\+\+MONITOR\+\_\+\+AMBIENTAL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ESTADO\_ALARMA@{ESTADO\_ALARMA}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!ESTADO\_ALARMA@{ESTADO\_ALARMA}}
+}\Hypertarget{fsm_8h_a21966b54989cd66c32b522ac6958991da08d7418ac9bf5aeedac1cca4033a6029}\label{fsm_8h_a21966b54989cd66c32b522ac6958991da08d7418ac9bf5aeedac1cca4033a6029} 
+ESTADO\+\_\+\+ALARMA&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0b}\index{fsm.h@{fsm.h}!EventoFSM@{EventoFSM}}
+\index{EventoFSM@{EventoFSM}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{EventoFSM}{EventoFSM}}
+{\footnotesize\ttfamily \label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0b} 
+enum \doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0b}{Evento\+FSM}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_CLAVE\_CORRECTA@{EVENTO\_CLAVE\_CORRECTA}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_CLAVE\_CORRECTA@{EVENTO\_CLAVE\_CORRECTA}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bafdc26ddc2aeb1e847da9782fda03121b}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bafdc26ddc2aeb1e847da9782fda03121b} 
+EVENTO\+\_\+\+CLAVE\+\_\+\+CORRECTA&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_CLAVE\_INCORRECTA@{EVENTO\_CLAVE\_INCORRECTA}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_CLAVE\_INCORRECTA@{EVENTO\_CLAVE\_INCORRECTA}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bac5e9dd08298cf5642b21dc138d60a46f}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bac5e9dd08298cf5642b21dc138d60a46f} 
+EVENTO\+\_\+\+CLAVE\+\_\+\+INCORRECTA&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_BOTON\_RESET@{EVENTO\_BOTON\_RESET}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_BOTON\_RESET@{EVENTO\_BOTON\_RESET}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba18909259cdb00f595db801d54c96174f}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba18909259cdb00f595db801d54c96174f} 
+EVENTO\+\_\+\+BOTON\+\_\+\+RESET&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_TECLA\_HASH@{EVENTO\_TECLA\_HASH}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_TECLA\_HASH@{EVENTO\_TECLA\_HASH}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bafd36b0874545158425c5cbb3dadcde72}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bafd36b0874545158425c5cbb3dadcde72} 
+EVENTO\+\_\+\+TECLA\+\_\+\+HASH&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_TECLA\_ASTERISCO@{EVENTO\_TECLA\_ASTERISCO}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_TECLA\_ASTERISCO@{EVENTO\_TECLA\_ASTERISCO}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0baa5f9a461506306c92d0b189213bda9ad}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0baa5f9a461506306c92d0b189213bda9ad} 
+EVENTO\+\_\+\+TECLA\+\_\+\+ASTERISCO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_TECLA\_A@{EVENTO\_TECLA\_A}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_TECLA\_A@{EVENTO\_TECLA\_A}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0badc046ae1a67d9768a3e812665f3b285b}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0badc046ae1a67d9768a3e812665f3b285b} 
+EVENTO\+\_\+\+TECLA\+\_\+A&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_SONIDO\_ALTO@{EVENTO\_SONIDO\_ALTO}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_SONIDO\_ALTO@{EVENTO\_SONIDO\_ALTO}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba68e62c986c3e1b54497ab66374bbc581}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba68e62c986c3e1b54497ab66374bbc581} 
+EVENTO\+\_\+\+SONIDO\+\_\+\+ALTO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_HALL\_DETECTADO@{EVENTO\_HALL\_DETECTADO}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_HALL\_DETECTADO@{EVENTO\_HALL\_DETECTADO}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bacb9957b60ccc763a7cbbf90723e17cda}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bacb9957b60ccc763a7cbbf90723e17cda} 
+EVENTO\+\_\+\+HALL\+\_\+\+DETECTADO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_CONDICION\_ALARMA\_AMBIENTAL@{EVENTO\_CONDICION\_ALARMA\_AMBIENTAL}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_CONDICION\_ALARMA\_AMBIENTAL@{EVENTO\_CONDICION\_ALARMA\_AMBIENTAL}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba62076be53b3a6b58757873785c0f6a06}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba62076be53b3a6b58757873785c0f6a06} 
+EVENTO\+\_\+\+CONDICION\+\_\+\+ALARMA\+\_\+\+AMBIENTAL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_TIMER\_2S@{EVENTO\_TIMER\_2S}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_TIMER\_2S@{EVENTO\_TIMER\_2S}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bafa9eb76b5d38ef9692959155c7036913}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bafa9eb76b5d38ef9692959155c7036913} 
+EVENTO\+\_\+\+TIMER\+\_\+2S&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_TIMER\_5S@{EVENTO\_TIMER\_5S}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_TIMER\_5S@{EVENTO\_TIMER\_5S}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba5761771e85a93bad27d400514cf6bdd7}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba5761771e85a93bad27d400514cf6bdd7} 
+EVENTO\+\_\+\+TIMER\+\_\+5S&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_TIMER\_2S\_DESDE\_ALARMA@{EVENTO\_TIMER\_2S\_DESDE\_ALARMA}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_TIMER\_2S\_DESDE\_ALARMA@{EVENTO\_TIMER\_2S\_DESDE\_ALARMA}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba99f7aa701e3140ee94145d0f57c9ad4a}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba99f7aa701e3140ee94145d0f57c9ad4a} 
+EVENTO\+\_\+\+TIMER\+\_\+2\+S\+\_\+\+DESDE\+\_\+\+ALARMA&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_TIMER\_4S\_DESDE\_ALARMA@{EVENTO\_TIMER\_4S\_DESDE\_ALARMA}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_TIMER\_4S\_DESDE\_ALARMA@{EVENTO\_TIMER\_4S\_DESDE\_ALARMA}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0baaa741da99ed1fa8140a2eb6877086b67}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0baaa741da99ed1fa8140a2eb6877086b67} 
+EVENTO\+\_\+\+TIMER\+\_\+4\+S\+\_\+\+DESDE\+\_\+\+ALARMA&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_TRES\_ALARMAS\_EN\_12S@{EVENTO\_TRES\_ALARMAS\_EN\_12S}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_TRES\_ALARMAS\_EN\_12S@{EVENTO\_TRES\_ALARMAS\_EN\_12S}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0baa35ea0a79886ef19029a844341745a7f}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0baa35ea0a79886ef19029a844341745a7f} 
+EVENTO\+\_\+\+TRES\+\_\+\+ALARMAS\+\_\+\+EN\+\_\+12S&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENTO\_RFID\_DETECTADO@{EVENTO\_RFID\_DETECTADO}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!EVENTO\_RFID\_DETECTADO@{EVENTO\_RFID\_DETECTADO}}
+}\Hypertarget{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba5dab285fc44f16557bb84d5abcb97ef8}\label{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba5dab285fc44f16557bb84d5abcb97ef8} 
+EVENTO\+\_\+\+RFID\+\_\+\+DETECTADO&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{fsm_8h_a0fc20bfd02629085874234f16ebf8c5b}\index{fsm.h@{fsm.h}!SubEstadoConfig@{SubEstadoConfig}}
+\index{SubEstadoConfig@{SubEstadoConfig}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{SubEstadoConfig}{SubEstadoConfig}}
+{\footnotesize\ttfamily \label{fsm_8h_a0fc20bfd02629085874234f16ebf8c5b} 
+enum \doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5b}{Sub\+Estado\+Config}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CONFIG\_MENU@{CONFIG\_MENU}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!CONFIG\_MENU@{CONFIG\_MENU}}
+}\Hypertarget{fsm_8h_a0fc20bfd02629085874234f16ebf8c5ba09d06a1d7569f0d7df95702b87278489}\label{fsm_8h_a0fc20bfd02629085874234f16ebf8c5ba09d06a1d7569f0d7df95702b87278489} 
+CONFIG\+\_\+\+MENU&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CONFIG\_CAMBIO\_CLAVE@{CONFIG\_CAMBIO\_CLAVE}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!CONFIG\_CAMBIO\_CLAVE@{CONFIG\_CAMBIO\_CLAVE}}
+}\Hypertarget{fsm_8h_a0fc20bfd02629085874234f16ebf8c5bae8f535678c25d6357d898c1592b083a0}\label{fsm_8h_a0fc20bfd02629085874234f16ebf8c5bae8f535678c25d6357d898c1592b083a0} 
+CONFIG\+\_\+\+CAMBIO\+\_\+\+CLAVE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CONFIG\_CONFIRMAR\_CLAVE@{CONFIG\_CONFIRMAR\_CLAVE}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!CONFIG\_CONFIRMAR\_CLAVE@{CONFIG\_CONFIRMAR\_CLAVE}}
+}\Hypertarget{fsm_8h_a0fc20bfd02629085874234f16ebf8c5ba3e375cff762a9f62a76efa97bf981144}\label{fsm_8h_a0fc20bfd02629085874234f16ebf8c5ba3e375cff762a9f62a76efa97bf981144} 
+CONFIG\+\_\+\+CONFIRMAR\+\_\+\+CLAVE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CONFIG\_REGISTRO\_RFID@{CONFIG\_REGISTRO\_RFID}!fsm.h@{fsm.h}}
+\index{fsm.h@{fsm.h}!CONFIG\_REGISTRO\_RFID@{CONFIG\_REGISTRO\_RFID}}
+}\Hypertarget{fsm_8h_a0fc20bfd02629085874234f16ebf8c5ba67ec9e35fbb773c9070925968b6e83bd}\label{fsm_8h_a0fc20bfd02629085874234f16ebf8c5ba67ec9e35fbb773c9070925968b6e83bd} 
+CONFIG\+\_\+\+REGISTRO\+\_\+\+RFID&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{fsm_8h_doc-func-members}
+\Hypertarget{fsm_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{fsm_8h_abaabf8fa257c1c045c9cab5681b09568}\index{fsm.h@{fsm.h}!actualizarLEDyBuzzer@{actualizarLEDyBuzzer}}
+\index{actualizarLEDyBuzzer@{actualizarLEDyBuzzer}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{actualizarLEDyBuzzer()}{actualizarLEDyBuzzer()}}
+{\footnotesize\ttfamily \label{fsm_8h_abaabf8fa257c1c045c9cab5681b09568} 
+void actualizar\+LEDy\+Buzzer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8h_a4576af7985c542ce00abbdf3981dcc54}\index{fsm.h@{fsm.h}!dispararEvento@{dispararEvento}}
+\index{dispararEvento@{dispararEvento}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{dispararEvento()}{dispararEvento()}}
+{\footnotesize\ttfamily \label{fsm_8h_a4576af7985c542ce00abbdf3981dcc54} 
+void disparar\+Evento (\begin{DoxyParamCaption}\item[{int}]{evento}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8h_adcf0fc417421a2f068fa8c3a2cfb2761}\index{fsm.h@{fsm.h}!getEstadoActual@{getEstadoActual}}
+\index{getEstadoActual@{getEstadoActual}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{getEstadoActual()}{getEstadoActual()}}
+{\footnotesize\ttfamily \label{fsm_8h_adcf0fc417421a2f068fa8c3a2cfb2761} 
+\doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991d}{Estado\+Sistema}} get\+Estado\+Actual (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8h_a6dd88945aefecfda223d4560bcec7376}\index{fsm.h@{fsm.h}!getSubEstadoConfig@{getSubEstadoConfig}}
+\index{getSubEstadoConfig@{getSubEstadoConfig}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{getSubEstadoConfig()}{getSubEstadoConfig()}}
+{\footnotesize\ttfamily \label{fsm_8h_a6dd88945aefecfda223d4560bcec7376} 
+\doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5b}{Sub\+Estado\+Config}} get\+Sub\+Estado\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8h_a5973b4a82b63ea902051f2307c9695cd}\index{fsm.h@{fsm.h}!loopFSM@{loopFSM}}
+\index{loopFSM@{loopFSM}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{loopFSM()}{loopFSM()}}
+{\footnotesize\ttfamily \label{fsm_8h_a5973b4a82b63ea902051f2307c9695cd} 
+void loop\+FSM (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8h_af98c24382ba5867f1ea87de3b944daad}\index{fsm.h@{fsm.h}!setupFSM@{setupFSM}}
+\index{setupFSM@{setupFSM}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{setupFSM()}{setupFSM()}}
+{\footnotesize\ttfamily \label{fsm_8h_af98c24382ba5867f1ea87de3b944daad} 
+void setup\+FSM (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{fsm_8h_doc-var-members}
+\Hypertarget{fsm_8h_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{fsm_8h_a0d0e9fabf9e0961643dd8db2e9ea1604}\index{fsm.h@{fsm.h}!ptrSistema@{ptrSistema}}
+\index{ptrSistema@{ptrSistema}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{ptrSistema}{ptrSistema}}
+{\footnotesize\ttfamily \label{fsm_8h_a0d0e9fabf9e0961643dd8db2e9ea1604} 
+\doxymbox{\hyperlink{class_sistema_confort}{Sistema\+Confort}}\texorpdfstring{$\ast$}{*} ptr\+Sistema\hspace{0.3cm}{\ttfamily [extern]}}
+

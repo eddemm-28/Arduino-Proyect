@@ -1,0 +1,84 @@
+\doxysection{sistema\+\_\+confort.\+h}
+\hypertarget{sistema__confort_8h_source}{}\label{sistema__confort_8h_source}\doxymbox{\hyperlink{sistema__confort_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ SISTEMA\_CONFORT\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ SISTEMA\_CONFORT\_H}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <LiquidCrystal.h>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <Keypad.h>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <Servo.h>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <EEPROM.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <MFRC522.h>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{configuracion_8h}{configuracion.h}}"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_sistema_confort_afb0ea0cdb0cb21a3f2b2f37560b83cf2}{SistemaConfort}}\ \{}
+\DoxyCodeLine{00018\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \doxymbox{\hyperlink{class_sistema_confort_afb0ea0cdb0cb21a3f2b2f37560b83cf2}{SistemaConfort}}();}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_a65856e918724a3cea334a22821d7445d}{begin}}();}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_aca3d6ca65f686f5dc1c7bfd2199ee7cc}{leerSensores}}();}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_a81d494a4efbb6fdab2a0c62fe0804736}{actualizarLCD}}();}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_af8b870b9488392192add901c0a64b1a5}{leerTeclado}}();}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_adc2a51bb1305d416becb6dd3e306b40a}{controlarAlarmas}}();}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_a9c5c9fe3e7fc8eae307bac364a27de29}{testHardware}}();}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_a3172dcdd6e34ed8cb46eca61ea8a1b0b}{leerBoton}}();}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_sistema_confort_ab0c1ba6b93ed806cb6b1268ebd4440ff}{leerRFID}}();}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_a36c5ff93a848326cdd676593821adb91}{guardarCredenciales}}(String\ clave,\ String\ uid);}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_sistema_confort_a46ed08cf0c3081490654d68251493ff8}{validarClave}}(String\ entrada);}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_sistema_confort_a8a7f9c44c6fae74bbb260095e5131d63}{validarUID}}(String\ uid);}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_sistema_confort_a5322892514175b26ff9e652fc1bc6508}{getIntentosFallidos}}();}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_a51918017153e3c16f0188e1585432a72}{incrementarIntentosFallidos}}();}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_a37648ca2dc9b0dc5ced32dba4a5fa64c}{resetIntentosFallidos}}();}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ Getters\ para\ la\ FSM}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_sistema_confort_a4b8ab119cf2a68a438ff33d5df5d7f55}{getTemperatura}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_sistema_confort_a8d9ec7b49e1c4c5283503a94dab7fde4}{temperatura}};\ \}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_sistema_confort_ac4e16e1fad3449a07f192fe6136d40f4}{getLuz}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_sistema_confort_af6a856e1c086255601d3fb3e3fc6b8c4}{luz}};\ \}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_sistema_confort_a622ef44932c4b661e1ff434875dbc88a}{getCampoMagnetico}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_sistema_confort_a08605d6354a765f29c539b7c01f90505}{campoMagnetico}};\ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_sistema_confort_a55ce556b92305b8747a3f8be677b48b1}{getSonidoAnalog}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_sistema_confort_a290f99098f9ce7b27a523d8372289b28}{sonidoAnalog}};\ \}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_sistema_confort_a3d2cb02ed8d111d8550b2c680efbb715}{getSonidoDigital}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_sistema_confort_ae17420927948e45f6af337bf8a4b7296}{sonidoDigital}};\ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_sistema_confort_a672768683446da6d66538a90b90260a3}{getAlarmasConsecutivas}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_sistema_confort_a8fcf6e6d2d695100ca730a8cc59edacf}{alarmasConsecutivas}};\ \}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_sistema_confort_aee4f0ab2cca7427a5859b1651aa38faf}{hayEmergencia}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_sistema_confort_a8557a94cfef49156ed12f6feced78a2e}{emergenciaActiva}};\ \}}
+\DoxyCodeLine{00043\ \ \ \ \ LiquidCrystal\&\ \doxymbox{\hyperlink{class_sistema_confort_a38a30fb35778a4015ce90bb4ccb7409b}{getLCD}}()\ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_sistema_confort_aa9b505c38acbfb17fd78832dc644aeb3}{lcd}};\ \}}
+\DoxyCodeLine{00044\ \ \ \ \ String\ \doxymbox{\hyperlink{class_sistema_confort_a7a9f23c16cfa6a96d9500b34f6a260de}{getClaveAlmacenada}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_sistema_confort_a3ced79e55d7fe4817f485736ef9419b4}{claveAlmacenada}};\ \}}
+\DoxyCodeLine{00045\ \ \ \ \ String\ \doxymbox{\hyperlink{class_sistema_confort_a48c00058ac97235fba5415d11c4d3298}{getUIDAlmacenado}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_sistema_confort_a8dbda3ea35b81489289de635206c4caf}{uidAlmacenado}};\ \}}
+\DoxyCodeLine{00046\ \ \ \ \ String\ \doxymbox{\hyperlink{class_sistema_confort_ab3d7ed70cccd3b0d81177a21aa7aaa3b}{leerCualquierRFID}}();\ \ \ \textcolor{comment}{//\ Lee\ UID\ sin\ validar}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_a5d37032f0b783dd371a947f93d7071cc}{leerTermistor}}();}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_a7b934199747afbf3fb21d10a63671987}{leerLDR}}();}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_aa0bafcd1dabeb7998824158b00b90306}{leerHall}}();}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_a4f24559b42609740e4ccafce4eda56e3}{leerSonido}}();}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_a01388718ac680b4bb7f5718aec6531f9}{procesarTecla}}(\textcolor{keywordtype}{char}\ tecla);}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_sistema_confort_aa400b2f3395b07d2bbb546295a95a8a8}{cargarCredencialesDesdeEEPROM}}();\ \ \ \textcolor{comment}{//\ <-\/-\/\ AGREGAR\ ESTA\ DECLARACIÓN}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Variables\ de\ sensores}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_sistema_confort_a8d9ec7b49e1c4c5283503a94dab7fde4}{temperatura}};}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_sistema_confort_af6a856e1c086255601d3fb3e3fc6b8c4}{luz}};}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_sistema_confort_a08605d6354a765f29c539b7c01f90505}{campoMagnetico}};}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_sistema_confort_a290f99098f9ce7b27a523d8372289b28}{sonidoAnalog}};}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_sistema_confort_ae17420927948e45f6af337bf8a4b7296}{sonidoDigital}};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ Variables\ de\ alarmas\ (estas\ faltaban)}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_sistema_confort_a8fcf6e6d2d695100ca730a8cc59edacf}{alarmasConsecutivas}};}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \doxymbox{\hyperlink{class_sistema_confort_a25c15cbde9ca246b1f867b6de0fb76be}{tiempoPrimeraAlarma}};}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_sistema_confort_a8557a94cfef49156ed12f6feced78a2e}{emergenciaActiva}};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{char}\ \doxymbox{\hyperlink{class_sistema_confort_a5eec5460ea81e9d945117dd4556d80a4}{ultimaTecla}};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ Objetos\ de\ periféricos}}
+\DoxyCodeLine{00071\ \ \ \ \ LiquidCrystal\ \doxymbox{\hyperlink{class_sistema_confort_aa9b505c38acbfb17fd78832dc644aeb3}{lcd}};}
+\DoxyCodeLine{00072\ \ \ \ \ Keypad\ \doxymbox{\hyperlink{class_sistema_confort_a42c60ed04a6377b27519e6bea9a50409}{teclado}};}
+\DoxyCodeLine{00073\ \ \ \ \ Servo\ \doxymbox{\hyperlink{class_sistema_confort_a9426f8800ef592de171cd447afdb651c}{myservo}};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//\ Funcionalidades}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_sistema_confort_aa44e738c9f176d80d216d0b2ab169844}{intentosFallidos}};}
+\DoxyCodeLine{00077\ \ \ \ \ String\ \doxymbox{\hyperlink{class_sistema_confort_a3ced79e55d7fe4817f485736ef9419b4}{claveAlmacenada}};}
+\DoxyCodeLine{00078\ \ \ \ \ String\ \doxymbox{\hyperlink{class_sistema_confort_a8dbda3ea35b81489289de635206c4caf}{uidAlmacenado}};}
+\DoxyCodeLine{00079\ \ \ \ \ MFRC522\ \doxymbox{\hyperlink{class_sistema_confort_ad83b75b340b9fcfdfabc46fc6910943d}{rfid}};}
+\DoxyCodeLine{00080\ \};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SISTEMA\_CONFORT\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,246 @@
+\doxysection{fsm.\+cpp File Reference}
+\hypertarget{fsm_8cpp}{}\label{fsm_8cpp}\index{fsm.cpp@{fsm.cpp}}
+{\ttfamily \+\#include "{}fsm.\+h"{}}\newline
+{\ttfamily \+\#include "{}configuracion.\+h"{}}\newline
+{\ttfamily \+\#include "{}sistema\+\_\+confort.\+h"{}}\newline
+{\ttfamily \+\#include "{}Async\+Task\+Lib.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{fsm_8cpp_a25cb6b274fd1a1d3bc34cae71e90886e}{detener\+Temporizadores}} ()
+\item 
+void \doxymbox{\hyperlink{fsm_8cpp_a6fd99bfaa4483b738a882df2c66f777b}{incrementar\+Contador\+Alarmas\+Global}} ()
+\item 
+void \doxymbox{\hyperlink{fsm_8cpp_abaabf8fa257c1c045c9cab5681b09568}{actualizar\+LEDy\+Buzzer}} ()
+\item 
+void \doxymbox{\hyperlink{fsm_8cpp_a76aced7816a1afbea852f23c40d48e76}{actualizar\+LCDpor\+Estado}} ()
+\item 
+String \doxymbox{\hyperlink{fsm_8cpp_aaed5292ada55932eb32048ab35f45ff3}{obtener\+Buffer\+Entrada}} ()
+\item 
+String \doxymbox{\hyperlink{fsm_8cpp_a108fa02cafd03d83e0519f36cd7168cf}{obtener\+UIDLeido}} ()
+\item 
+Async\+Task \doxymbox{\hyperlink{fsm_8cpp_ac9eba40a3b1c41d9d1789f35ade66981}{timer2s}} (2000, false, \+[$\,$]\+() \{ \doxymbox{\hyperlink{fsm_8cpp_a4576af7985c542ce00abbdf3981dcc54}{disparar\+Evento}}(\doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bafa9eb76b5d38ef9692959155c7036913}{EVENTO\+\_\+\+TIMER\+\_\+2S}});\})
+\item 
+Async\+Task \doxymbox{\hyperlink{fsm_8cpp_a89403d4b854b41431880d623a0096b45}{timer5s}} (5000, false, \+[$\,$]\+() \{ \doxymbox{\hyperlink{fsm_8cpp_a4576af7985c542ce00abbdf3981dcc54}{disparar\+Evento}}(\doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba5761771e85a93bad27d400514cf6bdd7}{EVENTO\+\_\+\+TIMER\+\_\+5S}});\})
+\item 
+Async\+Task \doxymbox{\hyperlink{fsm_8cpp_aec7e81af6d94b4174dd6c7c2c4331393}{timer\+Alarma2s}} (2000, false, \+[$\,$]\+() \{ \doxymbox{\hyperlink{fsm_8cpp_a4576af7985c542ce00abbdf3981dcc54}{disparar\+Evento}}(\doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba99f7aa701e3140ee94145d0f57c9ad4a}{EVENTO\+\_\+\+TIMER\+\_\+2\+S\+\_\+\+DESDE\+\_\+\+ALARMA}});\})
+\item 
+Async\+Task \doxymbox{\hyperlink{fsm_8cpp_a25ffe3ca28c40994fc70b1ae85f8b47f}{timer\+Alarma4s}} (4000, false, \+[$\,$]\+() \{ \doxymbox{\hyperlink{fsm_8cpp_a4576af7985c542ce00abbdf3981dcc54}{disparar\+Evento}}(\doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0baaa741da99ed1fa8140a2eb6877086b67}{EVENTO\+\_\+\+TIMER\+\_\+4\+S\+\_\+\+DESDE\+\_\+\+ALARMA}});\})
+\item 
+void \doxymbox{\hyperlink{fsm_8cpp_af98c24382ba5867f1ea87de3b944daad}{setup\+FSM}} ()
+\item 
+void \doxymbox{\hyperlink{fsm_8cpp_a5973b4a82b63ea902051f2307c9695cd}{loop\+FSM}} ()
+\item 
+void \doxymbox{\hyperlink{fsm_8cpp_a4576af7985c542ce00abbdf3981dcc54}{disparar\+Evento}} (int evento)
+\item 
+\doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991d}{Estado\+Sistema}} \doxymbox{\hyperlink{fsm_8cpp_adcf0fc417421a2f068fa8c3a2cfb2761}{get\+Estado\+Actual}} ()
+\item 
+\doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5b}{Sub\+Estado\+Config}} \doxymbox{\hyperlink{fsm_8cpp_a6dd88945aefecfda223d4560bcec7376}{get\+Sub\+Estado\+Config}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991d}{Estado\+Sistema}} \doxymbox{\hyperlink{fsm_8cpp_ad7541b7c95abce9e738921d41df96ca9}{estado\+Actual}} = \doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991da14fcbb1f74f9c57b69bbdce235d9d7ed}{ESTADO\+\_\+\+INICIO}}
+\item 
+static unsigned long \doxymbox{\hyperlink{fsm_8cpp_a232a526c4043b2d39258f6800ddcd1ae}{tiempo\+Ultimo\+Evento}} = 0
+\item 
+static int \doxymbox{\hyperlink{fsm_8cpp_ac7d83b7105a8e5a42daa7de2a0160a9d}{contador\+Sonido\+Alto}} = 0
+\item 
+static unsigned long \doxymbox{\hyperlink{fsm_8cpp_af015622028f46b526f9e500d44d71923}{tiempo\+Primer\+Sonido}} = 0
+\item 
+static int \doxymbox{\hyperlink{fsm_8cpp_a87c98b987db67498d740fba85a13dadf}{alarmas\+Globales}} = 0
+\item 
+static unsigned long \doxymbox{\hyperlink{fsm_8cpp_a2a034d2e71232099bcedb9d6943c12aa}{inicio\+Ventana\+Alarmas}} = 0
+\item 
+static bool \doxymbox{\hyperlink{fsm_8cpp_a89eff54efb618040375acc558b8235c3}{en\+Alarma\+Por\+Intruso}} = false
+\item 
+static \doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5b}{Sub\+Estado\+Config}} \doxymbox{\hyperlink{fsm_8cpp_a5f2d73bb00e4920230a831e11495ecb6}{sub\+Estado\+Config}} = \doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5ba09d06a1d7569f0d7df95702b87278489}{CONFIG\+\_\+\+MENU}}
+\item 
+static String \doxymbox{\hyperlink{fsm_8cpp_a1ee26c733c1bccafb6c28c370d9d4175}{nueva\+Clave}} = "{}"{}
+\item 
+static bool \doxymbox{\hyperlink{fsm_8cpp_a3e662248d929444f932097f3ba613ffb}{esperando\+Confirmacion}} = false
+\item 
+static unsigned long \doxymbox{\hyperlink{fsm_8cpp_a0fcc77ceab317e7fbc181dc767989dc0}{tiempo\+Espera\+RFID}} = 0
+\item 
+static String \doxymbox{\hyperlink{fsm_8cpp_a272ad9327efff3726ec7b9c58062ae0d}{confirmacion}} = "{}"{}
+\item 
+\doxymbox{\hyperlink{class_sistema_confort}{Sistema\+Confort}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{fsm_8cpp_a0d0e9fabf9e0961643dd8db2e9ea1604}{ptr\+Sistema}} = nullptr
+\end{DoxyCompactItemize}
+
+
+\label{fsm_8cpp_doc-func-members}
+\Hypertarget{fsm_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{fsm_8cpp_a76aced7816a1afbea852f23c40d48e76}\index{fsm.cpp@{fsm.cpp}!actualizarLCDporEstado@{actualizarLCDporEstado}}
+\index{actualizarLCDporEstado@{actualizarLCDporEstado}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{actualizarLCDporEstado()}{actualizarLCDporEstado()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a76aced7816a1afbea852f23c40d48e76} 
+void actualizar\+LCDpor\+Estado (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8cpp_abaabf8fa257c1c045c9cab5681b09568}\index{fsm.cpp@{fsm.cpp}!actualizarLEDyBuzzer@{actualizarLEDyBuzzer}}
+\index{actualizarLEDyBuzzer@{actualizarLEDyBuzzer}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{actualizarLEDyBuzzer()}{actualizarLEDyBuzzer()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_abaabf8fa257c1c045c9cab5681b09568} 
+void actualizar\+LEDy\+Buzzer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8cpp_a25cb6b274fd1a1d3bc34cae71e90886e}\index{fsm.cpp@{fsm.cpp}!detenerTemporizadores@{detenerTemporizadores}}
+\index{detenerTemporizadores@{detenerTemporizadores}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{detenerTemporizadores()}{detenerTemporizadores()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a25cb6b274fd1a1d3bc34cae71e90886e} 
+void detener\+Temporizadores (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8cpp_a4576af7985c542ce00abbdf3981dcc54}\index{fsm.cpp@{fsm.cpp}!dispararEvento@{dispararEvento}}
+\index{dispararEvento@{dispararEvento}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{dispararEvento()}{dispararEvento()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a4576af7985c542ce00abbdf3981dcc54} 
+void disparar\+Evento (\begin{DoxyParamCaption}\item[{int}]{evento}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8cpp_adcf0fc417421a2f068fa8c3a2cfb2761}\index{fsm.cpp@{fsm.cpp}!getEstadoActual@{getEstadoActual}}
+\index{getEstadoActual@{getEstadoActual}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{getEstadoActual()}{getEstadoActual()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_adcf0fc417421a2f068fa8c3a2cfb2761} 
+\doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991d}{Estado\+Sistema}} get\+Estado\+Actual (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8cpp_a6dd88945aefecfda223d4560bcec7376}\index{fsm.cpp@{fsm.cpp}!getSubEstadoConfig@{getSubEstadoConfig}}
+\index{getSubEstadoConfig@{getSubEstadoConfig}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{getSubEstadoConfig()}{getSubEstadoConfig()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a6dd88945aefecfda223d4560bcec7376} 
+\doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5b}{Sub\+Estado\+Config}} get\+Sub\+Estado\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8cpp_a6fd99bfaa4483b738a882df2c66f777b}\index{fsm.cpp@{fsm.cpp}!incrementarContadorAlarmasGlobal@{incrementarContadorAlarmasGlobal}}
+\index{incrementarContadorAlarmasGlobal@{incrementarContadorAlarmasGlobal}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{incrementarContadorAlarmasGlobal()}{incrementarContadorAlarmasGlobal()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a6fd99bfaa4483b738a882df2c66f777b} 
+void incrementar\+Contador\+Alarmas\+Global (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8cpp_a5973b4a82b63ea902051f2307c9695cd}\index{fsm.cpp@{fsm.cpp}!loopFSM@{loopFSM}}
+\index{loopFSM@{loopFSM}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{loopFSM()}{loopFSM()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a5973b4a82b63ea902051f2307c9695cd} 
+void loop\+FSM (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8cpp_aaed5292ada55932eb32048ab35f45ff3}\index{fsm.cpp@{fsm.cpp}!obtenerBufferEntrada@{obtenerBufferEntrada}}
+\index{obtenerBufferEntrada@{obtenerBufferEntrada}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{obtenerBufferEntrada()}{obtenerBufferEntrada()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_aaed5292ada55932eb32048ab35f45ff3} 
+String obtener\+Buffer\+Entrada (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{fsm_8cpp_a108fa02cafd03d83e0519f36cd7168cf}\index{fsm.cpp@{fsm.cpp}!obtenerUIDLeido@{obtenerUIDLeido}}
+\index{obtenerUIDLeido@{obtenerUIDLeido}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{obtenerUIDLeido()}{obtenerUIDLeido()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a108fa02cafd03d83e0519f36cd7168cf} 
+String obtener\+UIDLeido (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{fsm_8cpp_af98c24382ba5867f1ea87de3b944daad}\index{fsm.cpp@{fsm.cpp}!setupFSM@{setupFSM}}
+\index{setupFSM@{setupFSM}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{setupFSM()}{setupFSM()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_af98c24382ba5867f1ea87de3b944daad} 
+void setup\+FSM (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8cpp_ac9eba40a3b1c41d9d1789f35ade66981}\index{fsm.cpp@{fsm.cpp}!timer2s@{timer2s}}
+\index{timer2s@{timer2s}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{timer2s()}{timer2s()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_ac9eba40a3b1c41d9d1789f35ade66981} 
+Async\+Task timer2s (\begin{DoxyParamCaption}\item[{2000}]{}{, }\item[{false}]{}{, }\item[{\+[$\,$]\+ () \{ \doxymbox{\hyperlink{fsm_8cpp_a4576af7985c542ce00abbdf3981dcc54}{disparar\+Evento}}(\doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0bafa9eb76b5d38ef9692959155c7036913}{EVENTO\+\_\+\+TIMER\+\_\+2S}});\}}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8cpp_a89403d4b854b41431880d623a0096b45}\index{fsm.cpp@{fsm.cpp}!timer5s@{timer5s}}
+\index{timer5s@{timer5s}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{timer5s()}{timer5s()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a89403d4b854b41431880d623a0096b45} 
+Async\+Task timer5s (\begin{DoxyParamCaption}\item[{5000}]{}{, }\item[{false}]{}{, }\item[{\+[$\,$]\+ () \{ \doxymbox{\hyperlink{fsm_8cpp_a4576af7985c542ce00abbdf3981dcc54}{disparar\+Evento}}(\doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba5761771e85a93bad27d400514cf6bdd7}{EVENTO\+\_\+\+TIMER\+\_\+5S}});\}}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8cpp_aec7e81af6d94b4174dd6c7c2c4331393}\index{fsm.cpp@{fsm.cpp}!timerAlarma2s@{timerAlarma2s}}
+\index{timerAlarma2s@{timerAlarma2s}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{timerAlarma2s()}{timerAlarma2s()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_aec7e81af6d94b4174dd6c7c2c4331393} 
+Async\+Task timer\+Alarma2s (\begin{DoxyParamCaption}\item[{2000}]{}{, }\item[{false}]{}{, }\item[{\+[$\,$]\+ () \{ \doxymbox{\hyperlink{fsm_8cpp_a4576af7985c542ce00abbdf3981dcc54}{disparar\+Evento}}(\doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0ba99f7aa701e3140ee94145d0f57c9ad4a}{EVENTO\+\_\+\+TIMER\+\_\+2\+S\+\_\+\+DESDE\+\_\+\+ALARMA}});\}}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{fsm_8cpp_a25ffe3ca28c40994fc70b1ae85f8b47f}\index{fsm.cpp@{fsm.cpp}!timerAlarma4s@{timerAlarma4s}}
+\index{timerAlarma4s@{timerAlarma4s}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{timerAlarma4s()}{timerAlarma4s()}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a25ffe3ca28c40994fc70b1ae85f8b47f} 
+Async\+Task timer\+Alarma4s (\begin{DoxyParamCaption}\item[{4000}]{}{, }\item[{false}]{}{, }\item[{\+[$\,$]\+ () \{ \doxymbox{\hyperlink{fsm_8cpp_a4576af7985c542ce00abbdf3981dcc54}{disparar\+Evento}}(\doxymbox{\hyperlink{fsm_8h_a618c9df4b00bfb11a86cf3869ef45c0baaa741da99ed1fa8140a2eb6877086b67}{EVENTO\+\_\+\+TIMER\+\_\+4\+S\+\_\+\+DESDE\+\_\+\+ALARMA}});\}}]{}{}\end{DoxyParamCaption})}
+
+
+
+\label{fsm_8cpp_doc-var-members}
+\Hypertarget{fsm_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{fsm_8cpp_a87c98b987db67498d740fba85a13dadf}\index{fsm.cpp@{fsm.cpp}!alarmasGlobales@{alarmasGlobales}}
+\index{alarmasGlobales@{alarmasGlobales}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{alarmasGlobales}{alarmasGlobales}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a87c98b987db67498d740fba85a13dadf} 
+int alarmas\+Globales = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{fsm_8cpp_a272ad9327efff3726ec7b9c58062ae0d}\index{fsm.cpp@{fsm.cpp}!confirmacion@{confirmacion}}
+\index{confirmacion@{confirmacion}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{confirmacion}{confirmacion}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a272ad9327efff3726ec7b9c58062ae0d} 
+String confirmacion = "{}"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{fsm_8cpp_ac7d83b7105a8e5a42daa7de2a0160a9d}\index{fsm.cpp@{fsm.cpp}!contadorSonidoAlto@{contadorSonidoAlto}}
+\index{contadorSonidoAlto@{contadorSonidoAlto}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{contadorSonidoAlto}{contadorSonidoAlto}}
+{\footnotesize\ttfamily \label{fsm_8cpp_ac7d83b7105a8e5a42daa7de2a0160a9d} 
+int contador\+Sonido\+Alto = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{fsm_8cpp_a89eff54efb618040375acc558b8235c3}\index{fsm.cpp@{fsm.cpp}!enAlarmaPorIntruso@{enAlarmaPorIntruso}}
+\index{enAlarmaPorIntruso@{enAlarmaPorIntruso}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{enAlarmaPorIntruso}{enAlarmaPorIntruso}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a89eff54efb618040375acc558b8235c3} 
+bool en\+Alarma\+Por\+Intruso = false\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{fsm_8cpp_a3e662248d929444f932097f3ba613ffb}\index{fsm.cpp@{fsm.cpp}!esperandoConfirmacion@{esperandoConfirmacion}}
+\index{esperandoConfirmacion@{esperandoConfirmacion}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{esperandoConfirmacion}{esperandoConfirmacion}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a3e662248d929444f932097f3ba613ffb} 
+bool esperando\+Confirmacion = false\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{fsm_8cpp_ad7541b7c95abce9e738921d41df96ca9}\index{fsm.cpp@{fsm.cpp}!estadoActual@{estadoActual}}
+\index{estadoActual@{estadoActual}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{estadoActual}{estadoActual}}
+{\footnotesize\ttfamily \label{fsm_8cpp_ad7541b7c95abce9e738921d41df96ca9} 
+\doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991d}{Estado\+Sistema}} estado\+Actual = \doxymbox{\hyperlink{fsm_8h_a21966b54989cd66c32b522ac6958991da14fcbb1f74f9c57b69bbdce235d9d7ed}{ESTADO\+\_\+\+INICIO}}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{fsm_8cpp_a2a034d2e71232099bcedb9d6943c12aa}\index{fsm.cpp@{fsm.cpp}!inicioVentanaAlarmas@{inicioVentanaAlarmas}}
+\index{inicioVentanaAlarmas@{inicioVentanaAlarmas}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{inicioVentanaAlarmas}{inicioVentanaAlarmas}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a2a034d2e71232099bcedb9d6943c12aa} 
+unsigned long inicio\+Ventana\+Alarmas = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{fsm_8cpp_a1ee26c733c1bccafb6c28c370d9d4175}\index{fsm.cpp@{fsm.cpp}!nuevaClave@{nuevaClave}}
+\index{nuevaClave@{nuevaClave}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{nuevaClave}{nuevaClave}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a1ee26c733c1bccafb6c28c370d9d4175} 
+String nueva\+Clave = "{}"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{fsm_8cpp_a0d0e9fabf9e0961643dd8db2e9ea1604}\index{fsm.cpp@{fsm.cpp}!ptrSistema@{ptrSistema}}
+\index{ptrSistema@{ptrSistema}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{ptrSistema}{ptrSistema}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a0d0e9fabf9e0961643dd8db2e9ea1604} 
+\doxymbox{\hyperlink{class_sistema_confort}{Sistema\+Confort}}\texorpdfstring{$\ast$}{*} ptr\+Sistema = nullptr}
+
+\Hypertarget{fsm_8cpp_a5f2d73bb00e4920230a831e11495ecb6}\index{fsm.cpp@{fsm.cpp}!subEstadoConfig@{subEstadoConfig}}
+\index{subEstadoConfig@{subEstadoConfig}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{subEstadoConfig}{subEstadoConfig}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a5f2d73bb00e4920230a831e11495ecb6} 
+\doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5b}{Sub\+Estado\+Config}} sub\+Estado\+Config = \doxymbox{\hyperlink{fsm_8h_a0fc20bfd02629085874234f16ebf8c5ba09d06a1d7569f0d7df95702b87278489}{CONFIG\+\_\+\+MENU}}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{fsm_8cpp_a0fcc77ceab317e7fbc181dc767989dc0}\index{fsm.cpp@{fsm.cpp}!tiempoEsperaRFID@{tiempoEsperaRFID}}
+\index{tiempoEsperaRFID@{tiempoEsperaRFID}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{tiempoEsperaRFID}{tiempoEsperaRFID}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a0fcc77ceab317e7fbc181dc767989dc0} 
+unsigned long tiempo\+Espera\+RFID = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{fsm_8cpp_af015622028f46b526f9e500d44d71923}\index{fsm.cpp@{fsm.cpp}!tiempoPrimerSonido@{tiempoPrimerSonido}}
+\index{tiempoPrimerSonido@{tiempoPrimerSonido}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{tiempoPrimerSonido}{tiempoPrimerSonido}}
+{\footnotesize\ttfamily \label{fsm_8cpp_af015622028f46b526f9e500d44d71923} 
+unsigned long tiempo\+Primer\+Sonido = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{fsm_8cpp_a232a526c4043b2d39258f6800ddcd1ae}\index{fsm.cpp@{fsm.cpp}!tiempoUltimoEvento@{tiempoUltimoEvento}}
+\index{tiempoUltimoEvento@{tiempoUltimoEvento}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{tiempoUltimoEvento}{tiempoUltimoEvento}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a232a526c4043b2d39258f6800ddcd1ae} 
+unsigned long tiempo\+Ultimo\+Evento = 0\hspace{0.3cm}{\ttfamily [static]}}
+

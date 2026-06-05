@@ -1,0 +1,117 @@
+\doxysection{alarmas.\+cpp File Reference}
+\hypertarget{alarmas_8cpp}{}\label{alarmas_8cpp}\index{alarmas.cpp@{alarmas.cpp}}
+
+
+Implementación de la gestión de alarmas.  
+
+
+{\ttfamily \+\#include "{}alarmas.\+h"{}}\newline
+{\ttfamily \+\#include "{}configuracion.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{alarmas_8cpp_a9405a28b8fb0f17d090c200f324c274f}{inicializar\+Alarmas}} ()
+\begin{DoxyCompactList}\small\item\em Inicializa el sistema de alarmas (contadores y banderas). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{alarmas_8cpp_a3a5987a758e06497589a0aa22eaade88}{verificar\+Alarma}} (float temperatura, float humedad, int presion)
+\begin{DoxyCompactList}\small\item\em Verifica condiciones de peligro y actualiza el estado de alarmas. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{alarmas_8cpp_a0e915c6ad6bc1f847da99251b5cfa38b}{hay\+Emergencia}} ()
+\begin{DoxyCompactList}\small\item\em Indica si el sistema se encuentra en estado de emergencia. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static int \doxymbox{\hyperlink{alarmas_8cpp_a36be3ff6613fd8dd8e02c3a64c95ea15}{alarmas\+Consecutivas}} = 0
+\begin{DoxyCompactList}\small\item\em Contador local (podría unificarse con variable global). \end{DoxyCompactList}\item 
+static unsigned long \doxymbox{\hyperlink{alarmas_8cpp_a3b0253cddd9f6ef107c72c737d0b6a8f}{tiempo\+Ultima\+Alarma}} = 0
+\begin{DoxyCompactList}\small\item\em Momento de la última alarma. \end{DoxyCompactList}\item 
+static bool \doxymbox{\hyperlink{alarmas_8cpp_a878d395cf2c83738d35bdc07b2e4c13e}{emergencia\+Activa\+Local}} = false
+\begin{DoxyCompactList}\small\item\em Bandera local de emergencia. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementación de la gestión de alarmas. 
+
+Mantiene contadores y la lógica de ventana de 12 segundos. Actualmente depende de la variable global \textquotesingle{}contador\+Alarmas\textquotesingle{} y \textquotesingle{}emergencia\+Activa\textquotesingle{} definidas en \doxylink{configuracion_8h}{configuracion.\+h}. 
+
+\label{alarmas_8cpp_doc-func-members}
+\Hypertarget{alarmas_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{alarmas_8cpp_a0e915c6ad6bc1f847da99251b5cfa38b}\index{alarmas.cpp@{alarmas.cpp}!hayEmergencia@{hayEmergencia}}
+\index{hayEmergencia@{hayEmergencia}!alarmas.cpp@{alarmas.cpp}}
+\doxysubsubsection{\texorpdfstring{hayEmergencia()}{hayEmergencia()}}
+{\footnotesize\ttfamily \label{alarmas_8cpp_a0e915c6ad6bc1f847da99251b5cfa38b} 
+bool hay\+Emergencia (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Indica si el sistema se encuentra en estado de emergencia. 
+
+\begin{DoxyReturn}{Returns}
+true si hay emergencia activa, false en caso contrario. 
+\end{DoxyReturn}
+\Hypertarget{alarmas_8cpp_a9405a28b8fb0f17d090c200f324c274f}\index{alarmas.cpp@{alarmas.cpp}!inicializarAlarmas@{inicializarAlarmas}}
+\index{inicializarAlarmas@{inicializarAlarmas}!alarmas.cpp@{alarmas.cpp}}
+\doxysubsubsection{\texorpdfstring{inicializarAlarmas()}{inicializarAlarmas()}}
+{\footnotesize\ttfamily \label{alarmas_8cpp_a9405a28b8fb0f17d090c200f324c274f} 
+void inicializar\+Alarmas (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Inicializa el sistema de alarmas (contadores y banderas). 
+
+\Hypertarget{alarmas_8cpp_a3a5987a758e06497589a0aa22eaade88}\index{alarmas.cpp@{alarmas.cpp}!verificarAlarma@{verificarAlarma}}
+\index{verificarAlarma@{verificarAlarma}!alarmas.cpp@{alarmas.cpp}}
+\doxysubsubsection{\texorpdfstring{verificarAlarma()}{verificarAlarma()}}
+{\footnotesize\ttfamily \label{alarmas_8cpp_a3a5987a758e06497589a0aa22eaade88} 
+void verificar\+Alarma (\begin{DoxyParamCaption}\item[{float}]{temperatura}{, }\item[{float}]{humedad}{, }\item[{int}]{presion}{}\end{DoxyParamCaption})}
+
+
+
+Verifica condiciones de peligro y actualiza el estado de alarmas. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em temperatura} & Temperatura actual en °C. \\
+\hline
+{\em humedad} & Parámetro obsoleto (no usado, se mantiene por compatibilidad). \\
+\hline
+{\em presion} & Parámetro obsoleto (no usado). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+En esta versión solo se usa la temperatura; la humedad y presión se ignoran (se pueden eliminar en futuras revisiones). 
+\end{DoxyNote}
+
+
+\label{alarmas_8cpp_doc-var-members}
+\Hypertarget{alarmas_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{alarmas_8cpp_a36be3ff6613fd8dd8e02c3a64c95ea15}\index{alarmas.cpp@{alarmas.cpp}!alarmasConsecutivas@{alarmasConsecutivas}}
+\index{alarmasConsecutivas@{alarmasConsecutivas}!alarmas.cpp@{alarmas.cpp}}
+\doxysubsubsection{\texorpdfstring{alarmasConsecutivas}{alarmasConsecutivas}}
+{\footnotesize\ttfamily \label{alarmas_8cpp_a36be3ff6613fd8dd8e02c3a64c95ea15} 
+int alarmas\+Consecutivas = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Contador local (podría unificarse con variable global). 
+
+\Hypertarget{alarmas_8cpp_a878d395cf2c83738d35bdc07b2e4c13e}\index{alarmas.cpp@{alarmas.cpp}!emergenciaActivaLocal@{emergenciaActivaLocal}}
+\index{emergenciaActivaLocal@{emergenciaActivaLocal}!alarmas.cpp@{alarmas.cpp}}
+\doxysubsubsection{\texorpdfstring{emergenciaActivaLocal}{emergenciaActivaLocal}}
+{\footnotesize\ttfamily \label{alarmas_8cpp_a878d395cf2c83738d35bdc07b2e4c13e} 
+bool emergencia\+Activa\+Local = false\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Bandera local de emergencia. 
+
+\Hypertarget{alarmas_8cpp_a3b0253cddd9f6ef107c72c737d0b6a8f}\index{alarmas.cpp@{alarmas.cpp}!tiempoUltimaAlarma@{tiempoUltimaAlarma}}
+\index{tiempoUltimaAlarma@{tiempoUltimaAlarma}!alarmas.cpp@{alarmas.cpp}}
+\doxysubsubsection{\texorpdfstring{tiempoUltimaAlarma}{tiempoUltimaAlarma}}
+{\footnotesize\ttfamily \label{alarmas_8cpp_a3b0253cddd9f6ef107c72c737d0b6a8f} 
+unsigned long tiempo\+Ultima\+Alarma = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Momento de la última alarma. 
+

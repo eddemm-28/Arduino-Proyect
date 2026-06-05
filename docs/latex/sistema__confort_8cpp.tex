@@ -1,0 +1,265 @@
+\doxysection{sistema\+\_\+confort.\+cpp File Reference}
+\hypertarget{sistema__confort_8cpp}{}\label{sistema__confort_8cpp}\index{sistema\_confort.cpp@{sistema\_confort.cpp}}
+
+
+Implementación de la clase \doxylink{class_sistema_confort}{Sistema\+Confort}.  
+
+
+{\ttfamily \+\#include "{}sistema\+\_\+confort.\+h"{}}\newline
+{\ttfamily \+\#include "{}configuracion.\+h"{}}\newline
+{\ttfamily \+\#include "{}fsm.\+h"{}}\newline
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+String \doxymbox{\hyperlink{sistema__confort_8cpp_acdf4a026a65cd49e428c574f80e4f3c9}{input\+Buffer}}
+\item 
+bool \doxymbox{\hyperlink{sistema__confort_8cpp_af0d72d7decd1bcf725189af09cb0c21f}{buffer\+Completo}}
+\item 
+const byte \doxymbox{\hyperlink{sistema__confort_8cpp_adcd57a51bfcd8887f088bdd3cb736245}{filas\+Keypad}} \+[\doxymbox{\hyperlink{configuracion_8h_aa5fd7c6e6fa5aa567e1edbb8b2fecb9c}{FILAS\+\_\+\+KEYPAD}}]\+ = \{32, 33, 34, 35\}
+\begin{DoxyCompactList}\small\item\em Pines de fila (definidos en \doxylink{sistema__confort_8cpp}{sistema\+\_\+confort.\+cpp}). \end{DoxyCompactList}\item 
+const byte \doxymbox{\hyperlink{sistema__confort_8cpp_aae21fb67ff6fa497a18291c719a2f48a}{columnas\+Keypad}} \+[\doxymbox{\hyperlink{configuracion_8h_a4ed7941b88ef60255641b2324146861b}{COLUMNAS\+\_\+\+KEYPAD}}]\+ = \{A7, A6, A5, A4\}
+\begin{DoxyCompactList}\small\item\em Pines de columna. \end{DoxyCompactList}\item 
+const char \doxymbox{\hyperlink{sistema__confort_8cpp_a11013b215cf87940712bd18105a0905e}{teclas}} \+[\doxymbox{\hyperlink{configuracion_8h_aa5fd7c6e6fa5aa567e1edbb8b2fecb9c}{FILAS\+\_\+\+KEYPAD}}]\+\+[\doxymbox{\hyperlink{configuracion_8h_a4ed7941b88ef60255641b2324146861b}{COLUMNAS\+\_\+\+KEYPAD}}]\+
+\begin{DoxyCompactList}\small\item\em Mapa de caracteres. \end{DoxyCompactList}\item 
+const float \doxymbox{\hyperlink{sistema__confort_8cpp_a4c933287b489bfcb0c54bf05f56ce5ce}{R1}} = 10000.\+0
+\begin{DoxyCompactList}\small\item\em Resistencia fija en serie (10k ohm). \end{DoxyCompactList}\item 
+const float \doxymbox{\hyperlink{sistema__confort_8cpp_ad950dc05ac0a82e0e3a3a9661b687b10}{c1}} = 0.\+001129148
+\item 
+const float \doxymbox{\hyperlink{sistema__confort_8cpp_ac957e57920eecfff5e5d1091be875050}{c2}} = 0.\+000234125
+\item 
+const float \doxymbox{\hyperlink{sistema__confort_8cpp_ab30139b901a2a02132d8876996075c73}{c3}} = 0.\+0000000876741
+\item 
+const float \doxymbox{\hyperlink{sistema__confort_8cpp_a358276b254ca03eabbdc82c36430367e}{TEMP\+\_\+\+MAX}} = 35.\+0
+\begin{DoxyCompactList}\small\item\em Temperatura máxima permitida (°C). \end{DoxyCompactList}\item 
+const float \doxymbox{\hyperlink{sistema__confort_8cpp_abc78c5726c0d3b93cb4ca86a8ce18272}{TEMP\+\_\+\+MIN}} = 10.\+0
+\begin{DoxyCompactList}\small\item\em Temperatura mínima permitida (°C). \end{DoxyCompactList}\item 
+const int \doxymbox{\hyperlink{sistema__confort_8cpp_a73fb5b4c77029286dd76ac7245b0a636}{SONIDO\+\_\+\+UMBRAL}} = 800
+\begin{DoxyCompactList}\small\item\em Umbral analógico para sensor de sonido. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{sistema__confort_8cpp_a8347aeb522c9e13e9f376640fad780e7}{temperatura}} = 0
+\begin{DoxyCompactList}\small\item\em Última temperatura leída (°C). \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{sistema__confort_8cpp_a361d9560a5d2b91fded39e22d14764e4}{luz}} = 0
+\begin{DoxyCompactList}\small\item\em Último valor de luz (0-\/1023). \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{sistema__confort_8cpp_a3aa994542b0c34098259468dddc47d7e}{campo\+Magnetico}} = 0
+\begin{DoxyCompactList}\small\item\em Último valor del sensor Hall (0-\/1023). \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{sistema__confort_8cpp_a3a04df7bf99021664003e4789bf41040}{sonido\+Analog}} = 0
+\begin{DoxyCompactList}\small\item\em Último valor analógico del sensor de sonido. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{sistema__confort_8cpp_aa607c0051ef2d03b805541b8b6603cf5}{sonido\+Digital}} = false
+\begin{DoxyCompactList}\small\item\em Último valor digital del sensor de sonido. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{sistema__confort_8cpp_a847bdd2b08db7869108fe9a17d128648}{contador\+Alarmas}} = 0
+\begin{DoxyCompactList}\small\item\em Número de alarmas consecutivas en ventana de 12s. \end{DoxyCompactList}\item 
+unsigned long \doxymbox{\hyperlink{sistema__confort_8cpp_ae1e7a3c1339ecafdeb2865e229c75936}{tiempo\+Primera\+Alarma}} = 0
+\begin{DoxyCompactList}\small\item\em Momento (ms) de la primera alarma de la ventana. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{sistema__confort_8cpp_aa3406ff5b438980d1abf849b44f3a8b2}{emergencia\+Activa}} = false
+\begin{DoxyCompactList}\small\item\em Bandera que indica estado de emergencia crítica. \end{DoxyCompactList}\item 
+char \doxymbox{\hyperlink{sistema__confort_8cpp_a68e9384d506376f2672e5cb74c693abd}{ultima\+Tecla}} = 0
+\begin{DoxyCompactList}\small\item\em Última tecla presionada en el teclado. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementación de la clase \doxylink{class_sistema_confort}{Sistema\+Confort}. 
+
+Contiene toda la lógica de lectura de sensores, control de actuadores, gestión de alarmas y prueba de hardware. 
+
+\label{sistema__confort_8cpp_doc-var-members}
+\Hypertarget{sistema__confort_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{sistema__confort_8cpp_af0d72d7decd1bcf725189af09cb0c21f}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!bufferCompleto@{bufferCompleto}}
+\index{bufferCompleto@{bufferCompleto}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{bufferCompleto}{bufferCompleto}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_af0d72d7decd1bcf725189af09cb0c21f} 
+bool buffer\+Completo\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{sistema__confort_8cpp_ad950dc05ac0a82e0e3a3a9661b687b10}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!c1@{c1}}
+\index{c1@{c1}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{c1}{c1}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_ad950dc05ac0a82e0e3a3a9661b687b10} 
+const float c1 = 0.\+001129148}
+
+\Hypertarget{sistema__confort_8cpp_ac957e57920eecfff5e5d1091be875050}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!c2@{c2}}
+\index{c2@{c2}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{c2}{c2}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_ac957e57920eecfff5e5d1091be875050} 
+const float c2 = 0.\+000234125}
+
+\Hypertarget{sistema__confort_8cpp_ab30139b901a2a02132d8876996075c73}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!c3@{c3}}
+\index{c3@{c3}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{c3}{c3}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_ab30139b901a2a02132d8876996075c73} 
+const float c3 = 0.\+0000000876741}
+
+\Hypertarget{sistema__confort_8cpp_a3aa994542b0c34098259468dddc47d7e}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!campoMagnetico@{campoMagnetico}}
+\index{campoMagnetico@{campoMagnetico}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{campoMagnetico}{campoMagnetico}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_a3aa994542b0c34098259468dddc47d7e} 
+int campo\+Magnetico = 0}
+
+
+
+Último valor del sensor Hall (0-\/1023). 
+
+\Hypertarget{sistema__confort_8cpp_aae21fb67ff6fa497a18291c719a2f48a}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!columnasKeypad@{columnasKeypad}}
+\index{columnasKeypad@{columnasKeypad}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{columnasKeypad}{columnasKeypad}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_aae21fb67ff6fa497a18291c719a2f48a} 
+const byte columnas\+Keypad\+[\doxymbox{\hyperlink{configuracion_8h_a4ed7941b88ef60255641b2324146861b}{COLUMNAS\+\_\+\+KEYPAD}}]\+ = \{A7, A6, A5, A4\}}
+
+
+
+Pines de columna. 
+
+\Hypertarget{sistema__confort_8cpp_a847bdd2b08db7869108fe9a17d128648}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!contadorAlarmas@{contadorAlarmas}}
+\index{contadorAlarmas@{contadorAlarmas}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{contadorAlarmas}{contadorAlarmas}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_a847bdd2b08db7869108fe9a17d128648} 
+int contador\+Alarmas = 0}
+
+
+
+Número de alarmas consecutivas en ventana de 12s. 
+
+\Hypertarget{sistema__confort_8cpp_aa3406ff5b438980d1abf849b44f3a8b2}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!emergenciaActiva@{emergenciaActiva}}
+\index{emergenciaActiva@{emergenciaActiva}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{emergenciaActiva}{emergenciaActiva}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_aa3406ff5b438980d1abf849b44f3a8b2} 
+bool emergencia\+Activa = false}
+
+
+
+Bandera que indica estado de emergencia crítica. 
+
+\Hypertarget{sistema__confort_8cpp_adcd57a51bfcd8887f088bdd3cb736245}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!filasKeypad@{filasKeypad}}
+\index{filasKeypad@{filasKeypad}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{filasKeypad}{filasKeypad}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_adcd57a51bfcd8887f088bdd3cb736245} 
+const byte filas\+Keypad\+[\doxymbox{\hyperlink{configuracion_8h_aa5fd7c6e6fa5aa567e1edbb8b2fecb9c}{FILAS\+\_\+\+KEYPAD}}]\+ = \{32, 33, 34, 35\}}
+
+
+
+Pines de fila (definidos en \doxylink{sistema__confort_8cpp}{sistema\+\_\+confort.\+cpp}). 
+
+\Hypertarget{sistema__confort_8cpp_acdf4a026a65cd49e428c574f80e4f3c9}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!inputBuffer@{inputBuffer}}
+\index{inputBuffer@{inputBuffer}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{inputBuffer}{inputBuffer}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_acdf4a026a65cd49e428c574f80e4f3c9} 
+String input\+Buffer\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{sistema__confort_8cpp_a361d9560a5d2b91fded39e22d14764e4}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!luz@{luz}}
+\index{luz@{luz}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{luz}{luz}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_a361d9560a5d2b91fded39e22d14764e4} 
+int luz = 0}
+
+
+
+Último valor de luz (0-\/1023). 
+
+\Hypertarget{sistema__confort_8cpp_a4c933287b489bfcb0c54bf05f56ce5ce}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!R1@{R1}}
+\index{R1@{R1}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{R1}{R1}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_a4c933287b489bfcb0c54bf05f56ce5ce} 
+const float R1 = 10000.\+0}
+
+
+
+Resistencia fija en serie (10k ohm). 
+
+\Hypertarget{sistema__confort_8cpp_a73fb5b4c77029286dd76ac7245b0a636}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!SONIDO\_UMBRAL@{SONIDO\_UMBRAL}}
+\index{SONIDO\_UMBRAL@{SONIDO\_UMBRAL}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{SONIDO\_UMBRAL}{SONIDO\_UMBRAL}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_a73fb5b4c77029286dd76ac7245b0a636} 
+const int SONIDO\+\_\+\+UMBRAL = 800}
+
+
+
+Umbral analógico para sensor de sonido. 
+
+\Hypertarget{sistema__confort_8cpp_a3a04df7bf99021664003e4789bf41040}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!sonidoAnalog@{sonidoAnalog}}
+\index{sonidoAnalog@{sonidoAnalog}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{sonidoAnalog}{sonidoAnalog}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_a3a04df7bf99021664003e4789bf41040} 
+int sonido\+Analog = 0}
+
+
+
+Último valor analógico del sensor de sonido. 
+
+\Hypertarget{sistema__confort_8cpp_aa607c0051ef2d03b805541b8b6603cf5}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!sonidoDigital@{sonidoDigital}}
+\index{sonidoDigital@{sonidoDigital}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{sonidoDigital}{sonidoDigital}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_aa607c0051ef2d03b805541b8b6603cf5} 
+bool sonido\+Digital = false}
+
+
+
+Último valor digital del sensor de sonido. 
+
+\Hypertarget{sistema__confort_8cpp_a11013b215cf87940712bd18105a0905e}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!teclas@{teclas}}
+\index{teclas@{teclas}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{teclas}{teclas}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_a11013b215cf87940712bd18105a0905e} 
+const char teclas\+[\doxymbox{\hyperlink{configuracion_8h_aa5fd7c6e6fa5aa567e1edbb8b2fecb9c}{FILAS\+\_\+\+KEYPAD}}]\+\+[\doxymbox{\hyperlink{configuracion_8h_a4ed7941b88ef60255641b2324146861b}{COLUMNAS\+\_\+\+KEYPAD}}]\+}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \{}
+\DoxyCodeLine{\ \ \{\textcolor{charliteral}{'1'},\textcolor{charliteral}{'2'},\textcolor{charliteral}{'3'},\textcolor{charliteral}{'A'}\},}
+\DoxyCodeLine{\ \ \{\textcolor{charliteral}{'4'},\textcolor{charliteral}{'5'},\textcolor{charliteral}{'6'},\textcolor{charliteral}{'B'}\},}
+\DoxyCodeLine{\ \ \{\textcolor{charliteral}{'7'},\textcolor{charliteral}{'8'},\textcolor{charliteral}{'9'},\textcolor{charliteral}{'C'}\},}
+\DoxyCodeLine{\ \ \{\textcolor{charliteral}{'*'},\textcolor{charliteral}{'0'},\textcolor{charliteral}{'\#'},\textcolor{charliteral}{'D'}\}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Mapa de caracteres. 
+
+\Hypertarget{sistema__confort_8cpp_a358276b254ca03eabbdc82c36430367e}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!TEMP\_MAX@{TEMP\_MAX}}
+\index{TEMP\_MAX@{TEMP\_MAX}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{TEMP\_MAX}{TEMP\_MAX}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_a358276b254ca03eabbdc82c36430367e} 
+const float TEMP\+\_\+\+MAX = 35.\+0}
+
+
+
+Temperatura máxima permitida (°C). 
+
+\Hypertarget{sistema__confort_8cpp_abc78c5726c0d3b93cb4ca86a8ce18272}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!TEMP\_MIN@{TEMP\_MIN}}
+\index{TEMP\_MIN@{TEMP\_MIN}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{TEMP\_MIN}{TEMP\_MIN}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_abc78c5726c0d3b93cb4ca86a8ce18272} 
+const float TEMP\+\_\+\+MIN = 10.\+0}
+
+
+
+Temperatura mínima permitida (°C). 
+
+\Hypertarget{sistema__confort_8cpp_a8347aeb522c9e13e9f376640fad780e7}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!temperatura@{temperatura}}
+\index{temperatura@{temperatura}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{temperatura}{temperatura}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_a8347aeb522c9e13e9f376640fad780e7} 
+float temperatura = 0}
+
+
+
+Última temperatura leída (°C). 
+
+\Hypertarget{sistema__confort_8cpp_ae1e7a3c1339ecafdeb2865e229c75936}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!tiempoPrimeraAlarma@{tiempoPrimeraAlarma}}
+\index{tiempoPrimeraAlarma@{tiempoPrimeraAlarma}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{tiempoPrimeraAlarma}{tiempoPrimeraAlarma}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_ae1e7a3c1339ecafdeb2865e229c75936} 
+unsigned long tiempo\+Primera\+Alarma = 0}
+
+
+
+Momento (ms) de la primera alarma de la ventana. 
+
+\Hypertarget{sistema__confort_8cpp_a68e9384d506376f2672e5cb74c693abd}\index{sistema\_confort.cpp@{sistema\_confort.cpp}!ultimaTecla@{ultimaTecla}}
+\index{ultimaTecla@{ultimaTecla}!sistema\_confort.cpp@{sistema\_confort.cpp}}
+\doxysubsubsection{\texorpdfstring{ultimaTecla}{ultimaTecla}}
+{\footnotesize\ttfamily \label{sistema__confort_8cpp_a68e9384d506376f2672e5cb74c693abd} 
+char ultima\+Tecla = 0}
+
+
+
+Última tecla presionada en el teclado. 
+

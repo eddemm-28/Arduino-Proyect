@@ -1,0 +1,83 @@
+\doxysection{configuracion.\+h}
+\hypertarget{configuracion_8h_source}{}\label{configuracion_8h_source}\doxymbox{\hyperlink{configuracion_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ CONFIGURACION\_H}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ CONFIGURACION\_H}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ ====================\ PINES\ PARA\ ARDUINO\ MEGA\ ====================}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ Sensores}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ PIN\_TERMISTOR\ A2\ \ \ \ \ \ }}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ PIN\_LDR\ A3\ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ PIN\_HALL\ A1\ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ PIN\_SONIDO\_DIGITAL\ 8\ \ }}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ PIN\_SONIDO\_ANALOG\ A0\ \ }}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ Actuadores\ (reorganizados\ para\ evitar\ conflictos)}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ PIN\_SERVO\ 13}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ PIN\_BUZZER\ 7\ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//\ Cambiado\ a\ 10\ (libre)}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ PIN\_LED\_ALARMA\ 24\ \ \ \ \ \ \ }\textcolor{comment}{//\ Se\ mantiene\ en\ 3\ (LCD\ no\ usa\ este\ pin)}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ PIN\_LED\_RGB\_R\ 6}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ PIN\_LED\_RGB\_G\ 25\ \ \ \ \ \ \ \ }\textcolor{comment}{//\ Antes\ compartía\ con\ buzzer,\ ahora\ buzzer\ en\ 10}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ PIN\_LED\_RGB\_B\ 26}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{comment}{//\ Pines\ para\ LCD\ paralela\ (nuevos)}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ PIN\_LCD\_RS\ 12}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ PIN\_LCD\_EN\ 11}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ PIN\_LCD\_D4\ 5}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ PIN\_LCD\_D5\ 4}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ PIN\_LCD\_D6\ 3}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ PIN\_LCD\_D7\ 2}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{comment}{//\ Teclado\ matricial\ 4x4}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ FILAS\_KEYPAD\ 4\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ COLUMNAS\_KEYPAD\ 4\ \ \ \ \ }}
+\DoxyCodeLine{00042\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ \doxymbox{\hyperlink{configuracion_8h_adcd57a51bfcd8887f088bdd3cb736245}{filasKeypad}}[\doxymbox{\hyperlink{configuracion_8h_aa5fd7c6e6fa5aa567e1edbb8b2fecb9c}{FILAS\_KEYPAD}}];\ \ \ \ \ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ \doxymbox{\hyperlink{configuracion_8h_aae21fb67ff6fa497a18291c719a2f48a}{columnasKeypad}}[\doxymbox{\hyperlink{configuracion_8h_a4ed7941b88ef60255641b2324146861b}{COLUMNAS\_KEYPAD}}];\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \doxymbox{\hyperlink{configuracion_8h_a11013b215cf87940712bd18105a0905e}{teclas}}[\doxymbox{\hyperlink{configuracion_8h_aa5fd7c6e6fa5aa567e1edbb8b2fecb9c}{FILAS\_KEYPAD}}][\doxymbox{\hyperlink{configuracion_8h_a4ed7941b88ef60255641b2324146861b}{COLUMNAS\_KEYPAD}}];\ }
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{comment}{//\ RFID\ RC522\ (SPI)}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ PIN\_RFID\_SS\ 53\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ PIN\_RFID\_RST\ 9\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{comment}{//\ ====================\ PARÁMETROS\ DEL\ TERMISTOR\ ====================}}
+\DoxyCodeLine{00051\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{configuracion_8h_a4c933287b489bfcb0c54bf05f56ce5ce}{R1}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00052\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{configuracion_8h_ad950dc05ac0a82e0e3a3a9661b687b10}{c1}},\ \doxymbox{\hyperlink{configuracion_8h_ac957e57920eecfff5e5d1091be875050}{c2}},\ \doxymbox{\hyperlink{configuracion_8h_ab30139b901a2a02132d8876996075c73}{c3}};\ }
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{comment}{//\ ====================\ UMBRALES\ DE\ ALARMA\ ====================}}
+\DoxyCodeLine{00055\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{configuracion_8h_a358276b254ca03eabbdc82c36430367e}{TEMP\_MAX}};\ \ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{configuracion_8h_abc78c5726c0d3b93cb4ca86a8ce18272}{TEMP\_MIN}};\ \ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{configuracion_8h_a73fb5b4c77029286dd76ac7245b0a636}{SONIDO\_UMBRAL}};\ }
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{comment}{//\ ====================\ VARIABLES\ GLOBALES\ ====================}}
+\DoxyCodeLine{00060\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{configuracion_8h_a8347aeb522c9e13e9f376640fad780e7}{temperatura}};\ \ \ \ \ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{configuracion_8h_a361d9560a5d2b91fded39e22d14764e4}{luz}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00062\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{configuracion_8h_a3aa994542b0c34098259468dddc47d7e}{campoMagnetico}};\ \ \ \ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{configuracion_8h_a3a04df7bf99021664003e4789bf41040}{sonidoAnalog}};\ \ \ \ \ \ }
+\DoxyCodeLine{00064\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{configuracion_8h_aa607c0051ef2d03b805541b8b6603cf5}{sonidoDigital}};\ \ \ \ }
+\DoxyCodeLine{00065\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{configuracion_8h_a847bdd2b08db7869108fe9a17d128648}{contadorAlarmas}};\ \ \ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \doxymbox{\hyperlink{configuracion_8h_ae1e7a3c1339ecafdeb2865e229c75936}{tiempoPrimeraAlarma}};\ }
+\DoxyCodeLine{00067\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{configuracion_8h_aa3406ff5b438980d1abf849b44f3a8b2}{emergenciaActiva}};\ }
+\DoxyCodeLine{00068\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \doxymbox{\hyperlink{configuracion_8h_a68e9384d506376f2672e5cb74c693abd}{ultimaTecla}};\ \ \ \ \ \ }
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{comment}{//\ ====================\ BOTÓN\ EXTERNO\ ====================}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#define\ PIN\_BOTON\ 10\ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{comment}{//\ ====================\ EEPROM\ ====================}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#define\ EEPROM\_USUARIO\_VALIDO\ 0\ \ \ \ \ \ }}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#define\ EEPROM\_CLAVE\_LENGTH\ \ 4\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\#define\ EEPROM\_CLAVE\_START\ \ \ 1\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00077\ \textcolor{preprocessor}{\#define\ EEPROM\_UID\_LENGTH\ \ \ \ 4\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\#define\ EEPROM\_UID\_START\ \ \ \ \ 5\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \textcolor{comment}{//\ ====================\ VARIABLES\ GLOBALES\ ADICIONALES\ ====================}}
+\DoxyCodeLine{00081\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{configuracion_8h_acfb9e7912e62d1b94554eecb89323c7f}{botonPresionado}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00082\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \doxymbox{\hyperlink{configuracion_8h_a2351d3e05521914ba25469b867139e55}{tiempoUltimoBoton}};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CONFIGURACION\_H}}
+
+\end{DoxyCode}

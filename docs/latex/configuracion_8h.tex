@@ -1,0 +1,545 @@
+\doxysection{configuracion.\+h File Reference}
+\hypertarget{configuracion_8h}{}\label{configuracion_8h}\index{configuracion.h@{configuracion.h}}
+
+
+Definición de pines, constantes y variables globales del sistema.  
+
+
+{\ttfamily \+\#include $<$Arduino.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_ac9fab733824f4fce1b0c53a917746269}{PIN\+\_\+\+TERMISTOR}}~A2
+\begin{DoxyCompactList}\small\item\em Pin analógico para termistor NTC (temperatura). \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_acdd150b5dfeb344b264a48ffc3151cb5}{PIN\+\_\+\+LDR}}~A3
+\begin{DoxyCompactList}\small\item\em Pin analógico para fotoresistencia (luz). \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a9c80d45f4c5f9729887dcd301a26a342}{PIN\+\_\+\+HALL}}~A1
+\begin{DoxyCompactList}\small\item\em Pin analógico para sensor magnético Hall. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a09bddf33b4fec24aa5367055c2b920d6}{PIN\+\_\+\+SONIDO\+\_\+\+DIGITAL}}~8
+\begin{DoxyCompactList}\small\item\em Pin digital para sensor KY-\/037 (salida digital). \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a1f4b96802255805a35bee0edc593adca}{PIN\+\_\+\+SONIDO\+\_\+\+ANALOG}}~A0
+\begin{DoxyCompactList}\small\item\em Pin analógico para sensor KY-\/037 (intensidad de sonido). \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a683a2f1ac846d9e7c7f68fd29130ee1a}{PIN\+\_\+\+SERVO}}~13
+\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a192ea8eaba652d29bfc08675edebb6a2}{PIN\+\_\+\+BUZZER}}~7
+\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a521124558eb5b61df1f5a307b63f4e92}{PIN\+\_\+\+LED\+\_\+\+ALARMA}}~24
+\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a8bf13df16d75d7266d7c1531cb01b954}{PIN\+\_\+\+LED\+\_\+\+RGB\+\_\+R}}~6
+\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a446eed8bd5e21a1e7399a0d367d3bb5a}{PIN\+\_\+\+LED\+\_\+\+RGB\+\_\+G}}~25
+\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a016693b6ce3a3636f88cf4981d41fb41}{PIN\+\_\+\+LED\+\_\+\+RGB\+\_\+B}}~26
+\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a43c0959d5054a2213a6d27a555a49901}{PIN\+\_\+\+LCD\+\_\+\+RS}}~12
+\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a64f52dffee0fd279f34fb416545dc059}{PIN\+\_\+\+LCD\+\_\+\+EN}}~11
+\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a3b068b254b46cbf74d72233a12d897b4}{PIN\+\_\+\+LCD\+\_\+\+D4}}~5
+\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a138921074f6fbef7204383e9ec887205}{PIN\+\_\+\+LCD\+\_\+\+D5}}~4
+\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a83eb95b8a2f7521964b3279ef55c2387}{PIN\+\_\+\+LCD\+\_\+\+D6}}~3
+\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a39d3d28f9914cde07af0cf5b2746d094}{PIN\+\_\+\+LCD\+\_\+\+D7}}~2
+\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_aa5fd7c6e6fa5aa567e1edbb8b2fecb9c}{FILAS\+\_\+\+KEYPAD}}~4
+\begin{DoxyCompactList}\small\item\em Número de filas del teclado. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a4ed7941b88ef60255641b2324146861b}{COLUMNAS\+\_\+\+KEYPAD}}~4
+\begin{DoxyCompactList}\small\item\em Número de columnas del teclado. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a94f682f71b4a56080ed71d61ff11566b}{PIN\+\_\+\+RFID\+\_\+\+SS}}~53
+\begin{DoxyCompactList}\small\item\em Pin Slave Select para RC522. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_ab4be5758bd0984dd6d300315e574d47f}{PIN\+\_\+\+RFID\+\_\+\+RST}}~9
+\begin{DoxyCompactList}\small\item\em Pin Reset para RC522. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a9c471eeb260dd64a0bbb53bf3d54136a}{PIN\+\_\+\+BOTON}}~10
+\begin{DoxyCompactList}\small\item\em Pin para botón de reset (pull-\/up interno). \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_ac52ba72416430f0fcdb23c76ce737058}{EEPROM\+\_\+\+USUARIO\+\_\+\+VALIDO}}~0
+\begin{DoxyCompactList}\small\item\em Dirección donde se guarda si hay usuario configurado (byte). \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a8c9a6420158b18d057a3d289f7fd1dc4}{EEPROM\+\_\+\+CLAVE\+\_\+\+LENGTH}}~4
+\begin{DoxyCompactList}\small\item\em Longitud de la clave numérica (4 dígitos). \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a65c1fee58469292a668f969584191da4}{EEPROM\+\_\+\+CLAVE\+\_\+\+START}}~1
+\begin{DoxyCompactList}\small\item\em Dirección inicial de la clave (4 bytes). \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_acd8313a09b916824be7e2ac5e163fea3}{EEPROM\+\_\+\+UID\+\_\+\+LENGTH}}~4
+\begin{DoxyCompactList}\small\item\em Longitud del UID de RFID (4 bytes). \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{configuracion_8h_a0171efb0df630a4a0da3cbd2a255290c}{EEPROM\+\_\+\+UID\+\_\+\+START}}~5
+\begin{DoxyCompactList}\small\item\em Dirección inicial del UID. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const byte \doxymbox{\hyperlink{configuracion_8h_adcd57a51bfcd8887f088bdd3cb736245}{filas\+Keypad}} \+[\doxymbox{\hyperlink{configuracion_8h_aa5fd7c6e6fa5aa567e1edbb8b2fecb9c}{FILAS\+\_\+\+KEYPAD}}]\+
+\begin{DoxyCompactList}\small\item\em Pines de fila (definidos en \doxylink{sistema__confort_8cpp}{sistema\+\_\+confort.\+cpp}). \end{DoxyCompactList}\item 
+const byte \doxymbox{\hyperlink{configuracion_8h_aae21fb67ff6fa497a18291c719a2f48a}{columnas\+Keypad}} \+[\doxymbox{\hyperlink{configuracion_8h_a4ed7941b88ef60255641b2324146861b}{COLUMNAS\+\_\+\+KEYPAD}}]\+
+\begin{DoxyCompactList}\small\item\em Pines de columna. \end{DoxyCompactList}\item 
+const char \doxymbox{\hyperlink{configuracion_8h_a11013b215cf87940712bd18105a0905e}{teclas}} \+[\doxymbox{\hyperlink{configuracion_8h_aa5fd7c6e6fa5aa567e1edbb8b2fecb9c}{FILAS\+\_\+\+KEYPAD}}]\+\+[\doxymbox{\hyperlink{configuracion_8h_a4ed7941b88ef60255641b2324146861b}{COLUMNAS\+\_\+\+KEYPAD}}]\+
+\begin{DoxyCompactList}\small\item\em Mapa de caracteres. \end{DoxyCompactList}\item 
+const float \doxymbox{\hyperlink{configuracion_8h_a4c933287b489bfcb0c54bf05f56ce5ce}{R1}}
+\begin{DoxyCompactList}\small\item\em Resistencia fija en serie (10k ohm). \end{DoxyCompactList}\item 
+const float \doxymbox{\hyperlink{configuracion_8h_ad950dc05ac0a82e0e3a3a9661b687b10}{c1}}
+\item 
+const float \doxymbox{\hyperlink{configuracion_8h_ac957e57920eecfff5e5d1091be875050}{c2}}
+\item 
+const float \doxymbox{\hyperlink{configuracion_8h_ab30139b901a2a02132d8876996075c73}{c3}}
+\begin{DoxyCompactList}\small\item\em Coeficientes de Steinhart-\/\+Hart. \end{DoxyCompactList}\item 
+const float \doxymbox{\hyperlink{configuracion_8h_a358276b254ca03eabbdc82c36430367e}{TEMP\+\_\+\+MAX}}
+\begin{DoxyCompactList}\small\item\em Temperatura máxima permitida (°C). \end{DoxyCompactList}\item 
+const float \doxymbox{\hyperlink{configuracion_8h_abc78c5726c0d3b93cb4ca86a8ce18272}{TEMP\+\_\+\+MIN}}
+\begin{DoxyCompactList}\small\item\em Temperatura mínima permitida (°C). \end{DoxyCompactList}\item 
+const int \doxymbox{\hyperlink{configuracion_8h_a73fb5b4c77029286dd76ac7245b0a636}{SONIDO\+\_\+\+UMBRAL}}
+\begin{DoxyCompactList}\small\item\em Umbral analógico para sensor de sonido. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{configuracion_8h_a8347aeb522c9e13e9f376640fad780e7}{temperatura}}
+\begin{DoxyCompactList}\small\item\em Última temperatura leída (°C). \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{configuracion_8h_a361d9560a5d2b91fded39e22d14764e4}{luz}}
+\begin{DoxyCompactList}\small\item\em Último valor de luz (0-\/1023). \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{configuracion_8h_a3aa994542b0c34098259468dddc47d7e}{campo\+Magnetico}}
+\begin{DoxyCompactList}\small\item\em Último valor del sensor Hall (0-\/1023). \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{configuracion_8h_a3a04df7bf99021664003e4789bf41040}{sonido\+Analog}}
+\begin{DoxyCompactList}\small\item\em Último valor analógico del sensor de sonido. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{configuracion_8h_aa607c0051ef2d03b805541b8b6603cf5}{sonido\+Digital}}
+\begin{DoxyCompactList}\small\item\em Último valor digital del sensor de sonido. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{configuracion_8h_a847bdd2b08db7869108fe9a17d128648}{contador\+Alarmas}}
+\begin{DoxyCompactList}\small\item\em Número de alarmas consecutivas en ventana de 12s. \end{DoxyCompactList}\item 
+unsigned long \doxymbox{\hyperlink{configuracion_8h_ae1e7a3c1339ecafdeb2865e229c75936}{tiempo\+Primera\+Alarma}}
+\begin{DoxyCompactList}\small\item\em Momento (ms) de la primera alarma de la ventana. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{configuracion_8h_aa3406ff5b438980d1abf849b44f3a8b2}{emergencia\+Activa}}
+\begin{DoxyCompactList}\small\item\em Bandera que indica estado de emergencia crítica. \end{DoxyCompactList}\item 
+char \doxymbox{\hyperlink{configuracion_8h_a68e9384d506376f2672e5cb74c693abd}{ultima\+Tecla}}
+\begin{DoxyCompactList}\small\item\em Última tecla presionada en el teclado. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{configuracion_8h_acfb9e7912e62d1b94554eecb89323c7f}{boton\+Presionado}}
+\begin{DoxyCompactList}\small\item\em Bandera para debounce del botón. \end{DoxyCompactList}\item 
+unsigned long \doxymbox{\hyperlink{configuracion_8h_a2351d3e05521914ba25469b867139e55}{tiempo\+Ultimo\+Boton}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Definición de pines, constantes y variables globales del sistema. 
+
+Este archivo centraliza la configuración de hardware (pines, umbrales de alarma, parámetros del termistor) y declara las variables globales compartidas entre módulos. 
+
+\label{configuracion_8h_doc-define-members}
+\Hypertarget{configuracion_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{configuracion_8h_a4ed7941b88ef60255641b2324146861b}\index{configuracion.h@{configuracion.h}!COLUMNAS\_KEYPAD@{COLUMNAS\_KEYPAD}}
+\index{COLUMNAS\_KEYPAD@{COLUMNAS\_KEYPAD}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{COLUMNAS\_KEYPAD}{COLUMNAS\_KEYPAD}}
+{\footnotesize\ttfamily \label{configuracion_8h_a4ed7941b88ef60255641b2324146861b} 
+\+\#define COLUMNAS\+\_\+\+KEYPAD~4}
+
+
+
+Número de columnas del teclado. 
+
+\Hypertarget{configuracion_8h_a8c9a6420158b18d057a3d289f7fd1dc4}\index{configuracion.h@{configuracion.h}!EEPROM\_CLAVE\_LENGTH@{EEPROM\_CLAVE\_LENGTH}}
+\index{EEPROM\_CLAVE\_LENGTH@{EEPROM\_CLAVE\_LENGTH}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{EEPROM\_CLAVE\_LENGTH}{EEPROM\_CLAVE\_LENGTH}}
+{\footnotesize\ttfamily \label{configuracion_8h_a8c9a6420158b18d057a3d289f7fd1dc4} 
+\+\#define EEPROM\+\_\+\+CLAVE\+\_\+\+LENGTH~4}
+
+
+
+Longitud de la clave numérica (4 dígitos). 
+
+\Hypertarget{configuracion_8h_a65c1fee58469292a668f969584191da4}\index{configuracion.h@{configuracion.h}!EEPROM\_CLAVE\_START@{EEPROM\_CLAVE\_START}}
+\index{EEPROM\_CLAVE\_START@{EEPROM\_CLAVE\_START}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{EEPROM\_CLAVE\_START}{EEPROM\_CLAVE\_START}}
+{\footnotesize\ttfamily \label{configuracion_8h_a65c1fee58469292a668f969584191da4} 
+\+\#define EEPROM\+\_\+\+CLAVE\+\_\+\+START~1}
+
+
+
+Dirección inicial de la clave (4 bytes). 
+
+\Hypertarget{configuracion_8h_acd8313a09b916824be7e2ac5e163fea3}\index{configuracion.h@{configuracion.h}!EEPROM\_UID\_LENGTH@{EEPROM\_UID\_LENGTH}}
+\index{EEPROM\_UID\_LENGTH@{EEPROM\_UID\_LENGTH}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{EEPROM\_UID\_LENGTH}{EEPROM\_UID\_LENGTH}}
+{\footnotesize\ttfamily \label{configuracion_8h_acd8313a09b916824be7e2ac5e163fea3} 
+\+\#define EEPROM\+\_\+\+UID\+\_\+\+LENGTH~4}
+
+
+
+Longitud del UID de RFID (4 bytes). 
+
+\Hypertarget{configuracion_8h_a0171efb0df630a4a0da3cbd2a255290c}\index{configuracion.h@{configuracion.h}!EEPROM\_UID\_START@{EEPROM\_UID\_START}}
+\index{EEPROM\_UID\_START@{EEPROM\_UID\_START}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{EEPROM\_UID\_START}{EEPROM\_UID\_START}}
+{\footnotesize\ttfamily \label{configuracion_8h_a0171efb0df630a4a0da3cbd2a255290c} 
+\+\#define EEPROM\+\_\+\+UID\+\_\+\+START~5}
+
+
+
+Dirección inicial del UID. 
+
+\Hypertarget{configuracion_8h_ac52ba72416430f0fcdb23c76ce737058}\index{configuracion.h@{configuracion.h}!EEPROM\_USUARIO\_VALIDO@{EEPROM\_USUARIO\_VALIDO}}
+\index{EEPROM\_USUARIO\_VALIDO@{EEPROM\_USUARIO\_VALIDO}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{EEPROM\_USUARIO\_VALIDO}{EEPROM\_USUARIO\_VALIDO}}
+{\footnotesize\ttfamily \label{configuracion_8h_ac52ba72416430f0fcdb23c76ce737058} 
+\+\#define EEPROM\+\_\+\+USUARIO\+\_\+\+VALIDO~0}
+
+
+
+Dirección donde se guarda si hay usuario configurado (byte). 
+
+\Hypertarget{configuracion_8h_aa5fd7c6e6fa5aa567e1edbb8b2fecb9c}\index{configuracion.h@{configuracion.h}!FILAS\_KEYPAD@{FILAS\_KEYPAD}}
+\index{FILAS\_KEYPAD@{FILAS\_KEYPAD}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{FILAS\_KEYPAD}{FILAS\_KEYPAD}}
+{\footnotesize\ttfamily \label{configuracion_8h_aa5fd7c6e6fa5aa567e1edbb8b2fecb9c} 
+\+\#define FILAS\+\_\+\+KEYPAD~4}
+
+
+
+Número de filas del teclado. 
+
+\Hypertarget{configuracion_8h_a9c471eeb260dd64a0bbb53bf3d54136a}\index{configuracion.h@{configuracion.h}!PIN\_BOTON@{PIN\_BOTON}}
+\index{PIN\_BOTON@{PIN\_BOTON}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_BOTON}{PIN\_BOTON}}
+{\footnotesize\ttfamily \label{configuracion_8h_a9c471eeb260dd64a0bbb53bf3d54136a} 
+\+\#define PIN\+\_\+\+BOTON~10}
+
+
+
+Pin para botón de reset (pull-\/up interno). 
+
+\Hypertarget{configuracion_8h_a192ea8eaba652d29bfc08675edebb6a2}\index{configuracion.h@{configuracion.h}!PIN\_BUZZER@{PIN\_BUZZER}}
+\index{PIN\_BUZZER@{PIN\_BUZZER}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_BUZZER}{PIN\_BUZZER}}
+{\footnotesize\ttfamily \label{configuracion_8h_a192ea8eaba652d29bfc08675edebb6a2} 
+\+\#define PIN\+\_\+\+BUZZER~7}
+
+\Hypertarget{configuracion_8h_a9c80d45f4c5f9729887dcd301a26a342}\index{configuracion.h@{configuracion.h}!PIN\_HALL@{PIN\_HALL}}
+\index{PIN\_HALL@{PIN\_HALL}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_HALL}{PIN\_HALL}}
+{\footnotesize\ttfamily \label{configuracion_8h_a9c80d45f4c5f9729887dcd301a26a342} 
+\+\#define PIN\+\_\+\+HALL~A1}
+
+
+
+Pin analógico para sensor magnético Hall. 
+
+\Hypertarget{configuracion_8h_a3b068b254b46cbf74d72233a12d897b4}\index{configuracion.h@{configuracion.h}!PIN\_LCD\_D4@{PIN\_LCD\_D4}}
+\index{PIN\_LCD\_D4@{PIN\_LCD\_D4}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_LCD\_D4}{PIN\_LCD\_D4}}
+{\footnotesize\ttfamily \label{configuracion_8h_a3b068b254b46cbf74d72233a12d897b4} 
+\+\#define PIN\+\_\+\+LCD\+\_\+\+D4~5}
+
+\Hypertarget{configuracion_8h_a138921074f6fbef7204383e9ec887205}\index{configuracion.h@{configuracion.h}!PIN\_LCD\_D5@{PIN\_LCD\_D5}}
+\index{PIN\_LCD\_D5@{PIN\_LCD\_D5}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_LCD\_D5}{PIN\_LCD\_D5}}
+{\footnotesize\ttfamily \label{configuracion_8h_a138921074f6fbef7204383e9ec887205} 
+\+\#define PIN\+\_\+\+LCD\+\_\+\+D5~4}
+
+\Hypertarget{configuracion_8h_a83eb95b8a2f7521964b3279ef55c2387}\index{configuracion.h@{configuracion.h}!PIN\_LCD\_D6@{PIN\_LCD\_D6}}
+\index{PIN\_LCD\_D6@{PIN\_LCD\_D6}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_LCD\_D6}{PIN\_LCD\_D6}}
+{\footnotesize\ttfamily \label{configuracion_8h_a83eb95b8a2f7521964b3279ef55c2387} 
+\+\#define PIN\+\_\+\+LCD\+\_\+\+D6~3}
+
+\Hypertarget{configuracion_8h_a39d3d28f9914cde07af0cf5b2746d094}\index{configuracion.h@{configuracion.h}!PIN\_LCD\_D7@{PIN\_LCD\_D7}}
+\index{PIN\_LCD\_D7@{PIN\_LCD\_D7}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_LCD\_D7}{PIN\_LCD\_D7}}
+{\footnotesize\ttfamily \label{configuracion_8h_a39d3d28f9914cde07af0cf5b2746d094} 
+\+\#define PIN\+\_\+\+LCD\+\_\+\+D7~2}
+
+\Hypertarget{configuracion_8h_a64f52dffee0fd279f34fb416545dc059}\index{configuracion.h@{configuracion.h}!PIN\_LCD\_EN@{PIN\_LCD\_EN}}
+\index{PIN\_LCD\_EN@{PIN\_LCD\_EN}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_LCD\_EN}{PIN\_LCD\_EN}}
+{\footnotesize\ttfamily \label{configuracion_8h_a64f52dffee0fd279f34fb416545dc059} 
+\+\#define PIN\+\_\+\+LCD\+\_\+\+EN~11}
+
+\Hypertarget{configuracion_8h_a43c0959d5054a2213a6d27a555a49901}\index{configuracion.h@{configuracion.h}!PIN\_LCD\_RS@{PIN\_LCD\_RS}}
+\index{PIN\_LCD\_RS@{PIN\_LCD\_RS}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_LCD\_RS}{PIN\_LCD\_RS}}
+{\footnotesize\ttfamily \label{configuracion_8h_a43c0959d5054a2213a6d27a555a49901} 
+\+\#define PIN\+\_\+\+LCD\+\_\+\+RS~12}
+
+\Hypertarget{configuracion_8h_acdd150b5dfeb344b264a48ffc3151cb5}\index{configuracion.h@{configuracion.h}!PIN\_LDR@{PIN\_LDR}}
+\index{PIN\_LDR@{PIN\_LDR}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_LDR}{PIN\_LDR}}
+{\footnotesize\ttfamily \label{configuracion_8h_acdd150b5dfeb344b264a48ffc3151cb5} 
+\+\#define PIN\+\_\+\+LDR~A3}
+
+
+
+Pin analógico para fotoresistencia (luz). 
+
+\Hypertarget{configuracion_8h_a521124558eb5b61df1f5a307b63f4e92}\index{configuracion.h@{configuracion.h}!PIN\_LED\_ALARMA@{PIN\_LED\_ALARMA}}
+\index{PIN\_LED\_ALARMA@{PIN\_LED\_ALARMA}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_LED\_ALARMA}{PIN\_LED\_ALARMA}}
+{\footnotesize\ttfamily \label{configuracion_8h_a521124558eb5b61df1f5a307b63f4e92} 
+\+\#define PIN\+\_\+\+LED\+\_\+\+ALARMA~24}
+
+\Hypertarget{configuracion_8h_a016693b6ce3a3636f88cf4981d41fb41}\index{configuracion.h@{configuracion.h}!PIN\_LED\_RGB\_B@{PIN\_LED\_RGB\_B}}
+\index{PIN\_LED\_RGB\_B@{PIN\_LED\_RGB\_B}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_LED\_RGB\_B}{PIN\_LED\_RGB\_B}}
+{\footnotesize\ttfamily \label{configuracion_8h_a016693b6ce3a3636f88cf4981d41fb41} 
+\+\#define PIN\+\_\+\+LED\+\_\+\+RGB\+\_\+B~26}
+
+\Hypertarget{configuracion_8h_a446eed8bd5e21a1e7399a0d367d3bb5a}\index{configuracion.h@{configuracion.h}!PIN\_LED\_RGB\_G@{PIN\_LED\_RGB\_G}}
+\index{PIN\_LED\_RGB\_G@{PIN\_LED\_RGB\_G}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_LED\_RGB\_G}{PIN\_LED\_RGB\_G}}
+{\footnotesize\ttfamily \label{configuracion_8h_a446eed8bd5e21a1e7399a0d367d3bb5a} 
+\+\#define PIN\+\_\+\+LED\+\_\+\+RGB\+\_\+G~25}
+
+\Hypertarget{configuracion_8h_a8bf13df16d75d7266d7c1531cb01b954}\index{configuracion.h@{configuracion.h}!PIN\_LED\_RGB\_R@{PIN\_LED\_RGB\_R}}
+\index{PIN\_LED\_RGB\_R@{PIN\_LED\_RGB\_R}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_LED\_RGB\_R}{PIN\_LED\_RGB\_R}}
+{\footnotesize\ttfamily \label{configuracion_8h_a8bf13df16d75d7266d7c1531cb01b954} 
+\+\#define PIN\+\_\+\+LED\+\_\+\+RGB\+\_\+R~6}
+
+\Hypertarget{configuracion_8h_ab4be5758bd0984dd6d300315e574d47f}\index{configuracion.h@{configuracion.h}!PIN\_RFID\_RST@{PIN\_RFID\_RST}}
+\index{PIN\_RFID\_RST@{PIN\_RFID\_RST}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_RFID\_RST}{PIN\_RFID\_RST}}
+{\footnotesize\ttfamily \label{configuracion_8h_ab4be5758bd0984dd6d300315e574d47f} 
+\+\#define PIN\+\_\+\+RFID\+\_\+\+RST~9}
+
+
+
+Pin Reset para RC522. 
+
+\Hypertarget{configuracion_8h_a94f682f71b4a56080ed71d61ff11566b}\index{configuracion.h@{configuracion.h}!PIN\_RFID\_SS@{PIN\_RFID\_SS}}
+\index{PIN\_RFID\_SS@{PIN\_RFID\_SS}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_RFID\_SS}{PIN\_RFID\_SS}}
+{\footnotesize\ttfamily \label{configuracion_8h_a94f682f71b4a56080ed71d61ff11566b} 
+\+\#define PIN\+\_\+\+RFID\+\_\+\+SS~53}
+
+
+
+Pin Slave Select para RC522. 
+
+\Hypertarget{configuracion_8h_a683a2f1ac846d9e7c7f68fd29130ee1a}\index{configuracion.h@{configuracion.h}!PIN\_SERVO@{PIN\_SERVO}}
+\index{PIN\_SERVO@{PIN\_SERVO}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_SERVO}{PIN\_SERVO}}
+{\footnotesize\ttfamily \label{configuracion_8h_a683a2f1ac846d9e7c7f68fd29130ee1a} 
+\+\#define PIN\+\_\+\+SERVO~13}
+
+\Hypertarget{configuracion_8h_a1f4b96802255805a35bee0edc593adca}\index{configuracion.h@{configuracion.h}!PIN\_SONIDO\_ANALOG@{PIN\_SONIDO\_ANALOG}}
+\index{PIN\_SONIDO\_ANALOG@{PIN\_SONIDO\_ANALOG}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_SONIDO\_ANALOG}{PIN\_SONIDO\_ANALOG}}
+{\footnotesize\ttfamily \label{configuracion_8h_a1f4b96802255805a35bee0edc593adca} 
+\+\#define PIN\+\_\+\+SONIDO\+\_\+\+ANALOG~A0}
+
+
+
+Pin analógico para sensor KY-\/037 (intensidad de sonido). 
+
+\Hypertarget{configuracion_8h_a09bddf33b4fec24aa5367055c2b920d6}\index{configuracion.h@{configuracion.h}!PIN\_SONIDO\_DIGITAL@{PIN\_SONIDO\_DIGITAL}}
+\index{PIN\_SONIDO\_DIGITAL@{PIN\_SONIDO\_DIGITAL}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_SONIDO\_DIGITAL}{PIN\_SONIDO\_DIGITAL}}
+{\footnotesize\ttfamily \label{configuracion_8h_a09bddf33b4fec24aa5367055c2b920d6} 
+\+\#define PIN\+\_\+\+SONIDO\+\_\+\+DIGITAL~8}
+
+
+
+Pin digital para sensor KY-\/037 (salida digital). 
+
+\Hypertarget{configuracion_8h_ac9fab733824f4fce1b0c53a917746269}\index{configuracion.h@{configuracion.h}!PIN\_TERMISTOR@{PIN\_TERMISTOR}}
+\index{PIN\_TERMISTOR@{PIN\_TERMISTOR}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{PIN\_TERMISTOR}{PIN\_TERMISTOR}}
+{\footnotesize\ttfamily \label{configuracion_8h_ac9fab733824f4fce1b0c53a917746269} 
+\+\#define PIN\+\_\+\+TERMISTOR~A2}
+
+
+
+Pin analógico para termistor NTC (temperatura). 
+
+
+
+\label{configuracion_8h_doc-var-members}
+\Hypertarget{configuracion_8h_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{configuracion_8h_acfb9e7912e62d1b94554eecb89323c7f}\index{configuracion.h@{configuracion.h}!botonPresionado@{botonPresionado}}
+\index{botonPresionado@{botonPresionado}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{botonPresionado}{botonPresionado}}
+{\footnotesize\ttfamily \label{configuracion_8h_acfb9e7912e62d1b94554eecb89323c7f} 
+bool boton\+Presionado\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Bandera para debounce del botón. 
+
+\Hypertarget{configuracion_8h_ad950dc05ac0a82e0e3a3a9661b687b10}\index{configuracion.h@{configuracion.h}!c1@{c1}}
+\index{c1@{c1}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{c1}{c1}}
+{\footnotesize\ttfamily \label{configuracion_8h_ad950dc05ac0a82e0e3a3a9661b687b10} 
+const float c1\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{configuracion_8h_ac957e57920eecfff5e5d1091be875050}\index{configuracion.h@{configuracion.h}!c2@{c2}}
+\index{c2@{c2}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{c2}{c2}}
+{\footnotesize\ttfamily \label{configuracion_8h_ac957e57920eecfff5e5d1091be875050} 
+const float c2}
+
+\Hypertarget{configuracion_8h_ab30139b901a2a02132d8876996075c73}\index{configuracion.h@{configuracion.h}!c3@{c3}}
+\index{c3@{c3}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{c3}{c3}}
+{\footnotesize\ttfamily \label{configuracion_8h_ab30139b901a2a02132d8876996075c73} 
+const float c3}
+
+
+
+Coeficientes de Steinhart-\/\+Hart. 
+
+\Hypertarget{configuracion_8h_a3aa994542b0c34098259468dddc47d7e}\index{configuracion.h@{configuracion.h}!campoMagnetico@{campoMagnetico}}
+\index{campoMagnetico@{campoMagnetico}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{campoMagnetico}{campoMagnetico}}
+{\footnotesize\ttfamily \label{configuracion_8h_a3aa994542b0c34098259468dddc47d7e} 
+int campo\+Magnetico\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Último valor del sensor Hall (0-\/1023). 
+
+\Hypertarget{configuracion_8h_aae21fb67ff6fa497a18291c719a2f48a}\index{configuracion.h@{configuracion.h}!columnasKeypad@{columnasKeypad}}
+\index{columnasKeypad@{columnasKeypad}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{columnasKeypad}{columnasKeypad}}
+{\footnotesize\ttfamily \label{configuracion_8h_aae21fb67ff6fa497a18291c719a2f48a} 
+const byte columnas\+Keypad\+[\doxymbox{\hyperlink{configuracion_8h_a4ed7941b88ef60255641b2324146861b}{COLUMNAS\+\_\+\+KEYPAD}}]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Pines de columna. 
+
+\Hypertarget{configuracion_8h_a847bdd2b08db7869108fe9a17d128648}\index{configuracion.h@{configuracion.h}!contadorAlarmas@{contadorAlarmas}}
+\index{contadorAlarmas@{contadorAlarmas}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{contadorAlarmas}{contadorAlarmas}}
+{\footnotesize\ttfamily \label{configuracion_8h_a847bdd2b08db7869108fe9a17d128648} 
+int contador\+Alarmas\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Número de alarmas consecutivas en ventana de 12s. 
+
+\Hypertarget{configuracion_8h_aa3406ff5b438980d1abf849b44f3a8b2}\index{configuracion.h@{configuracion.h}!emergenciaActiva@{emergenciaActiva}}
+\index{emergenciaActiva@{emergenciaActiva}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{emergenciaActiva}{emergenciaActiva}}
+{\footnotesize\ttfamily \label{configuracion_8h_aa3406ff5b438980d1abf849b44f3a8b2} 
+bool emergencia\+Activa\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Bandera que indica estado de emergencia crítica. 
+
+\Hypertarget{configuracion_8h_adcd57a51bfcd8887f088bdd3cb736245}\index{configuracion.h@{configuracion.h}!filasKeypad@{filasKeypad}}
+\index{filasKeypad@{filasKeypad}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{filasKeypad}{filasKeypad}}
+{\footnotesize\ttfamily \label{configuracion_8h_adcd57a51bfcd8887f088bdd3cb736245} 
+const byte filas\+Keypad\+[\doxymbox{\hyperlink{configuracion_8h_aa5fd7c6e6fa5aa567e1edbb8b2fecb9c}{FILAS\+\_\+\+KEYPAD}}]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Pines de fila (definidos en \doxylink{sistema__confort_8cpp}{sistema\+\_\+confort.\+cpp}). 
+
+\Hypertarget{configuracion_8h_a361d9560a5d2b91fded39e22d14764e4}\index{configuracion.h@{configuracion.h}!luz@{luz}}
+\index{luz@{luz}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{luz}{luz}}
+{\footnotesize\ttfamily \label{configuracion_8h_a361d9560a5d2b91fded39e22d14764e4} 
+int luz\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Último valor de luz (0-\/1023). 
+
+\Hypertarget{configuracion_8h_a4c933287b489bfcb0c54bf05f56ce5ce}\index{configuracion.h@{configuracion.h}!R1@{R1}}
+\index{R1@{R1}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{R1}{R1}}
+{\footnotesize\ttfamily \label{configuracion_8h_a4c933287b489bfcb0c54bf05f56ce5ce} 
+const float R1\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Resistencia fija en serie (10k ohm). 
+
+\Hypertarget{configuracion_8h_a73fb5b4c77029286dd76ac7245b0a636}\index{configuracion.h@{configuracion.h}!SONIDO\_UMBRAL@{SONIDO\_UMBRAL}}
+\index{SONIDO\_UMBRAL@{SONIDO\_UMBRAL}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{SONIDO\_UMBRAL}{SONIDO\_UMBRAL}}
+{\footnotesize\ttfamily \label{configuracion_8h_a73fb5b4c77029286dd76ac7245b0a636} 
+const int SONIDO\+\_\+\+UMBRAL\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Umbral analógico para sensor de sonido. 
+
+\Hypertarget{configuracion_8h_a3a04df7bf99021664003e4789bf41040}\index{configuracion.h@{configuracion.h}!sonidoAnalog@{sonidoAnalog}}
+\index{sonidoAnalog@{sonidoAnalog}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{sonidoAnalog}{sonidoAnalog}}
+{\footnotesize\ttfamily \label{configuracion_8h_a3a04df7bf99021664003e4789bf41040} 
+int sonido\+Analog\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Último valor analógico del sensor de sonido. 
+
+\Hypertarget{configuracion_8h_aa607c0051ef2d03b805541b8b6603cf5}\index{configuracion.h@{configuracion.h}!sonidoDigital@{sonidoDigital}}
+\index{sonidoDigital@{sonidoDigital}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{sonidoDigital}{sonidoDigital}}
+{\footnotesize\ttfamily \label{configuracion_8h_aa607c0051ef2d03b805541b8b6603cf5} 
+bool sonido\+Digital\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Último valor digital del sensor de sonido. 
+
+\Hypertarget{configuracion_8h_a11013b215cf87940712bd18105a0905e}\index{configuracion.h@{configuracion.h}!teclas@{teclas}}
+\index{teclas@{teclas}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{teclas}{teclas}}
+{\footnotesize\ttfamily \label{configuracion_8h_a11013b215cf87940712bd18105a0905e} 
+const char teclas\+[\doxymbox{\hyperlink{configuracion_8h_aa5fd7c6e6fa5aa567e1edbb8b2fecb9c}{FILAS\+\_\+\+KEYPAD}}]\+\+[\doxymbox{\hyperlink{configuracion_8h_a4ed7941b88ef60255641b2324146861b}{COLUMNAS\+\_\+\+KEYPAD}}]\+\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Mapa de caracteres. 
+
+\Hypertarget{configuracion_8h_a358276b254ca03eabbdc82c36430367e}\index{configuracion.h@{configuracion.h}!TEMP\_MAX@{TEMP\_MAX}}
+\index{TEMP\_MAX@{TEMP\_MAX}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{TEMP\_MAX}{TEMP\_MAX}}
+{\footnotesize\ttfamily \label{configuracion_8h_a358276b254ca03eabbdc82c36430367e} 
+const float TEMP\+\_\+\+MAX\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Temperatura máxima permitida (°C). 
+
+\Hypertarget{configuracion_8h_abc78c5726c0d3b93cb4ca86a8ce18272}\index{configuracion.h@{configuracion.h}!TEMP\_MIN@{TEMP\_MIN}}
+\index{TEMP\_MIN@{TEMP\_MIN}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{TEMP\_MIN}{TEMP\_MIN}}
+{\footnotesize\ttfamily \label{configuracion_8h_abc78c5726c0d3b93cb4ca86a8ce18272} 
+const float TEMP\+\_\+\+MIN\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Temperatura mínima permitida (°C). 
+
+\Hypertarget{configuracion_8h_a8347aeb522c9e13e9f376640fad780e7}\index{configuracion.h@{configuracion.h}!temperatura@{temperatura}}
+\index{temperatura@{temperatura}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{temperatura}{temperatura}}
+{\footnotesize\ttfamily \label{configuracion_8h_a8347aeb522c9e13e9f376640fad780e7} 
+float temperatura\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Última temperatura leída (°C). 
+
+\Hypertarget{configuracion_8h_ae1e7a3c1339ecafdeb2865e229c75936}\index{configuracion.h@{configuracion.h}!tiempoPrimeraAlarma@{tiempoPrimeraAlarma}}
+\index{tiempoPrimeraAlarma@{tiempoPrimeraAlarma}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{tiempoPrimeraAlarma}{tiempoPrimeraAlarma}}
+{\footnotesize\ttfamily \label{configuracion_8h_ae1e7a3c1339ecafdeb2865e229c75936} 
+unsigned long tiempo\+Primera\+Alarma\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Momento (ms) de la primera alarma de la ventana. 
+
+\Hypertarget{configuracion_8h_a2351d3e05521914ba25469b867139e55}\index{configuracion.h@{configuracion.h}!tiempoUltimoBoton@{tiempoUltimoBoton}}
+\index{tiempoUltimoBoton@{tiempoUltimoBoton}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{tiempoUltimoBoton}{tiempoUltimoBoton}}
+{\footnotesize\ttfamily \label{configuracion_8h_a2351d3e05521914ba25469b867139e55} 
+unsigned long tiempo\+Ultimo\+Boton\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{configuracion_8h_a68e9384d506376f2672e5cb74c693abd}\index{configuracion.h@{configuracion.h}!ultimaTecla@{ultimaTecla}}
+\index{ultimaTecla@{ultimaTecla}!configuracion.h@{configuracion.h}}
+\doxysubsubsection{\texorpdfstring{ultimaTecla}{ultimaTecla}}
+{\footnotesize\ttfamily \label{configuracion_8h_a68e9384d506376f2672e5cb74c693abd} 
+char ultima\+Tecla\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Última tecla presionada en el teclado. 
+

@@ -1,0 +1,420 @@
+\doxysection{Sistema\+Confort Class Reference}
+\hypertarget{class_sistema_confort}{}\label{class_sistema_confort}\index{SistemaConfort@{SistemaConfort}}
+
+
+{\ttfamily \+\#include $<$sistema\+\_\+confort.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_sistema_confort_afb0ea0cdb0cb21a3f2b2f37560b83cf2}{Sistema\+Confort}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_a65856e918724a3cea334a22821d7445d}{begin}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_aca3d6ca65f686f5dc1c7bfd2199ee7cc}{leer\+Sensores}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_a81d494a4efbb6fdab2a0c62fe0804736}{actualizar\+LCD}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_af8b870b9488392192add901c0a64b1a5}{leer\+Teclado}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_adc2a51bb1305d416becb6dd3e306b40a}{controlar\+Alarmas}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_a9c5c9fe3e7fc8eae307bac364a27de29}{test\+Hardware}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_a3172dcdd6e34ed8cb46eca61ea8a1b0b}{leer\+Boton}} ()
+\item 
+bool \doxymbox{\hyperlink{class_sistema_confort_ab0c1ba6b93ed806cb6b1268ebd4440ff}{leer\+RFID}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_a36c5ff93a848326cdd676593821adb91}{guardar\+Credenciales}} (String clave, String uid)
+\item 
+bool \doxymbox{\hyperlink{class_sistema_confort_a46ed08cf0c3081490654d68251493ff8}{validar\+Clave}} (String entrada)
+\item 
+bool \doxymbox{\hyperlink{class_sistema_confort_a8a7f9c44c6fae74bbb260095e5131d63}{validar\+UID}} (String uid)
+\item 
+int \doxymbox{\hyperlink{class_sistema_confort_a5322892514175b26ff9e652fc1bc6508}{get\+Intentos\+Fallidos}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_a51918017153e3c16f0188e1585432a72}{incrementar\+Intentos\+Fallidos}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_a37648ca2dc9b0dc5ced32dba4a5fa64c}{reset\+Intentos\+Fallidos}} ()
+\item 
+float \doxymbox{\hyperlink{class_sistema_confort_a4b8ab119cf2a68a438ff33d5df5d7f55}{get\+Temperatura}} () const
+\item 
+int \doxymbox{\hyperlink{class_sistema_confort_ac4e16e1fad3449a07f192fe6136d40f4}{get\+Luz}} () const
+\item 
+int \doxymbox{\hyperlink{class_sistema_confort_a622ef44932c4b661e1ff434875dbc88a}{get\+Campo\+Magnetico}} () const
+\item 
+int \doxymbox{\hyperlink{class_sistema_confort_a55ce556b92305b8747a3f8be677b48b1}{get\+Sonido\+Analog}} () const
+\item 
+bool \doxymbox{\hyperlink{class_sistema_confort_a3d2cb02ed8d111d8550b2c680efbb715}{get\+Sonido\+Digital}} () const
+\item 
+int \doxymbox{\hyperlink{class_sistema_confort_a672768683446da6d66538a90b90260a3}{get\+Alarmas\+Consecutivas}} () const
+\item 
+bool \doxymbox{\hyperlink{class_sistema_confort_aee4f0ab2cca7427a5859b1651aa38faf}{hay\+Emergencia}} () const
+\item 
+Liquid\+Crystal \& \doxymbox{\hyperlink{class_sistema_confort_a38a30fb35778a4015ce90bb4ccb7409b}{get\+LCD}} ()
+\item 
+String \doxymbox{\hyperlink{class_sistema_confort_a7a9f23c16cfa6a96d9500b34f6a260de}{get\+Clave\+Almacenada}} () const
+\item 
+String \doxymbox{\hyperlink{class_sistema_confort_a48c00058ac97235fba5415d11c4d3298}{get\+UIDAlmacenado}} () const
+\item 
+String \doxymbox{\hyperlink{class_sistema_confort_ab3d7ed70cccd3b0d81177a21aa7aaa3b}{leer\+Cualquier\+RFID}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_a5d37032f0b783dd371a947f93d7071cc}{leer\+Termistor}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_a7b934199747afbf3fb21d10a63671987}{leer\+LDR}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_aa0bafcd1dabeb7998824158b00b90306}{leer\+Hall}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_a4f24559b42609740e4ccafce4eda56e3}{leer\+Sonido}} ()
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_a01388718ac680b4bb7f5718aec6531f9}{procesar\+Tecla}} (char tecla)
+\item 
+void \doxymbox{\hyperlink{class_sistema_confort_aa400b2f3395b07d2bbb546295a95a8a8}{cargar\+Credenciales\+Desde\+EEPROM}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \doxymbox{\hyperlink{class_sistema_confort_a8d9ec7b49e1c4c5283503a94dab7fde4}{temperatura}}
+\item 
+int \doxymbox{\hyperlink{class_sistema_confort_af6a856e1c086255601d3fb3e3fc6b8c4}{luz}}
+\item 
+int \doxymbox{\hyperlink{class_sistema_confort_a08605d6354a765f29c539b7c01f90505}{campo\+Magnetico}}
+\item 
+int \doxymbox{\hyperlink{class_sistema_confort_a290f99098f9ce7b27a523d8372289b28}{sonido\+Analog}}
+\item 
+bool \doxymbox{\hyperlink{class_sistema_confort_ae17420927948e45f6af337bf8a4b7296}{sonido\+Digital}}
+\item 
+int \doxymbox{\hyperlink{class_sistema_confort_a8fcf6e6d2d695100ca730a8cc59edacf}{alarmas\+Consecutivas}}
+\item 
+unsigned long \doxymbox{\hyperlink{class_sistema_confort_a25c15cbde9ca246b1f867b6de0fb76be}{tiempo\+Primera\+Alarma}}
+\item 
+bool \doxymbox{\hyperlink{class_sistema_confort_a8557a94cfef49156ed12f6feced78a2e}{emergencia\+Activa}}
+\item 
+char \doxymbox{\hyperlink{class_sistema_confort_a5eec5460ea81e9d945117dd4556d80a4}{ultima\+Tecla}}
+\item 
+Liquid\+Crystal \doxymbox{\hyperlink{class_sistema_confort_aa9b505c38acbfb17fd78832dc644aeb3}{lcd}}
+\item 
+Keypad \doxymbox{\hyperlink{class_sistema_confort_a42c60ed04a6377b27519e6bea9a50409}{teclado}}
+\item 
+Servo \doxymbox{\hyperlink{class_sistema_confort_a9426f8800ef592de171cd447afdb651c}{myservo}}
+\item 
+int \doxymbox{\hyperlink{class_sistema_confort_aa44e738c9f176d80d216d0b2ab169844}{intentos\+Fallidos}}
+\item 
+String \doxymbox{\hyperlink{class_sistema_confort_a3ced79e55d7fe4817f485736ef9419b4}{clave\+Almacenada}}
+\item 
+String \doxymbox{\hyperlink{class_sistema_confort_a8dbda3ea35b81489289de635206c4caf}{uid\+Almacenado}}
+\item 
+MFRC522 \doxymbox{\hyperlink{class_sistema_confort_ad83b75b340b9fcfdfabc46fc6910943d}{rfid}}
+\end{DoxyCompactItemize}
+
+
+\label{class_sistema_confort_doc-constructors}
+\Hypertarget{class_sistema_confort_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_sistema_confort_afb0ea0cdb0cb21a3f2b2f37560b83cf2}\index{SistemaConfort@{SistemaConfort}!SistemaConfort@{SistemaConfort}}
+\index{SistemaConfort@{SistemaConfort}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{SistemaConfort()}{SistemaConfort()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_afb0ea0cdb0cb21a3f2b2f37560b83cf2} 
+Sistema\+Confort::\+\+Sistema\+Confort (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{class_sistema_confort_doc-func-members}
+\Hypertarget{class_sistema_confort_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_sistema_confort_a81d494a4efbb6fdab2a0c62fe0804736}\index{SistemaConfort@{SistemaConfort}!actualizarLCD@{actualizarLCD}}
+\index{actualizarLCD@{actualizarLCD}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{actualizarLCD()}{actualizarLCD()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a81d494a4efbb6fdab2a0c62fe0804736} 
+void Sistema\+Confort::\+actualizar\+LCD (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_a65856e918724a3cea334a22821d7445d}\index{SistemaConfort@{SistemaConfort}!begin@{begin}}
+\index{begin@{begin}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a65856e918724a3cea334a22821d7445d} 
+void Sistema\+Confort::\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_aa400b2f3395b07d2bbb546295a95a8a8}\index{SistemaConfort@{SistemaConfort}!cargarCredencialesDesdeEEPROM@{cargarCredencialesDesdeEEPROM}}
+\index{cargarCredencialesDesdeEEPROM@{cargarCredencialesDesdeEEPROM}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{cargarCredencialesDesdeEEPROM()}{cargarCredencialesDesdeEEPROM()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_aa400b2f3395b07d2bbb546295a95a8a8} 
+void Sistema\+Confort::\+cargar\+Credenciales\+Desde\+EEPROM (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_adc2a51bb1305d416becb6dd3e306b40a}\index{SistemaConfort@{SistemaConfort}!controlarAlarmas@{controlarAlarmas}}
+\index{controlarAlarmas@{controlarAlarmas}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{controlarAlarmas()}{controlarAlarmas()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_adc2a51bb1305d416becb6dd3e306b40a} 
+void Sistema\+Confort::\+controlar\+Alarmas (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_a672768683446da6d66538a90b90260a3}\index{SistemaConfort@{SistemaConfort}!getAlarmasConsecutivas@{getAlarmasConsecutivas}}
+\index{getAlarmasConsecutivas@{getAlarmasConsecutivas}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{getAlarmasConsecutivas()}{getAlarmasConsecutivas()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a672768683446da6d66538a90b90260a3} 
+int Sistema\+Confort::\+get\+Alarmas\+Consecutivas (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_sistema_confort_a622ef44932c4b661e1ff434875dbc88a}\index{SistemaConfort@{SistemaConfort}!getCampoMagnetico@{getCampoMagnetico}}
+\index{getCampoMagnetico@{getCampoMagnetico}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{getCampoMagnetico()}{getCampoMagnetico()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a622ef44932c4b661e1ff434875dbc88a} 
+int Sistema\+Confort::\+get\+Campo\+Magnetico (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_sistema_confort_a7a9f23c16cfa6a96d9500b34f6a260de}\index{SistemaConfort@{SistemaConfort}!getClaveAlmacenada@{getClaveAlmacenada}}
+\index{getClaveAlmacenada@{getClaveAlmacenada}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{getClaveAlmacenada()}{getClaveAlmacenada()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a7a9f23c16cfa6a96d9500b34f6a260de} 
+String Sistema\+Confort::\+get\+Clave\+Almacenada (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_sistema_confort_a5322892514175b26ff9e652fc1bc6508}\index{SistemaConfort@{SistemaConfort}!getIntentosFallidos@{getIntentosFallidos}}
+\index{getIntentosFallidos@{getIntentosFallidos}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{getIntentosFallidos()}{getIntentosFallidos()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a5322892514175b26ff9e652fc1bc6508} 
+int Sistema\+Confort::\+get\+Intentos\+Fallidos (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_a38a30fb35778a4015ce90bb4ccb7409b}\index{SistemaConfort@{SistemaConfort}!getLCD@{getLCD}}
+\index{getLCD@{getLCD}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{getLCD()}{getLCD()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a38a30fb35778a4015ce90bb4ccb7409b} 
+Liquid\+Crystal \& Sistema\+Confort::\+get\+LCD (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_sistema_confort_ac4e16e1fad3449a07f192fe6136d40f4}\index{SistemaConfort@{SistemaConfort}!getLuz@{getLuz}}
+\index{getLuz@{getLuz}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{getLuz()}{getLuz()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_ac4e16e1fad3449a07f192fe6136d40f4} 
+int Sistema\+Confort::\+get\+Luz (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_sistema_confort_a55ce556b92305b8747a3f8be677b48b1}\index{SistemaConfort@{SistemaConfort}!getSonidoAnalog@{getSonidoAnalog}}
+\index{getSonidoAnalog@{getSonidoAnalog}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{getSonidoAnalog()}{getSonidoAnalog()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a55ce556b92305b8747a3f8be677b48b1} 
+int Sistema\+Confort::\+get\+Sonido\+Analog (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_sistema_confort_a3d2cb02ed8d111d8550b2c680efbb715}\index{SistemaConfort@{SistemaConfort}!getSonidoDigital@{getSonidoDigital}}
+\index{getSonidoDigital@{getSonidoDigital}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{getSonidoDigital()}{getSonidoDigital()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a3d2cb02ed8d111d8550b2c680efbb715} 
+bool Sistema\+Confort::\+get\+Sonido\+Digital (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_sistema_confort_a4b8ab119cf2a68a438ff33d5df5d7f55}\index{SistemaConfort@{SistemaConfort}!getTemperatura@{getTemperatura}}
+\index{getTemperatura@{getTemperatura}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{getTemperatura()}{getTemperatura()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a4b8ab119cf2a68a438ff33d5df5d7f55} 
+float Sistema\+Confort::\+get\+Temperatura (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_sistema_confort_a48c00058ac97235fba5415d11c4d3298}\index{SistemaConfort@{SistemaConfort}!getUIDAlmacenado@{getUIDAlmacenado}}
+\index{getUIDAlmacenado@{getUIDAlmacenado}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{getUIDAlmacenado()}{getUIDAlmacenado()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a48c00058ac97235fba5415d11c4d3298} 
+String Sistema\+Confort::\+get\+UIDAlmacenado (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_sistema_confort_a36c5ff93a848326cdd676593821adb91}\index{SistemaConfort@{SistemaConfort}!guardarCredenciales@{guardarCredenciales}}
+\index{guardarCredenciales@{guardarCredenciales}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{guardarCredenciales()}{guardarCredenciales()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a36c5ff93a848326cdd676593821adb91} 
+void Sistema\+Confort::\+guardar\+Credenciales (\begin{DoxyParamCaption}\item[{String}]{clave}{, }\item[{String}]{uid}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_aee4f0ab2cca7427a5859b1651aa38faf}\index{SistemaConfort@{SistemaConfort}!hayEmergencia@{hayEmergencia}}
+\index{hayEmergencia@{hayEmergencia}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{hayEmergencia()}{hayEmergencia()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_aee4f0ab2cca7427a5859b1651aa38faf} 
+bool Sistema\+Confort::\+hay\+Emergencia (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_sistema_confort_a51918017153e3c16f0188e1585432a72}\index{SistemaConfort@{SistemaConfort}!incrementarIntentosFallidos@{incrementarIntentosFallidos}}
+\index{incrementarIntentosFallidos@{incrementarIntentosFallidos}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{incrementarIntentosFallidos()}{incrementarIntentosFallidos()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a51918017153e3c16f0188e1585432a72} 
+void Sistema\+Confort::\+incrementar\+Intentos\+Fallidos (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_a3172dcdd6e34ed8cb46eca61ea8a1b0b}\index{SistemaConfort@{SistemaConfort}!leerBoton@{leerBoton}}
+\index{leerBoton@{leerBoton}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{leerBoton()}{leerBoton()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a3172dcdd6e34ed8cb46eca61ea8a1b0b} 
+void Sistema\+Confort::\+leer\+Boton (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_ab3d7ed70cccd3b0d81177a21aa7aaa3b}\index{SistemaConfort@{SistemaConfort}!leerCualquierRFID@{leerCualquierRFID}}
+\index{leerCualquierRFID@{leerCualquierRFID}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{leerCualquierRFID()}{leerCualquierRFID()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_ab3d7ed70cccd3b0d81177a21aa7aaa3b} 
+String Sistema\+Confort::\+leer\+Cualquier\+RFID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_aa0bafcd1dabeb7998824158b00b90306}\index{SistemaConfort@{SistemaConfort}!leerHall@{leerHall}}
+\index{leerHall@{leerHall}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{leerHall()}{leerHall()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_aa0bafcd1dabeb7998824158b00b90306} 
+void Sistema\+Confort::\+leer\+Hall (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_a7b934199747afbf3fb21d10a63671987}\index{SistemaConfort@{SistemaConfort}!leerLDR@{leerLDR}}
+\index{leerLDR@{leerLDR}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{leerLDR()}{leerLDR()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a7b934199747afbf3fb21d10a63671987} 
+void Sistema\+Confort::\+leer\+LDR (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_ab0c1ba6b93ed806cb6b1268ebd4440ff}\index{SistemaConfort@{SistemaConfort}!leerRFID@{leerRFID}}
+\index{leerRFID@{leerRFID}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{leerRFID()}{leerRFID()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_ab0c1ba6b93ed806cb6b1268ebd4440ff} 
+bool Sistema\+Confort::\+leer\+RFID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_aca3d6ca65f686f5dc1c7bfd2199ee7cc}\index{SistemaConfort@{SistemaConfort}!leerSensores@{leerSensores}}
+\index{leerSensores@{leerSensores}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{leerSensores()}{leerSensores()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_aca3d6ca65f686f5dc1c7bfd2199ee7cc} 
+void Sistema\+Confort::\+leer\+Sensores (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_a4f24559b42609740e4ccafce4eda56e3}\index{SistemaConfort@{SistemaConfort}!leerSonido@{leerSonido}}
+\index{leerSonido@{leerSonido}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{leerSonido()}{leerSonido()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a4f24559b42609740e4ccafce4eda56e3} 
+void Sistema\+Confort::\+leer\+Sonido (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_af8b870b9488392192add901c0a64b1a5}\index{SistemaConfort@{SistemaConfort}!leerTeclado@{leerTeclado}}
+\index{leerTeclado@{leerTeclado}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{leerTeclado()}{leerTeclado()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_af8b870b9488392192add901c0a64b1a5} 
+void Sistema\+Confort::\+leer\+Teclado (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_a5d37032f0b783dd371a947f93d7071cc}\index{SistemaConfort@{SistemaConfort}!leerTermistor@{leerTermistor}}
+\index{leerTermistor@{leerTermistor}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{leerTermistor()}{leerTermistor()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a5d37032f0b783dd371a947f93d7071cc} 
+void Sistema\+Confort::\+leer\+Termistor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_a01388718ac680b4bb7f5718aec6531f9}\index{SistemaConfort@{SistemaConfort}!procesarTecla@{procesarTecla}}
+\index{procesarTecla@{procesarTecla}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{procesarTecla()}{procesarTecla()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a01388718ac680b4bb7f5718aec6531f9} 
+void Sistema\+Confort::\+procesar\+Tecla (\begin{DoxyParamCaption}\item[{char}]{tecla}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_a37648ca2dc9b0dc5ced32dba4a5fa64c}\index{SistemaConfort@{SistemaConfort}!resetIntentosFallidos@{resetIntentosFallidos}}
+\index{resetIntentosFallidos@{resetIntentosFallidos}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{resetIntentosFallidos()}{resetIntentosFallidos()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a37648ca2dc9b0dc5ced32dba4a5fa64c} 
+void Sistema\+Confort::\+reset\+Intentos\+Fallidos (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_a9c5c9fe3e7fc8eae307bac364a27de29}\index{SistemaConfort@{SistemaConfort}!testHardware@{testHardware}}
+\index{testHardware@{testHardware}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{testHardware()}{testHardware()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a9c5c9fe3e7fc8eae307bac364a27de29} 
+void Sistema\+Confort::\+test\+Hardware (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_a46ed08cf0c3081490654d68251493ff8}\index{SistemaConfort@{SistemaConfort}!validarClave@{validarClave}}
+\index{validarClave@{validarClave}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{validarClave()}{validarClave()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a46ed08cf0c3081490654d68251493ff8} 
+bool Sistema\+Confort::\+validar\+Clave (\begin{DoxyParamCaption}\item[{String}]{entrada}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_sistema_confort_a8a7f9c44c6fae74bbb260095e5131d63}\index{SistemaConfort@{SistemaConfort}!validarUID@{validarUID}}
+\index{validarUID@{validarUID}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{validarUID()}{validarUID()}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a8a7f9c44c6fae74bbb260095e5131d63} 
+bool Sistema\+Confort::\+validar\+UID (\begin{DoxyParamCaption}\item[{String}]{uid}{}\end{DoxyParamCaption})}
+
+
+
+\label{class_sistema_confort_doc-variable-members}
+\Hypertarget{class_sistema_confort_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{class_sistema_confort_a8fcf6e6d2d695100ca730a8cc59edacf}\index{SistemaConfort@{SistemaConfort}!alarmasConsecutivas@{alarmasConsecutivas}}
+\index{alarmasConsecutivas@{alarmasConsecutivas}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{alarmasConsecutivas}{alarmasConsecutivas}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a8fcf6e6d2d695100ca730a8cc59edacf} 
+int Sistema\+Confort::\+alarmas\+Consecutivas\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_a08605d6354a765f29c539b7c01f90505}\index{SistemaConfort@{SistemaConfort}!campoMagnetico@{campoMagnetico}}
+\index{campoMagnetico@{campoMagnetico}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{campoMagnetico}{campoMagnetico}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a08605d6354a765f29c539b7c01f90505} 
+int Sistema\+Confort::\+campo\+Magnetico\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_a3ced79e55d7fe4817f485736ef9419b4}\index{SistemaConfort@{SistemaConfort}!claveAlmacenada@{claveAlmacenada}}
+\index{claveAlmacenada@{claveAlmacenada}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{claveAlmacenada}{claveAlmacenada}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a3ced79e55d7fe4817f485736ef9419b4} 
+String Sistema\+Confort::\+clave\+Almacenada\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_a8557a94cfef49156ed12f6feced78a2e}\index{SistemaConfort@{SistemaConfort}!emergenciaActiva@{emergenciaActiva}}
+\index{emergenciaActiva@{emergenciaActiva}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{emergenciaActiva}{emergenciaActiva}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a8557a94cfef49156ed12f6feced78a2e} 
+bool Sistema\+Confort::\+emergencia\+Activa\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_aa44e738c9f176d80d216d0b2ab169844}\index{SistemaConfort@{SistemaConfort}!intentosFallidos@{intentosFallidos}}
+\index{intentosFallidos@{intentosFallidos}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{intentosFallidos}{intentosFallidos}}
+{\footnotesize\ttfamily \label{class_sistema_confort_aa44e738c9f176d80d216d0b2ab169844} 
+int Sistema\+Confort::\+intentos\+Fallidos\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_aa9b505c38acbfb17fd78832dc644aeb3}\index{SistemaConfort@{SistemaConfort}!lcd@{lcd}}
+\index{lcd@{lcd}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{lcd}{lcd}}
+{\footnotesize\ttfamily \label{class_sistema_confort_aa9b505c38acbfb17fd78832dc644aeb3} 
+Liquid\+Crystal Sistema\+Confort::\+lcd\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_af6a856e1c086255601d3fb3e3fc6b8c4}\index{SistemaConfort@{SistemaConfort}!luz@{luz}}
+\index{luz@{luz}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{luz}{luz}}
+{\footnotesize\ttfamily \label{class_sistema_confort_af6a856e1c086255601d3fb3e3fc6b8c4} 
+int Sistema\+Confort::\+luz\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_a9426f8800ef592de171cd447afdb651c}\index{SistemaConfort@{SistemaConfort}!myservo@{myservo}}
+\index{myservo@{myservo}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{myservo}{myservo}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a9426f8800ef592de171cd447afdb651c} 
+Servo Sistema\+Confort::\+myservo\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_ad83b75b340b9fcfdfabc46fc6910943d}\index{SistemaConfort@{SistemaConfort}!rfid@{rfid}}
+\index{rfid@{rfid}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{rfid}{rfid}}
+{\footnotesize\ttfamily \label{class_sistema_confort_ad83b75b340b9fcfdfabc46fc6910943d} 
+MFRC522 Sistema\+Confort::\+rfid\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_a290f99098f9ce7b27a523d8372289b28}\index{SistemaConfort@{SistemaConfort}!sonidoAnalog@{sonidoAnalog}}
+\index{sonidoAnalog@{sonidoAnalog}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{sonidoAnalog}{sonidoAnalog}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a290f99098f9ce7b27a523d8372289b28} 
+int Sistema\+Confort::\+sonido\+Analog\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_ae17420927948e45f6af337bf8a4b7296}\index{SistemaConfort@{SistemaConfort}!sonidoDigital@{sonidoDigital}}
+\index{sonidoDigital@{sonidoDigital}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{sonidoDigital}{sonidoDigital}}
+{\footnotesize\ttfamily \label{class_sistema_confort_ae17420927948e45f6af337bf8a4b7296} 
+bool Sistema\+Confort::\+sonido\+Digital\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_a42c60ed04a6377b27519e6bea9a50409}\index{SistemaConfort@{SistemaConfort}!teclado@{teclado}}
+\index{teclado@{teclado}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{teclado}{teclado}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a42c60ed04a6377b27519e6bea9a50409} 
+Keypad Sistema\+Confort::\+teclado\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_a8d9ec7b49e1c4c5283503a94dab7fde4}\index{SistemaConfort@{SistemaConfort}!temperatura@{temperatura}}
+\index{temperatura@{temperatura}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{temperatura}{temperatura}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a8d9ec7b49e1c4c5283503a94dab7fde4} 
+float Sistema\+Confort::\+temperatura\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_a25c15cbde9ca246b1f867b6de0fb76be}\index{SistemaConfort@{SistemaConfort}!tiempoPrimeraAlarma@{tiempoPrimeraAlarma}}
+\index{tiempoPrimeraAlarma@{tiempoPrimeraAlarma}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{tiempoPrimeraAlarma}{tiempoPrimeraAlarma}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a25c15cbde9ca246b1f867b6de0fb76be} 
+unsigned long Sistema\+Confort::\+tiempo\+Primera\+Alarma\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_a8dbda3ea35b81489289de635206c4caf}\index{SistemaConfort@{SistemaConfort}!uidAlmacenado@{uidAlmacenado}}
+\index{uidAlmacenado@{uidAlmacenado}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{uidAlmacenado}{uidAlmacenado}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a8dbda3ea35b81489289de635206c4caf} 
+String Sistema\+Confort::\+uid\+Almacenado\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_sistema_confort_a5eec5460ea81e9d945117dd4556d80a4}\index{SistemaConfort@{SistemaConfort}!ultimaTecla@{ultimaTecla}}
+\index{ultimaTecla@{ultimaTecla}!SistemaConfort@{SistemaConfort}}
+\doxysubsubsection{\texorpdfstring{ultimaTecla}{ultimaTecla}}
+{\footnotesize\ttfamily \label{class_sistema_confort_a5eec5460ea81e9d945117dd4556d80a4} 
+char Sistema\+Confort::\+ultima\+Tecla\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{sistema__confort_8h}{sistema\+\_\+confort.\+h}}\item 
+\doxymbox{\hyperlink{sistema__confort_8cpp}{sistema\+\_\+confort.\+cpp}}\end{DoxyCompactItemize}
