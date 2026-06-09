@@ -45,6 +45,7 @@ class SistemaConfort {
     String getClaveAlmacenada() const { return claveAlmacenada; }
     String getUIDAlmacenado() const { return uidAlmacenado; }
     String leerCualquierRFID();
+    void moverServo(int angulo) { myservo.write(angulo); }  // 0=cerrado, 90=abierto
  
   private:
     void leerTermistor();
@@ -80,3 +81,4 @@ class SistemaConfort {
 };
  
 #endif // SISTEMA_CONFORT_H
+ 

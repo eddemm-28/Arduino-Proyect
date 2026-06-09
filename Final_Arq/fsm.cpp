@@ -73,6 +73,7 @@ void dispararEvento(int evento) {
         estadoActual = ESTADO_CONFIGURACION;
         Serial.println("-> CONFIGURACION");
         detenerTemporizadores();
+        if (ptrSistema) ptrSistema->moverServo(90);  // abrir puerta
       } 
       else if (evento == EVENTO_CLAVE_INCORRECTA) {
         int fallos = ptrSistema->getIntentosFallidos();
@@ -108,6 +109,7 @@ void dispararEvento(int evento) {
         detenerTemporizadores();
         // Recargar credenciales por si se registró un nuevo RFID
         if (ptrSistema) ptrSistema->cargarCredencialesDesdeEEPROM();
+        if (ptrSistema) ptrSistema->moverServo(0);  // cerrar puerta
       }
       else if (evento == EVENTO_RFID_DETECTADO && subEstadoConfig == CONFIG_REGISTRO_RFID) {
         String nuevoUID = obtenerUIDLeido();
@@ -129,6 +131,7 @@ void dispararEvento(int evento) {
           detenerTemporizadores();
           // Recargar credenciales por si se registró un nuevo RFID
           if (ptrSistema) ptrSistema->cargarCredencialesDesdeEEPROM();
+          //if (ptrSistema) ptrSistema->moverServo(0);  // cerrar puerta
           timer2s.Start();
         } else {
           subEstadoConfig = CONFIG_MENU;
@@ -220,6 +223,7 @@ void dispararEvento(int evento) {
         estadoActual = ESTADO_CONFIGURACION;
         Serial.println("-> CONFIGURACION (#)");
         detenerTemporizadores();
+        if (ptrSistema) ptrSistema->moverServo(90);  // abrir puerta
       }
       else if (evento == EVENTO_SONIDO_ALTO || evento == EVENTO_HALL_DETECTADO) {
         // Sonido Y campo magnético (Hall) comparten el mismo contador de detecciones
@@ -254,6 +258,7 @@ void dispararEvento(int evento) {
         estadoActual = ESTADO_CONFIGURACION;
         Serial.println("-> CONFIGURACION (*)");
         detenerTemporizadores();
+        if (ptrSistema) ptrSistema->moverServo(90);  // abrir puerta
       }
       else if (evento == EVENTO_CONDICION_ALARMA_AMBIENTAL) {
         enAlarmaPorIntruso = false;
@@ -283,6 +288,7 @@ void dispararEvento(int evento) {
         Serial.println("-> INICIO (3 alarmas en 12s)");
         detenerTemporizadores();
         if (ptrSistema) ptrSistema->resetIntentosFallidos();
+        if (ptrSistema) ptrSistema->moverServo(0);
         alarmasGlobales = 0;
       }
       break;
@@ -495,3 +501,4 @@ EstadoSistema getEstadoActual() {
 SubEstadoConfig getSubEstadoConfig() {
   return subEstadoConfig;
 }
+ 
