@@ -88,7 +88,7 @@ void loop() {
       // Campo magnético: el sensor Hall devuelve ~512 en reposo;
       // una variación > 50 respecto al centro indica presencia de imán
       int hall = confort.getCampoMagnetico();
-      if (hall < 520 || hall > 610) {
+      if (hall < 480 || hall > 610) {
         dispararEvento(EVENTO_HALL_DETECTADO);
       }
     }
