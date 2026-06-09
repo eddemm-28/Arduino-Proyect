@@ -7,6 +7,13 @@
 #define CONFIGURACION_H
  
 #include <Arduino.h>
+#define EEPROM_FRANJAS_START   13
+// Cada franja ocupa 4 bytes: 2 para horaInicio (int), 2 para horaFin (int)
+// Rol 0: pos 13-16 | Rol 1: pos 17-20 | Rol 2: pos 21-24 | Rol 3: pos 25-28
+
+// ==================== ROLES ====================
+#define NUM_ROLES 4
+extern int rolActivo;    
  
 // ==================== PINES PARA ARDUINO MEGA ====================
 #define PIN_TERMISTOR A2
@@ -75,5 +82,11 @@ extern char ultimaTecla;
 // ==================== VARIABLES GLOBALES ADICIONALES ====================
 extern bool botonPresionado;
 extern unsigned long tiempoUltimoBoton;
- 
+ // ==================== FRANJAS HORARIAS Y ROLES ====================
+#define NUM_ROLES 4
+// EEPROM: 4 roles × 4 bytes (2 para inicio, 2 para fin) = 16 bytes desde pos 13
+#define EEPROM_FRANJAS_START   13
+
+extern int rolActivo;
+
 #endif // CONFIGURACION_H

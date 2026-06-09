@@ -6,6 +6,7 @@
  
 // ==================== ENUMS PRINCIPALES ====================
 enum EstadoSistema {
+  ESTADO_INGRESAR_HORA,   // *** NUEVO: pedir hora antes del login ***
   ESTADO_INICIO,
   ESTADO_BLOQUEO,
   ESTADO_CONFIGURACION,
@@ -36,7 +37,10 @@ enum SubEstadoConfig {
   CONFIG_MENU,
   CONFIG_CAMBIO_CLAVE,
   CONFIG_CONFIRMAR_CLAVE,
-  CONFIG_REGISTRO_RFID
+  CONFIG_REGISTRO_RFID,
+  CONFIG_FRANJAS_MENU,        // *** NUEVO ***
+  CONFIG_FRANJAS_HORA_INICIO, // *** NUEVO ***
+  CONFIG_FRANJAS_HORA_FIN     // *** NUEVO ***
 };
  
 // ==================== PROTOTIPOS DE FUNCIONES ====================
